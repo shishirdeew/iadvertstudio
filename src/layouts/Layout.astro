@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "IAdvert Studio | Premier Meta & Facebook Ads Agency", 
+  description = "We scale brands with high-performance Meta and Facebook ads. Psychological creative, scientific CBO architecture, and bulletproof CAPI tracking." 
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://iadverts.site/" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-obsidian-900 text-[#F8F7FA] font-sans relative selection:bg-terra-bright selection:text-white">
+    <!-- Ambient Background Light Fields -->
+    <div class="fixed -top-40 left-1/4 w-[600px] h-[600px] bg-radial from-terra-glow to-transparent blur-[100px] pointer-events-none z-0 animate-pulse-glow"></div>
+    <div class="fixed bottom-10 right-5 w-[500px] h-[500px] bg-radial from-[rgba(224,72,50,0.12)] to-transparent blur-[110px] pointer-events-none z-0"></div>
+
+    <div class="relative z-10 flex flex-col min-h-screen">
+      <slot />
+    </div>
+  </body>
+</html>

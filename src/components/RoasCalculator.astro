@@ -1,0 +1,174 @@
+---
+---
+<section class="relative py-24 max-w-7xl mx-auto px-6" id="calculator">
+  <!-- Title -->
+  <div class="mb-14 text-center max-w-2xl mx-auto">
+    <div class="font-mono text-xs text-terra-bright uppercase tracking-widest mb-3">LIVE SCALING SIMULATOR</div>
+    <h2 class="font-display text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+      Estimate Your Meta Ads <br>
+      <span class="text-peach">Scaling Potential</span>
+    </h2>
+    <p class="text-white/60 text-base leading-relaxed">
+      আপনার বর্তমান মাসিক অ্যাড বাজেট নির্ধারণ করে দেখুন আমাদের অপ্টিমাইজড মেটা ফানেলে আপনি কী পরিমাণ রিটার্ন প্রত্যাশা করতে পারেন।
+    </p>
+  </div>
+
+  <!-- Calculator Card -->
+  <div class="bg-gradient-to-br from-obsidian-800/90 via-obsidian-900/95 to-obsidian-950 border border-terra/30 rounded-3xl p-6 sm:p-12 shadow-2xl shadow-black/80 relative overflow-hidden">
+    <!-- Subtle glow behind output -->
+    <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-terra-bright/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      
+      <!-- Inputs (Span 7) -->
+      <div class="lg:col-span-7 space-y-8">
+        
+        <!-- Spend Slider -->
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <label for="calc-spend" class="text-sm font-semibold text-white/90">
+              Monthly Ad Spend <span class="text-white/50 text-xs font-normal">(মাসিক বাজেট)</span>
+            </label>
+            <span class="font-mono text-lg font-bold text-peach" id="disp-spend">৳ 60,000</span>
+          </div>
+          <input 
+            type="range" 
+            id="calc-spend" 
+            min="15000" 
+            max="300000" 
+            step="5000" 
+            value="60000" 
+            class="w-full accent-terra-bright"
+          />
+          <div class="flex justify-between text-[11px] font-mono text-white/40 mt-1.5">
+            <span>৳ 15,000</span>
+            <span>৳ 300,000+</span>
+          </div>
+        </div>
+
+        <!-- AOV Slider -->
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <label for="calc-aov" class="text-sm font-semibold text-white/90">
+              Average Order Value / AOV <span class="text-white/50 text-xs font-normal">(গড় পণ্যের দাম)</span>
+            </label>
+            <span class="font-mono text-lg font-bold text-peach" id="disp-aov">৳ 1,200</span>
+          </div>
+          <input 
+            type="range" 
+            id="calc-aov" 
+            min="500" 
+            max="8000" 
+            step="100" 
+            value="1200" 
+            class="w-full accent-terra-bright"
+          />
+          <div class="flex justify-between text-[11px] font-mono text-white/40 mt-1.5">
+            <span>৳ 500</span>
+            <span>৳ 8,000</span>
+          </div>
+        </div>
+
+        <!-- ROAS Multiplier Slider -->
+        <div>
+          <div class="flex justify-between items-center mb-3">
+            <label for="calc-roas" class="text-sm font-semibold text-white/90">
+              Target Return Multiplier <span class="text-white/50 text-xs font-normal">(ROAS টার্গেট)</span>
+            </label>
+            <span class="font-mono text-lg font-bold text-accent-mint" id="disp-roas">4.2x</span>
+          </div>
+          <input 
+            type="range" 
+            id="calc-roas" 
+            min="2.5" 
+            max="6.5" 
+            step="0.1" 
+            value="4.2" 
+            class="w-full accent-accent-mint"
+          />
+          <div class="flex justify-between text-[11px] font-mono text-white/40 mt-1.5">
+            <span>2.5x (Safe)</span>
+            <span>6.5x (Aggressive)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Outputs (Span 5) -->
+      <div class="lg:col-span-5 bg-obsidian-950/80 border border-white/10 rounded-2xl p-6 sm:p-8 text-center relative z-10">
+        <div class="font-mono text-xs uppercase tracking-wider text-white/50 mb-2">
+          Estimated Monthly Revenue (সম্ভাব্য মোট সেলস)
+        </div>
+        <div class="font-display font-extrabold text-4xl sm:text-5xl text-accent-mint tracking-tight mb-4 drop-shadow-[0_0_25px_rgba(0,229,153,0.3)]" id="disp-revenue">
+          ৳ 252,000
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 py-4 my-4 border-y border-white/10">
+          <div>
+            <div class="font-display font-bold text-2xl text-peach" id="disp-orders">210</div>
+            <div class="text-[11px] font-mono uppercase text-white/50 mt-1">Est. Orders</div>
+          </div>
+          <div>
+            <div class="font-display font-bold text-2xl text-white" id="disp-profit">৳ 192,000</div>
+            <div class="text-[11px] font-mono uppercase text-white/50 mt-1">Gross Profit (Post-Ad)</div>
+          </div>
+        </div>
+
+        <a 
+          href="https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20used%20your%20ROAS%20calculator%20and%20want%20to%20scale%20my%20business%20with%20Meta%20Ads." 
+          target="_blank"
+          id="calc-whatsapp-btn"
+          class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white font-semibold text-sm px-6 py-3.5 rounded-full border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-[1.02]"
+        >
+          <span>Scale With IAdvert Studio →</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  const spendSlider = document.getElementById('calc-spend') as HTMLInputElement;
+  const aovSlider = document.getElementById('calc-aov') as HTMLInputElement;
+  const roasSlider = document.getElementById('calc-roas') as HTMLInputElement;
+
+  const dispSpend = document.getElementById('disp-spend');
+  const dispAov = document.getElementById('disp-aov');
+  const dispRoas = document.getElementById('disp-roas');
+
+  const dispRevenue = document.getElementById('disp-revenue');
+  const dispOrders = document.getElementById('disp-orders');
+  const dispProfit = document.getElementById('disp-profit');
+  const waBtn = document.getElementById('calc-whatsapp-btn') as HTMLAnchorElement;
+
+  function update() {
+    if (!spendSlider || !aovSlider || !roasSlider) return;
+
+    const spend = parseInt(spendSlider.value, 10);
+    const aov = parseInt(aovSlider.value, 10);
+    const roas = parseFloat(roasSlider.value);
+
+    if (dispSpend) dispSpend.innerText = '৳ ' + spend.toLocaleString('en-US');
+    if (dispAov) dispAov.innerText = '৳ ' + aov.toLocaleString('en-US');
+    if (dispRoas) dispRoas.innerText = roas.toFixed(1) + 'x';
+
+    const revenue = Math.round(spend * roas);
+    const orders = Math.round(revenue / aov);
+    const profit = Math.round(revenue - spend);
+
+    if (dispRevenue) dispRevenue.innerText = '৳ ' + revenue.toLocaleString('en-US');
+    if (dispOrders) dispOrders.innerText = orders.toLocaleString('en-US');
+    if (dispProfit) dispProfit.innerText = '৳ ' + profit.toLocaleString('en-US');
+
+    if (waBtn) {
+      const msg = encodeURIComponent(`Hello Ratul, I used your Meta Ads ROAS Calculator. My monthly budget is ৳${spend.toLocaleString()}, and I want to scale my business to ৳${revenue.toLocaleString()} revenue!`);
+      waBtn.href = `https://wa.me/8801301843562?text=${msg}`;
+    }
+  }
+
+  [spendSlider, aovSlider, roasSlider].forEach(el => {
+    if (el) el.addEventListener('input', update);
+  });
+  update();
+</script>
