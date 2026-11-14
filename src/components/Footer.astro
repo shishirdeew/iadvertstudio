@@ -1,20 +1,29 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const homeUrl = base || '/';
 ---
 <footer class="border-t border-white/[0.08] py-12 text-center text-xs text-white/40 font-mono">
   <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-    <div class="flex items-center gap-2">
-      <div class="w-6 h-6 rounded bg-terra flex items-center justify-center font-bold text-white text-xs">iA</div>
-      <span class="text-white/80 font-display font-semibold text-sm">IAdvert Studio</span>
-    </div>
+    <a href={homeUrl} class="flex items-center gap-2 group" aria-label="IAdvert Studio home">
+      <img
+        src={`${base}/assets/logo.png`}
+        alt="IAdvert Studio"
+        width="1200"
+        height="442"
+        class="h-6 w-auto max-w-[140px] object-contain transition-transform duration-300 group-hover:scale-105"
+        loading="lazy"
+      />
+    </a>
 
     <div>
       © {new Date().getFullYear()} IAdvert Studio. Meta™ and Facebook™ are trademarks of Meta Platforms, Inc.
     </div>
 
     <div class="flex items-center gap-6">
-      <a href="https://www.facebook.com/iAdvertStudio" target="_blank" class="hover:text-white transition-colors">Facebook</a>
-      <a href="https://www.instagram.com/iadvertstudio" target="_blank" class="hover:text-white transition-colors">Instagram</a>
-      <a href="https://www.linkedin.com/company/iadvertsm/" target="_blank" class="hover:text-white transition-colors">LinkedIn</a>
+      <a href="https://www.facebook.com/iAdvertStudio" target="_blank" rel="noopener" class="hover:text-white transition-colors">Facebook</a>
+      <a href="https://www.instagram.com/iadvertstudio" target="_blank" rel="noopener" class="hover:text-white transition-colors">Instagram</a>
+      <a href="https://www.linkedin.com/company/iadvertsm/" target="_blank" rel="noopener" class="hover:text-white transition-colors">LinkedIn</a>
+      <a href={`${base}/privacy-policy`} class="hover:text-white transition-colors">Privacy Policy</a>
     </div>
   </div>
 </footer>
