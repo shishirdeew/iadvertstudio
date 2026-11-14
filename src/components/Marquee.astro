@@ -1,0 +1,59 @@
+---
+const items = [
+  'Meta Ads Management',
+  'AI UGC Creative',
+  'Server-Side CAPI',
+  'CBO Scaling Engine',
+  'Cold Prospecting',
+  'Retargeting Funnels',
+  'Event Match Quality',
+  'Creative Testing',
+  'Scale With IAdvert Studio',
+];
+---
+
+<section class="relative py-5 border-y border-white/[0.06] bg-obsidian-950/60 overflow-hidden">
+  <div class="marquee-mask relative flex overflow-hidden">
+    <div class="marquee-track flex shrink-0 items-center gap-10 pr-10">
+      {[...items, ...items].map((item) => (
+        <span class="flex shrink-0 items-center gap-10">
+          <span class="font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-white/45 whitespace-nowrap">
+            {item}
+          </span>
+          <span class="w-1.5 h-1.5 rounded-full bg-terra-bright/60 shrink-0"></span>
+        </span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-mask:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-mask {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+</style>

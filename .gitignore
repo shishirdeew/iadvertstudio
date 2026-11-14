@@ -1,6 +1,7 @@
 # Build & Cache
 dist/
 .astro/
+.pocketdev/
 
 # Dependencies
 node_modules/
@@ -18,3 +19,6 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# Deployment artifacts
+source.zip

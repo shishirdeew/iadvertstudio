@@ -6,39 +6,122 @@ interface Props {
   description?: string;
 }
 
-const { 
-  title = "IAdvert Studio | Premier Meta & Facebook Ads Agency", 
-  description = "We scale brands with high-performance Meta and Facebook ads. Psychological creative, scientific CBO architecture, and bulletproof CAPI tracking." 
+const {
+  title = 'IAdvert Studio | Premier Meta & Facebook Ads Agency',
+  description = 'We scale brands with high-performance Meta and Facebook ads. Psychological creative, scientific CBO architecture, and bulletproof CAPI tracking.',
 } = Astro.props;
+
+const siteUrl = 'https://iadverts.site';
+const ogImage = `${siteUrl}/assets/hero-3d-concept.jpg`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'IAdvert Studio',
+  description,
+  url: siteUrl,
+  image: ogImage,
+  telephone: '+8801301843562',
+  areaServed: ['Bangladesh', 'Rajshahi'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Rajshahi',
+    addressCountry: 'BD',
+  },
+  founder: {
+    '@type': 'Person',
+    name: 'Ratul Ahmed Shishir',
+  },
+  sameAs: [
+    'https://www.facebook.com/iAdvertStudio',
+    'https://www.instagram.com/iadvertstudio',
+    'https://www.linkedin.com/company/iadvertsm/',
+  ],
+};
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="theme-color" content="#0c0a10" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    
+    <link rel="canonical" href={siteUrl} />
+
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://iadverts.site/" />
-    
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="IAdvert Studio" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body class="bg-obsidian-900 text-[#F8F7FA] font-sans relative selection:bg-terra-bright selection:text-white">
+  <body
+    class="bg-obsidian-900 text-[#F8F7FA] font-sans relative selection:bg-terra-bright selection:text-white"
+  >
     <!-- Ambient Background Light Fields -->
-    <div class="fixed -top-40 left-1/4 w-[600px] h-[600px] bg-radial from-terra-glow to-transparent blur-[100px] pointer-events-none z-0 animate-pulse-glow"></div>
-    <div class="fixed bottom-10 right-5 w-[500px] h-[500px] bg-radial from-[rgba(224,72,50,0.12)] to-transparent blur-[110px] pointer-events-none z-0"></div>
+    <div
+      class="fixed -top-40 left-1/4 w-[600px] h-[600px] bg-radial from-terra-glow to-transparent blur-[100px] pointer-events-none z-0 animate-pulse-glow"
+    >
+    </div>
+    <div
+      class="fixed bottom-10 right-5 w-[500px] h-[500px] bg-radial from-[rgba(224,72,50,0.12)] to-transparent blur-[110px] pointer-events-none z-0"
+    >
+    </div>
+
+    <!-- Subtle grain overlay for depth -->
+    <div class="grain-overlay pointer-events-none fixed inset-0 z-[1] opacity-[0.035]"></div>
 
     <div class="relative z-10 flex flex-col min-h-screen">
       <slot />
     </div>
+
+    <style>
+      .grain-overlay {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+    </style>
+
+    <script>
+      // Scroll-reveal for elements marked .reveal
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduceMotion) {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+        );
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      }
+    </script>
   </body>
 </html>
