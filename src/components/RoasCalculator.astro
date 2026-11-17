@@ -9,7 +9,7 @@
       <span class="text-peach">Scaling Potential</span>
     </h2>
     <p class="text-white/60 text-base leading-relaxed">
-      আপনার বর্তমান মাসিক অ্যাড বাজেট নির্ধারণ করে দেখুন আমাদের অপ্টিমাইজড মেটা ফানেলে আপনি কী পরিমাণ রিটার্ন প্রত্যাশা করতে পারেন।
+      Determine your current monthly ad budget to see how much return you can expect from our optimized Meta funnel.
     </p>
   </div>
 
@@ -27,9 +27,9 @@
         <div>
           <div class="flex justify-between items-center mb-3">
             <label for="calc-spend" class="text-sm font-semibold text-white/90">
-              Monthly Ad Spend <span class="text-white/50 text-xs font-normal">(মাসিক বাজেট)</span>
+              Monthly Ad Spend <span class="text-white/50 text-xs font-normal">(Monthly Budget)</span>
             </label>
-            <span class="font-mono text-lg font-bold text-peach" id="disp-spend">৳ 60,000</span>
+            <span class="font-mono text-lg font-bold text-peach" id="disp-spend">$60,000</span>
           </div>
           <input 
             type="range" 
@@ -41,8 +41,8 @@
             class="w-full accent-terra-bright"
           />
           <div class="flex justify-between text-[11px] font-mono text-white/40 mt-1.5">
-            <span>৳ 15,000</span>
-            <span>৳ 300,000+</span>
+            <span>$15,000</span>
+            <span>$300,000+</span>
           </div>
         </div>
 
@@ -50,9 +50,9 @@
         <div>
           <div class="flex justify-between items-center mb-3">
             <label for="calc-aov" class="text-sm font-semibold text-white/90">
-              Average Order Value / AOV <span class="text-white/50 text-xs font-normal">(গড় পণ্যের দাম)</span>
+              Average Order Value / AOV <span class="text-white/50 text-xs font-normal">(Average Product Price)</span>
             </label>
-            <span class="font-mono text-lg font-bold text-peach" id="disp-aov">৳ 1,200</span>
+            <span class="font-mono text-lg font-bold text-peach" id="disp-aov">$1,200</span>
           </div>
           <input 
             type="range" 
@@ -64,8 +64,8 @@
             class="w-full accent-terra-bright"
           />
           <div class="flex justify-between text-[11px] font-mono text-white/40 mt-1.5">
-            <span>৳ 500</span>
-            <span>৳ 8,000</span>
+            <span>$500</span>
+            <span>$8,000</span>
           </div>
         </div>
 
@@ -73,7 +73,7 @@
         <div>
           <div class="flex justify-between items-center mb-3">
             <label for="calc-roas" class="text-sm font-semibold text-white/90">
-              Target Return Multiplier <span class="text-white/50 text-xs font-normal">(ROAS টার্গেট)</span>
+              Target Return Multiplier <span class="text-white/50 text-xs font-normal">(ROAS Target)</span>
             </label>
             <span class="font-mono text-lg font-bold text-accent-mint" id="disp-roas">4.2x</span>
           </div>
@@ -97,10 +97,10 @@
       <!-- Outputs (Span 5) -->
       <div class="lg:col-span-5 bg-obsidian-950/80 border border-white/10 rounded-2xl p-6 sm:p-8 text-center relative z-10">
         <div class="font-mono text-xs uppercase tracking-wider text-white/50 mb-2">
-          Estimated Monthly Revenue (সম্ভাব্য মোট সেলস)
+          Estimated Monthly Revenue
         </div>
         <div class="font-display font-extrabold text-4xl sm:text-5xl text-accent-mint tracking-tight mb-4 drop-shadow-[0_0_25px_rgba(0,229,153,0.3)]" id="disp-revenue">
-          ৳ 252,000
+          $252,000
         </div>
 
         <div class="grid grid-cols-2 gap-4 py-4 my-4 border-y border-white/10">
@@ -109,7 +109,7 @@
             <div class="text-[11px] font-mono uppercase text-white/50 mt-1">Est. Orders</div>
           </div>
           <div>
-            <div class="font-display font-bold text-2xl text-white" id="disp-profit">৳ 192,000</div>
+            <div class="font-display font-bold text-2xl text-white" id="disp-profit">$192,000</div>
             <div class="text-[11px] font-mono uppercase text-white/50 mt-1">Gross Profit (Post-Ad)</div>
           </div>
         </div>
@@ -149,20 +149,20 @@
     const aov = parseInt(aovSlider.value, 10);
     const roas = parseFloat(roasSlider.value);
 
-    if (dispSpend) dispSpend.innerText = '৳ ' + spend.toLocaleString('en-US');
-    if (dispAov) dispAov.innerText = '৳ ' + aov.toLocaleString('en-US');
+    if (dispSpend) dispSpend.innerText = '$' + spend.toLocaleString('en-US');
+    if (dispAov) dispAov.innerText = '$' + aov.toLocaleString('en-US');
     if (dispRoas) dispRoas.innerText = roas.toFixed(1) + 'x';
 
     const revenue = Math.round(spend * roas);
     const orders = Math.round(revenue / aov);
     const profit = Math.round(revenue - spend);
 
-    if (dispRevenue) dispRevenue.innerText = '৳ ' + revenue.toLocaleString('en-US');
+    if (dispRevenue) dispRevenue.innerText = '$' + revenue.toLocaleString('en-US');
     if (dispOrders) dispOrders.innerText = orders.toLocaleString('en-US');
-    if (dispProfit) dispProfit.innerText = '৳ ' + profit.toLocaleString('en-US');
+    if (dispProfit) dispProfit.innerText = '$' + profit.toLocaleString('en-US');
 
     if (waBtn) {
-      const msg = encodeURIComponent(`Hello Ratul, I used your Meta Ads ROAS Calculator. My monthly budget is ৳${spend.toLocaleString()}, and I want to scale my business to ৳${revenue.toLocaleString()} revenue!`);
+      const msg = encodeURIComponent(`Hello Ratul, I used your Meta Ads ROAS Calculator. My monthly budget is $${spend.toLocaleString()}, and I want to scale my business to $${revenue.toLocaleString()} revenue!`);
       waBtn.href = `https://wa.me/8801301843562?text=${msg}`;
     }
   }
