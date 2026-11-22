@@ -12,10 +12,10 @@
       </div>
 
       <!-- Main Headline -->
-      <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.12] mb-6 text-white reveal reveal-left reveal-up">
+      <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.18] mb-6 text-white reveal reveal-left">
         We Scale Brands with <br class="hidden sm:inline" />
-        <span class="bg-gradient-to-r from-white via-peach to-terra-bright bg-clip-text text-transparent">High-Performance</span> <br class="hidden sm:inline" />
-        <span class="text-terra-bright drop-shadow-[0_0_35px_rgba(224,72,50,0.4)]">Meta Ads.</span>
+        <span class="text-peach tracking-wide font-bold italic">HIGH-PERFORMANCE</span> <br class="hidden sm:inline" />
+        <span class="text-terra-bright tracking-wide font-bold drop-shadow-[0_0_25px_rgba(224,72,50,0.5)]">META ADS.</span>
       </h1>
 
       <!-- English Subtitle -->
@@ -210,20 +210,12 @@
     const card2 = document.getElementById('tilt-card-2');
     const card3 = document.getElementById('tilt-card-3');
 
-    // Pause rendering when the section is off-screen to save battery
-    let visible = true;
-    const perfObserver = new IntersectionObserver(
-      (entries) => {
-        visible = entries[0].isIntersecting;
-      },
-      { threshold: [0] }
-    );
-    perfObserver.observe(stage);
+    // Optimized rendering: pause when off-screen to save CPU and battery
+    let visible = false;
+    let animationFrameId: number | null = null;
 
-    function animate() {
-      if (!reduceMotion) {
-        requestAnimationFrame(animate);
-      }
+    function renderLoop() {
+      if (!visible) return;
 
       targetX += (mouseX - targetX) * 0.05;
       targetY += (mouseY - targetY) * 0.05;
@@ -243,11 +235,30 @@
       if (card3)
         card3.style.transform = `translate(calc(-50% + ${targetX * 8}px), calc(-50% + ${-targetY * 8}px))`;
 
-      if (visible) {
-        renderer.render(scene, camera);
+      renderer.render(scene, camera);
+
+      if (!reduceMotion) {
+        animationFrameId = requestAnimationFrame(renderLoop);
       }
     }
-    animate();
+
+    const perfObserver = new IntersectionObserver(
+      (entries) => {
+        const isIntersecting = entries[0].isIntersecting;
+        if (isIntersecting && !visible) {
+          visible = true;
+          renderLoop();
+        } else if (!isIntersecting && visible) {
+          visible = false;
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
+        }
+      },
+      { threshold: 0.05 }
+    );
+    perfObserver.observe(stage);
 
     window.addEventListener(
       'resize',
