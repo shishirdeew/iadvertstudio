@@ -1,0 +1,254 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const homeUrl = base || '/';
+---
+
+<Layout 
+  title="Privacy Policy | IAdvert Studio" 
+  description="Privacy Policy of IAdvert Studio. Learn how we collect, use, and protect your personal information when using our Meta & Facebook ads services."
+>
+  <Navbar />
+
+  <main class="relative pt-32 pb-24 max-w-5xl mx-auto px-6">
+    <!-- Breadcrumb / Back Link -->
+    <div class="mb-8 flex items-center gap-2 text-xs font-mono text-white/50">
+      <a href={homeUrl} class="hover:text-terra-bright transition-colors flex items-center gap-1">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Back to Home</span>
+      </a>
+      <span>/</span>
+      <span class="text-peach">Privacy Policy</span>
+    </div>
+
+    <!-- Header Card -->
+    <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 mb-12 relative overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-terra/20 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terra/15 border border-terra/30 text-peach text-xs font-mono mb-4 uppercase tracking-wider">
+        <span class="w-2 h-2 rounded-full bg-terra animate-pulse"></span>
+        Legal & Compliance
+      </div>
+      
+      <h1 class="font-display text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        Privacy <span class="bg-gradient-to-r from-terra-bright via-peach to-terra bg-clip-text text-transparent">Policy</span>
+      </h1>
+      
+      <p class="text-white/70 text-sm sm:text-base leading-relaxed max-w-3xl">
+        This Privacy Policy describes our policies and procedures on the collection, use, and disclosure of your information when you use our service, and tells you about your privacy rights and how the law protects you.
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-4 text-xs font-mono text-white/40 pt-6 border-t border-white/10">
+        <div>Last Updated: <span class="text-white/80">October 20, 2026</span></div>
+        <div>•</div>
+        <div>Entity: <span class="text-white/80">IAdvert Studio</span></div>
+        <div>•</div>
+        <div>Jurisdiction: <span class="text-white/80">Bangladesh</span></div>
+      </div>
+    </div>
+
+    <!-- Content Card -->
+    <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 space-y-12 text-white/80 text-sm sm:text-base leading-relaxed font-sans">
+      
+      <!-- Section 1 -->
+      <section class="space-y-4">
+        <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-terra/20 text-terra-bright flex items-center justify-center font-mono text-sm border border-terra/30">01</span>
+          Introduction & Overview
+        </h2>
+        <p>
+          We use your Personal Data to provide and improve the Service. We collect, use, and disclose your information as described in this Privacy Policy and, where required by applicable law, only where we have a valid legal basis to do so, including your consent (where consent is required).
+        </p>
+        <p>
+          By accessing or using the services provided by <strong class="text-white">IAdvert Studio</strong> ("the Company", "We", "Us", or "Our"), accessible from <a href="https://iadverts.site/" class="text-peach hover:underline" target="_blank" rel="noopener">https://iadverts.site/</a>, you acknowledge and agree to the collection and use of information in accordance with this Privacy Policy.
+        </p>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="space-y-4 pt-8 border-t border-white/10">
+        <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-terra/20 text-terra-bright flex items-center justify-center font-mono text-sm border border-terra/30">02</span>
+          Interpretation and Definitions
+        </h2>
+        
+        <h3 class="font-display text-lg font-semibold text-peach pt-2">Interpretation</h3>
+        <p>
+          The words whose initial letters are capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
+        </p>
+
+        <h3 class="font-display text-lg font-semibold text-peach pt-2">Definitions</h3>
+        <ul class="space-y-3 list-none pl-0">
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Account:</strong> A unique account created for You to access Our Service or parts of Our Service.
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Affiliate:</strong> An entity that controls, is controlled by, or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest, or other securities entitled to vote for election of directors or other managing authority.
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Company:</strong> Refers to <strong class="text-white">IAdvert Studio</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Privacy Policy).
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Cookies:</strong> Small files that are placed on Your computer, mobile device, or any other device by a website, containing details of Your browsing history on that website among its many uses.
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Country/State:</strong> Refers to <strong class="text-white">Bangladesh</strong>.
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Device:</strong> Any device that can access the Service, such as a computer, mobile phone, or digital tablet.
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Personal Data:</strong> Any information that relates to an identified or identifiable individual.
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Service:</strong> Refers to the Website and our digital marketing and advertising consulting services.
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Service Provider:</strong> Any natural or legal person who processes data on behalf of the Company to facilitate the Service or assist in analyzing how the Service is used.
+          </li>
+          <li class="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+            <strong class="text-white font-mono text-sm">Usage Data:</strong> Data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).
+          </li>
+        </ul>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="space-y-4 pt-8 border-t border-white/10">
+        <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-terra/20 text-terra-bright flex items-center justify-center font-mono text-sm border border-terra/30">03</span>
+          Collecting and Using Your Personal Information
+        </h2>
+        
+        <h3 class="font-display text-lg font-semibold text-peach pt-2">Personal Data</h3>
+        <p>
+          While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:
+        </p>
+        <ul class="list-disc pl-6 space-y-1 text-white/90">
+          <li>Email address</li>
+          <li>First name and last name</li>
+          <li>Phone number and WhatsApp contact</li>
+          <li>Business name and website / store URL</li>
+          <li>Advertising campaign goals and monthly ad spend expectations</li>
+          <li>Usage Data</li>
+        </ul>
+
+        <h3 class="font-display text-lg font-semibold text-peach pt-4">Usage Data</h3>
+        <p>
+          Usage Data is collected automatically when using the Service. It may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of Our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers, and other diagnostic data.
+        </p>
+      </section>
+
+      <!-- Section 4 -->
+      <section class="space-y-4 pt-8 border-t border-white/10">
+        <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-terra/20 text-terra-bright flex items-center justify-center font-mono text-sm border border-terra/30">04</span>
+          Tracking Technologies & Cookies
+        </h2>
+        <p>
+          We use tracking technologies (such as cookies, web beacons, and pixels) to track activity and improve Our Service. Cookies can be "Persistent" or "Session" Cookies:
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08]">
+            <h4 class="font-display font-semibold text-white mb-2">Necessary / Essential Cookies</h4>
+            <p class="text-xs text-white/60 leading-relaxed">
+              Session Cookies essential to provide you with services available through the Website and enable security and anti-fraud protections.
+            </p>
+          </div>
+          <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.08]">
+            <h4 class="font-display font-semibold text-white mb-2">Functionality & Analytics Cookies</h4>
+            <p class="text-xs text-white/60 leading-relaxed">
+              Persistent Cookies that allow us to remember choices you make (such as theme preferences) and analyze performance trends to continuously optimize our platforms.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5 -->
+      <section class="space-y-4 pt-8 border-t border-white/10">
+        <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-terra/20 text-terra-bright flex items-center justify-center font-mono text-sm border border-terra/30">05</span>
+          Use of Your Personal Data
+        </h2>
+        <p>The Company may use Personal Data for the following purposes:</p>
+        <ul class="space-y-2 list-disc pl-6 text-white/80">
+          <li><strong>To provide and maintain our Service:</strong> including monitoring usage and ensuring system integrity.</li>
+          <li><strong>To manage your requests & audits:</strong> attending to your inquiries, scheduling Meta Ads strategy consultations, and conducting Free Ads Audits.</li>
+          <li><strong>For contract execution:</strong> the development, compliance, and execution of services agreements for Meta advertising campaigns.</li>
+          <li><strong>To contact you:</strong> via email, WhatsApp, telephone calls, or SMS regarding campaign updates, security notices, or informative communications.</li>
+          <li><strong>For data analytics:</strong> evaluating marketing effectiveness, conversion rate improvements, and client growth trajectories.</li>
+        </ul>
+      </section>
+
+      <!-- Section 6 -->
+      <section class="space-y-4 pt-8 border-t border-white/10">
+        <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-terra/20 text-terra-bright flex items-center justify-center font-mono text-sm border border-terra/30">06</span>
+          Data Retention & Deletion
+        </h2>
+        <p>
+          We retain Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy.
+        </p>
+        <ul class="space-y-2 list-disc pl-6 text-white/80">
+          <li><strong>Client & Account Records:</strong> Retained for the duration of the relationship plus up to 24 months to address post-termination inquiries or legal compliance.</li>
+          <li><strong>Support & Communication Logs:</strong> Retained for up to 24 months for quality assurance and record keeping.</li>
+          <li><strong>Analytics Data:</strong> Retained for up to 24 months from collection.</li>
+        </ul>
+        <p class="pt-2">
+          You have the right to request access to, correction of, or deletion of the Personal Data that We have collected about You at any time by contacting us directly.
+        </p>
+      </section>
+
+      <!-- Section 7 -->
+      <section class="space-y-4 pt-8 border-t border-white/10">
+        <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-terra/20 text-terra-bright flex items-center justify-center font-mono text-sm border border-terra/30">07</span>
+          Security of Your Personal Data
+        </h2>
+        <p>
+          The security of Your Personal Data is paramount to us. We implement robust technical and organizational safeguards, including SSL/TLS encryption, restricted access controls, and secure server environments. However, please remember that no method of transmission over the Internet or method of electronic storage is 100% secure.
+        </p>
+      </section>
+
+      <!-- Section 8 -->
+      <section class="space-y-4 pt-8 border-t border-white/10">
+        <h2 class="font-display text-2xl font-bold text-white flex items-center gap-3">
+          <span class="w-8 h-8 rounded-xl bg-terra/20 text-terra-bright flex items-center justify-center font-mono text-sm border border-terra/30">08</span>
+          Contact Us
+        </h2>
+        <p>
+          If you have any questions, concerns, or requests regarding this Privacy Policy or your data protection rights, please reach out to us:
+        </p>
+        
+        <div class="mt-4 p-6 rounded-2xl bg-white/[0.03] border border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs sm:text-sm">
+          <div>
+            <div class="text-white/40 uppercase tracking-wider text-[11px] mb-1">Email Inquiry</div>
+            <a href="mailto:inquiryiadverts@gmail.com" class="text-terra-bright hover:underline font-semibold">
+              inquiryiadverts@gmail.com
+            </a>
+          </div>
+          <div>
+            <div class="text-white/40 uppercase tracking-wider text-[11px] mb-1">WhatsApp Direct</div>
+            <a href="https://wa.me/8801301843562" target="_blank" rel="noopener" class="text-accent-mint hover:underline font-semibold">
+              +880 1301-843562
+            </a>
+          </div>
+          <div>
+            <div class="text-white/40 uppercase tracking-wider text-[11px] mb-1">Direct Phone</div>
+            <div class="text-white/80">+880 1738-632389</div>
+          </div>
+          <div>
+            <div class="text-white/40 uppercase tracking-wider text-[11px] mb-1">Physical Location</div>
+            <div class="text-white/80">Shibpur Hat-6260, Puthia, Rajshahi, Bangladesh</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

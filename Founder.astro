@@ -1,0 +1,63 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="relative py-24 max-w-7xl mx-auto px-6" id="founder">
+  <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+
+      <!-- Founder Photo -->
+      <div class="md:col-span-4 flex justify-center">
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-r from-terra-bright to-peach rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+          <a
+            href="https://www.linkedin.com/in/ratulashishir/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Ratul Ahmed Shishir on LinkedIn"
+            class="relative block rounded-2xl"
+          >
+            <img
+              src={`${base}/assets/founder.jpg`}
+              alt="Ratul Ahmed Shishir - Founder & CEO of IAdvert Studio"
+              width="1145"
+              height="1374"
+              class="relative w-64 h-64 sm:w-72 sm:h-72 object-cover rounded-2xl border-2 border-terra/60 shadow-2xl transition-transform duration-300 group-hover:scale-[1.02]"
+              loading="lazy"
+            />
+          </a>
+        </div>
+      </div>
+
+      <!-- Founder Bio -->
+      <div class="md:col-span-8 flex flex-col items-start">
+        <div class="font-mono text-xs text-terra-bright uppercase tracking-widest mb-2">THE STRATEGIST BEHIND THE SYSTEM</div>
+        <h3 class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">Ratul Ahmed Shishir</h3>
+
+
+        <blockquote class="text-white/70 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-terra-bright pl-4">
+          "Agencies that claim to handle graphics, logos, websites, and SEO all at once cannot truly specialize in any. I have spent the last several years focusing exclusively on the internal algorithms, high-conversion copywriting, and server-side tracking mechanisms of Meta and Facebook ads. My single goal: to deliver the maximum cash return for every 1 taka of ad spend."
+        </blockquote>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <a 
+            href="https://wa.me/8801301843562" 
+            target="_blank"
+            class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white font-medium text-xs sm:text-sm px-5 py-2.5 rounded-full border border-white/15 transition-all hover:scale-105"
+          >
+            <span>Connect on WhatsApp</span>
+            <svg class="w-4 h-4 text-accent-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </a>
+
+          <a 
+            href="https://www.linkedin.com/in/ratulashishir/" 
+            target="_blank"
+            class="text-xs font-mono text-white/50 hover:text-white transition-colors"
+          >
+            LinkedIn Profile ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
