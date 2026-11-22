@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import vercel from '@astrojs/vercel/static';
 
 // GitHub Pages: SITE_URL / BASE_PATH are injected by the deploy workflow.
 // Local dev defaults keep `astro dev` working unchanged.
@@ -16,6 +17,9 @@ export default defineConfig({
   integrations: [tailwind({
     applyBaseStyles: false,
   })],
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
   site,
   base,
   server: {
