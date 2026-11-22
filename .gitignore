@@ -2,6 +2,7 @@
 dist/
 .astro/
 .pocketdev/
+.vercel/
 
 # Dependencies
 node_modules/
