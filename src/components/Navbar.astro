@@ -4,43 +4,49 @@ const homeUrl = base || '/';
 ---
 <header
   id="site-header"
-  class="fixed top-0 left-0 right-0 z-50 bg-obsidian-900/70 backdrop-blur-xl border-b border-white/[0.08] transition-all duration-300"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
 >
-  <div class="header-inner max-w-7xl mx-auto px-5 sm:px-6 h-20 flex items-center justify-between">
-    <!-- Brand -->
-    <a href={homeUrl} class="flex items-center gap-3 group shrink-0" aria-label="iAdvert Studio home">
-      <img
-        src={`${base}/assets/logo.png`}
-        alt="iAdvert Studio"
-        width="1200"
-        height="442"
-        class="h-8 sm:h-10 w-auto max-h-10 max-w-[190px] sm:max-w-[240px] object-contain transition-transform duration-300 group-hover:scale-105"
-      />
-    </a>
-
-    <!-- Navigation links -->
-    <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
-      <a href={`${base}/#services`} data-nav-link class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">Meta Engine</a>
-      <a href={`${base}/#calculator`} data-nav-link class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">ROAS Simulator</a>
-      <a href={`${base}/#results`} data-nav-link class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">Case Studies</a>
-      <a href={`${base}/#founder`} data-nav-link class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">About</a>
-      <a href={`${base}/privacy-policy`} class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">Privacy</a>
-    </nav>
-
-    <!-- CTA + mobile toggle -->
-    <div class="flex items-center gap-3">
-      <a
-        href="https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20want%20a%20Free%20Meta%20Ads%20Audit%20for%20my%20business."
-        target="_blank"
-        rel="noopener"
-        class="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white text-xs md:text-sm font-semibold tracking-wide uppercase px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105 hover:shadow-terra/50"
-      >
-        <span>Claim Free Audit</span>
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 sm:pt-5">
+    <div
+      id="nav-pill"
+      class="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-obsidian-900/60 backdrop-blur-xl px-4 sm:px-5 h-16 transition-all duration-300"
+    >
+      <!-- Brand / Logo -->
+      <a href={homeUrl} class="flex items-center shrink-0 group" aria-label="iAdvert Studio home">
+        <img
+          src={`${base}/assets/logo.png`}
+          alt="iAdvert Studio"
+          width="1200"
+          height="442"
+          class="h-7 sm:h-8 w-auto max-h-8 max-w-[170px] sm:max-w-[210px] object-contain transition-transform duration-300 group-hover:scale-105"
+        />
       </a>
 
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-7 lg:gap-8" aria-label="Primary">
+        <a href={`${base}/#services`} data-nav-link class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">Meta Engine</a>
+        <a href={`${base}/#calculator`} data-nav-link class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">ROAS Simulator</a>
+        <a href={`${base}/#results`} data-nav-link class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">Case Studies</a>
+        <a href={`${base}/#founder`} data-nav-link class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">About</a>
+        <a href={`${base}/privacy-policy`} class="nav-link text-sm font-medium text-white/70 hover:text-white transition-colors">Privacy</a>
+      </nav>
+
+      <!-- Desktop CTA -->
+      <div class="hidden md:flex items-center gap-3">
+        <a
+          href="https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20want%20a%20Free%20Meta%20Ads%20Audit%20for%20my%20business."
+          target="_blank"
+          rel="noopener"
+          class="bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white text-xs lg:text-sm font-semibold tracking-wide uppercase px-5 lg:px-6 py-2.5 lg:py-3 rounded-full border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105 hover:shadow-terra/50 inline-flex items-center gap-2"
+        >
+          <span>Claim Free Audit</span>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
       <button
         id="mobile-menu-btn"
         type="button"
@@ -60,17 +66,18 @@ const homeUrl = base || '/';
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="md:hidden hidden border-t border-white/[0.08] bg-obsidian-950/95 backdrop-blur-2xl">
-    <nav class="px-5 py-5 flex flex-col gap-1" aria-label="Mobile">
+  <div id="mobile-menu" class="md:hidden hidden mt-2 mx-4 sm:mx-6 rounded-2xl border border-white/10 bg-obsidian-950/95 backdrop-blur-2xl overflow-hidden">
+    <nav class="px-4 py-4 flex flex-col gap-1" aria-label="Mobile navigation">
       <a href="#services" class="mobile-link px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:text-white hover:bg-white/[0.06] transition-colors">Meta Engine</a>
       <a href="#calculator" class="mobile-link px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:text-white hover:bg-white/[0.06] transition-colors">ROAS Simulator</a>
       <a href="#results" class="mobile-link px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:text-white hover:bg-white/[0.06] transition-colors">Case Studies</a>
       <a href="#founder" class="mobile-link px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:text-white hover:bg-white/[0.06] transition-colors">About</a>
+      <a href="/privacy-policy" class="mobile-link px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:text-white hover:bg-white/[0.06] transition-colors">Privacy</a>
       <a
         href="https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20want%20a%20Free%20Meta%20Ads%20Audit%20for%20my%20business."
         target="_blank"
         rel="noopener"
-        class="mobile-link mt-3 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-terra-bright to-terra text-white text-sm font-semibold px-5 py-3.5 rounded-full shadow-lg shadow-terra/30"
+        class="mobile-link mt-2 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-terra-bright to-terra text-white text-sm font-semibold px-5 py-3.5 rounded-full shadow-lg shadow-terra/30 transition-all"
       >
         Claim Free Audit
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -97,7 +104,7 @@ const homeUrl = base || '/';
   const iconOpen = document.getElementById('icon-open');
   const iconClose = document.getElementById('icon-close');
 
-  function setMenu(open: boolean) {
+  function setMenu(open) {
     mobileMenu?.classList.toggle('hidden', !open);
     menuBtn?.setAttribute('aria-expanded', String(open));
     menuBtn?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
@@ -114,8 +121,8 @@ const homeUrl = base || '/';
   });
 
   // Active section highlighting
-  const sections = Array.from(document.querySelectorAll<HTMLElement>('section[id]'));
-  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
+  const sections = Array.from(document.querySelectorAll('section[id]'));
+  const navLinks = Array.from(document.querySelectorAll('[data-nav-link]'));
 
   const sectionObserver = new IntersectionObserver(
     (entries) => {
@@ -136,12 +143,10 @@ const homeUrl = base || '/';
 </script>
 
 <style>
-  #site-header.scrolled {
+  #site-header.scrolled #nav-pill {
     background: rgba(8, 7, 11, 0.92);
+    border-color: rgba(255, 255, 255, 0.14);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
-  }
-  #site-header.scrolled .header-inner {
-    height: 4.25rem;
   }
   .nav-link {
     position: relative;
