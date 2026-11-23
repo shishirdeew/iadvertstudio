@@ -2,7 +2,7 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const homeUrl = base || '/';
 ---
-<footer class="border-t border-white/[0.08] py-14 text-xs text-white/40 font-mono">
+<footer class="border-t border-white/[0.08] py-14 text-xs text-white/40 font-sans">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
     <!-- Brand -->
@@ -17,15 +17,15 @@ const homeUrl = base || '/';
           loading="lazy"
         />
       </a>
-      <p class="mt-4 leading-relaxed text-white/40 font-sans text-sm max-w-xs">
-        IAdvert Studio is a Meta Ads agency in Puthia, Rajshahi. We plan, launch and optimize Facebook and Instagram ads for businesses in Bangladesh and beyond.
+      <p class="mt-4 leading-relaxed text-white/40 text-sm max-w-xs">
+        IAdvert Studio is a Meta Ads agency based in Rajshahi, Bangladesh. We plan, launch, and optimize Facebook and Instagram ads for businesses in Bangladesh and beyond.
       </p>
     </div>
 
     <!-- Company links -->
     <nav aria-label="Company">
       <h5 class="font-display text-sm font-bold text-white uppercase tracking-widest mb-4">Company</h5>
-      <ul class="space-y-2.5 font-sans text-sm">
+      <ul class="space-y-2.5 text-sm">
         <li><a href={homeUrl} class="hover:text-peach transition-colors">Home</a></li>
         <li><a href={`${base}/#services`} class="hover:text-peach transition-colors">Services</a></li>
         <li><a href={`${base}/#results`} class="hover:text-peach transition-colors">Case Studies</a></li>
@@ -38,7 +38,7 @@ const homeUrl = base || '/';
     <!-- Contact -->
     <div id="contact">
       <h5 class="font-display text-sm font-bold text-white uppercase tracking-widest mb-4">Contact</h5>
-      <ul class="space-y-2.5 font-sans text-sm">
+      <ul class="space-y-2.5 text-sm">
         <li>
           <a href="mailto:inquiryiadverts@gmail.com" class="hover:text-peach transition-colors break-all">inquiryiadverts@gmail.com</a>
         </li>
@@ -48,14 +48,14 @@ const homeUrl = base || '/';
         <li>
           <a href="https://wa.me/8801301843562" target="_blank" rel="noopener" class="hover:text-peach transition-colors">WhatsApp: +880 1301-843562</a>
         </li>
-        <li class="text-white/40">Shibpur Hat-6260, Puthia, Rajshahi</li>
+        <li class="text-white/40">Rajshahi, Bangladesh</li>
       </ul>
     </div>
 
     <!-- CTA -->
     <div>
       <h5 class="font-display text-sm font-bold text-white uppercase tracking-widest mb-4">Have an idea or project?</h5>
-      <p class="font-sans text-sm text-white/50 mb-4">Let's <em class="text-peach not-italic">talk</em></p>
+      <p class="text-sm text-white/50 mb-4">Let's <em class="text-peach not-italic font-bold">TALK</em></p>
       <a
         href="mailto:inquiryiadverts@gmail.com"
         class="inline-flex items-center gap-2 bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white font-semibold text-sm px-5 py-2.5 rounded-full border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105"
@@ -92,8 +92,13 @@ const homeUrl = base || '/';
     </div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-6 mt-10 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3">
-    <div>© {new Date().getFullYear()} IAdvert Studio. Meta™ and Facebook™ are trademarks of Meta Platforms, Inc.</div>
-    <div class="text-white/30">Made with focus in Rajshahi, Bangladesh</div>
+  <div class="max-w-7xl mx-auto px-6 mt-10 pt-6 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left text-xs text-white/40">
+    <div class="space-y-1">
+      <p>© {new Date().getFullYear()} IAdvert Studio. All rights reserved.</p>
+      <p class="text-[11px] text-white/30">Meta™ and Facebook™ are trademarks of Meta Platforms, Inc.</p>
+    </div>
+    <div class="text-[11px] text-white/40 tracking-wide">
+      Made with focus in Rajshahi, Bangladesh
+    </div>
   </div>
 </footer>
