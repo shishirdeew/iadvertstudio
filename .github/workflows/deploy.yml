@@ -41,7 +41,11 @@ jobs:
           fi
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          if [ ! -d "dist" ] && [ -d ".vercel/output/static" ]; then
+            cp -r .vercel/output/static dist
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -12,14 +12,20 @@ const isUserPage = repoName.endsWith('.github.io');
 const site = process.env.SITE_URL ?? 'http://localhost:3000';
 const base = process.env.BASE_PATH ?? (repoName && !isUserPage ? `/${repoName}` : '/');
 
+// Use Vercel adapter only when deployed on Vercel.
+// On GitHub Pages or local builds, keep Astro's default static output to 'dist/'
+const isVercel = Boolean(process.env.VERCEL);
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind({
     applyBaseStyles: false,
   })],
-  adapter: vercel({
-    webAnalytics: { enabled: true },
-  }),
+  ...(isVercel ? {
+    adapter: vercel({
+      webAnalytics: { enabled: true },
+    }),
+  } : {}),
   site,
   base,
   server: {
