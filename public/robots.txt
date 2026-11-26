@@ -1,0 +1,5 @@
+# robots.txt for iAdvert Studio
+User-agent: *
+Allow: /
+
+Sitemap: https://iadverts.site/sitemap.xml
