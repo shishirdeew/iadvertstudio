@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface BlogPost {
+  title: string;
+  excerpt: string;
+  readTime: string;
+  category: string;
+  date: string;
+  image: string;
+  slug: string;
+}
+
+const posts: BlogPost[] = [
+  {
+    title: 'How We Tripled ROAS for a D2C Beauty Brand in 45 Days',
+    excerpt: 'Using AI-powered UGC creative and cloud CAPI integration, we recovered 28% drop-off and turned casual browsers into repeat customers — all while cutting CPA by 44%.',
+    readTime: '8 min read',
+    category: 'Meta Ads',
+    date: 'Nov 15, 2026',
+    image: '/assets/hero-3d-concept.jpg',
+    slug: 'tripled-roas-beauty',
+  },
+  {
+    title: 'The Complete CAPI Setup Checklist for 2027',
+    excerpt: 'A step-by-step walkthrough of the Conversions API implementation that protects your ad data against iOS changes and ensures accurate attribution.',
+    readTime: '12 min read',
+    category: 'CAPI',
+    date: 'Oct 22, 2026',
+    image: '/assets/hero-3d-concept.jpg',
+    slug: 'capi-setup-checklist',
+  },
+  {
+    title: 'Creative Psychology: Designing Ads That Stick',
+    excerpt: 'From color psychology to hook placement, we break down the exact visual elements that make Meta ads impossible to scroll past.',
+    readTime: '6 min read',
+    category: 'Creative',
+    date: 'Sep 30, 2026',
+    image: '/assets/hero-3d-concept.jpg',
+    slug: 'creative-psychology-ads',
+  },
+  {
+    title: 'From $2K to $20K Monthly Ad Spend: A Scaling Playbook',
+    excerpt: 'The systematic framework we use to scale ad budgets 10x without losing ROAS — including bid strategies and audience layering.',
+    readTime: '10 min read',
+    category: 'Strategy',
+    date: 'Sep 05, 2026',
+    image: '/assets/hero-3d-concept.jpg',
+    slug: 'scaling-playbook',
+  },
+  {
+    title: '5 Common Meta Ad Mistakes and How to Fix Them',
+    excerpt: 'From wrong attribution windows to creative fatigue, we cover the most frequent errors that drain ad budgets — and the quick fixes.',
+    readTime: '5 min read',
+    category: 'Education',
+    date: 'Aug 20, 2026',
+    image: '/assets/hero-3d-concept.jpg',
+    slug: 'meta-mistakes',
+  },
+];
+
+const [featured, ...rest] = posts;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const homeUrl = base || '/';
+---
+
+<Layout title="iAdvert Studio | Meta Ads Blog & Insights">
+  <Navbar />
+  <main class="pt-24 md:pt-32">
+    <!-- Header -->
+    <section class="max-w-7xl mx-auto px-6 mb-14">
+      <div class="reveal">
+        <div class="font-mono text-xs text-peach uppercase tracking-widest mb-3">BLOG INSIGHTS</div>
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight mb-5">
+          Meta Advertising <span class="text-peach font-bold italic">INSIGHTS.</span>
+        </h1>
+        <p class="text-white/60 text-base sm:text-lg leading-relaxed max-w-2xl">
+          Psychological creative, scientific architecture, and bulletproof tracking — everything you need to scale with Meta ads.
+        </p>
+      </div>
+    </section>
+
+    <!-- Featured post -->
+    <section class="max-w-7xl mx-auto px-6 mb-16 reveal reveal-up">
+      <article class="liquid-glass rounded-3xl overflow-hidden grid md:grid-cols-2 border border-white/10 group">
+        <div class="relative h-56 md:h-full overflow-hidden">
+          <img
+            src={featured.image}
+            alt={featured.title}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/80 via-obsidian-950/20 to-transparent"></div>
+          <span class="absolute top-4 left-4 font-mono text-[10px] uppercase tracking-widest text-white bg-terra/80 px-3 py-1 rounded-full border border-peach/30">
+            Featured
+          </span>
+        </div>
+        <div class="p-7 sm:p-9 flex flex-col justify-center">
+          <span class="font-mono text-xs text-peach uppercase tracking-widest mb-3">{featured.category}</span>
+          <h2 class="font-display text-2xl sm:text-3xl font-bold text-white leading-tight mb-4 group-hover:text-peach transition-colors">
+            {featured.title}
+          </h2>
+          <p class="text-white/60 text-sm sm:text-base leading-relaxed mb-6">
+            {featured.excerpt}
+          </p>
+          <div class="flex items-center gap-4 text-white/40 text-xs font-mono">
+            <span>{featured.readTime}</span>
+            <span class="w-px h-3 bg-white/20"></span>
+            <time datetime={featured.date}>{featured.date}</time>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Posts grid -->
+    <section class="max-w-7xl mx-auto px-6 mb-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {rest.map((post, i) => (
+          <article
+            class="glass-panel rounded-3xl overflow-hidden flex flex-col group border border-white/10 reveal reveal-up"
+            style={`--reveal-delay: ${(i % 3) * 100}ms`}
+          >
+            <div class="relative h-40 overflow-hidden">
+              <img
+                src={post.image}
+                alt={post.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/70 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 font-mono text-[10px] uppercase tracking-widest text-peach bg-obsidian-950/80 px-2.5 py-1 rounded-full border border-white/10">
+                {post.category}
+              </span>
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="font-display text-lg font-bold text-white leading-snug mb-3 line-clamp-2 group-hover:text-peach transition-colors">
+                {post.title}
+              </h3>
+              <p class="text-white/60 text-sm leading-relaxed line-clamp-3 mb-5">
+                {post.excerpt}
+              </p>
+              <div class="mt-auto flex items-center justify-between text-white/40 text-xs font-mono">
+                <span>{post.readTime}</span>
+                <time datetime={post.date}>{post.date}</time>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="max-w-7xl mx-auto px-6 pb-24 reveal reveal-up">
+      <div class="liquid-glass rounded-3xl p-8 sm:p-12 text-center border border-white/15 max-w-3xl mx-auto">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
+          Ready to Scale with <span class="text-peach font-bold italic">META ADS?</span>
+        </h2>
+        <p class="text-white/60 text-base sm:text-lg mb-7 max-w-xl mx-auto">
+          Book a free audit and get a custom scaling roadmap for your brand.
+        </p>
+        <a
+          href="https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20read%20your%20blog%20and%20want%20a%20Free%20Meta%20Ads%20Audit."
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white font-semibold text-sm px-6 py-3 rounded-full border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105"
+        >
+          <span>Claim Free Audit</span>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
