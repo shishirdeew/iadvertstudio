@@ -30,7 +30,6 @@ const homeUrl = base || '/';
         <li><a href={`${base}/#services`} class="hover:text-peach transition-colors">Services</a></li>
         <li><a href={`${base}/#results`} class="hover:text-peach transition-colors">Case Studies</a></li>
         <li><a href={`${base}/blog`} class="hover:text-peach transition-colors">Blog</a></li>
-        <li><a href={`${base}/dashboard`} class="hover:text-peach transition-colors">Client Dashboard</a></li>
         <li><a href={`${base}/#founder`} class="hover:text-peach transition-colors">About</a></li>
         <li><a href={`${base}/#contact`} class="hover:text-peach transition-colors">Contact</a></li>
         <li><a href={`${base}/privacy-policy`} class="hover:text-peach transition-colors">Privacy Policy</a></li>
@@ -96,7 +95,7 @@ const homeUrl = base || '/';
 
   <div class="max-w-7xl mx-auto px-6 mt-10 pt-6 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left text-xs text-white/40">
     <div class="space-y-1">
-      <p>© {new Date().getFullYear()} iAdvert Studio. All rights reserved.</p>
+      <p id="secret-admin-trigger" class="cursor-default select-none transition-colors hover:text-white/60" title="iAdvert Studio">© {new Date().getFullYear()} iAdvert Studio. All rights reserved.</p>
       <p class="text-[11px] text-white/30">Meta™ and Facebook™ are trademarks of Meta Platforms, Inc.</p>
     </div>
     <div class="text-[11px] text-white/40 tracking-wide">
@@ -104,3 +103,27 @@ const homeUrl = base || '/';
     </div>
   </div>
 </footer>
+
+<script>
+  // Secret admin access: 3 clicks on copyright or press Ctrl+Shift+A
+  let clickCount = 0;
+  let clickTimer: any = null;
+  const trigger = document.getElementById('secret-admin-trigger');
+
+  trigger?.addEventListener('click', () => {
+    clickCount++;
+    clearTimeout(clickTimer);
+    if (clickCount >= 3) {
+      window.location.href = '/dashboard';
+    }
+    clickTimer = setTimeout(() => {
+      clickCount = 0;
+    }, 1200);
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+      window.location.href = '/dashboard';
+    }
+  });
+</script>

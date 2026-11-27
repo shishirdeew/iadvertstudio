@@ -24,3 +24,55 @@ import Marquee from '../components/Marquee.astro';
   </main>
   <Footer />
 </Layout>
+
+<script>
+  // Live sync with Site Customizer overrides from Admin Dashboard
+  try {
+    const raw = localStorage.getItem('iadverts_custom_site_content');
+    if (raw) {
+      const c = JSON.parse(raw);
+      if (c.heroTag) {
+        const el = document.getElementById('live-hero-tag');
+        if (el) el.textContent = c.heroTag;
+      }
+      if (c.heroSubtitle) {
+        const el = document.getElementById('live-hero-subtitle');
+        if (el) el.textContent = c.heroSubtitle;
+      }
+      if (c.heroCta) {
+        const el = document.getElementById('live-hero-cta');
+        if (el) el.textContent = c.heroCta;
+      }
+      if (c.metric1) {
+        const el = document.getElementById('live-hero-metric-1');
+        if (el) el.textContent = c.metric1;
+      }
+      if (c.metric2) {
+        const el = document.getElementById('live-hero-metric-2');
+        if (el) el.textContent = c.metric2;
+      }
+      if (c.metric3) {
+        const el = document.getElementById('live-hero-metric-3');
+        if (el) el.textContent = c.metric3;
+      }
+      if (c.founderName) {
+        const el = document.getElementById('live-founder-name');
+        if (el) el.textContent = c.founderName;
+      }
+      if (c.founderQuote) {
+        const el = document.getElementById('live-founder-quote');
+        if (el) el.textContent = c.founderQuote;
+      }
+      if (c.ctaHeadline) {
+        const el = document.getElementById('live-cta-headline');
+        if (el) el.textContent = c.ctaHeadline;
+      }
+      if (c.ctaBtn) {
+        const el = document.getElementById('live-cta-btn');
+        if (el) el.textContent = c.ctaBtn;
+      }
+    }
+  } catch (e) {
+    // Graceful fallback
+  }
+</script>
