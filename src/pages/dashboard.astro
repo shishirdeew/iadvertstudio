@@ -1,0 +1,2411 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const homeUrl = base || '/';
+---
+
+<Layout
+  title="Admin CMS & Performance Dashboard | iAdvert Studio"
+  description="All-in-one control center for iAdvert Studio: manage blog publications, change cover pictures, configure SEO & SERP previews, edit site settings, and monitor live Meta Ads ROAS."
+>
+  <Navbar />
+
+  <main class="pt-28 md:pt-36 pb-24 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+      <!-- Top Dashboard Header & Status Banner -->
+      <section class="mb-8">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-6 border-b border-white/[0.08]">
+          <div>
+            <div class="flex flex-wrap items-center gap-2.5 mb-2.5">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-glass-inner text-[11px] font-mono text-accent-mint">
+                <span class="w-2 h-2 rounded-full bg-accent-mint animate-pulse shadow-[0_0_8px_rgba(46,213,115,0.8)]"></span>
+                SYSTEM OPERATIONAL
+              </span>
+              <span class="text-white/40 text-xs font-mono">•</span>
+              <span class="text-white/60 text-xs font-mono">CMS Suite v2.4 (Live Sync)</span>
+              <span class="text-white/40 text-xs font-mono">•</span>
+              <span class="text-peach text-xs font-mono">Rajshahi, BD</span>
+            </div>
+            <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+              Control <span class="text-peach font-bold italic">PANEL.</span>
+            </h1>
+            <p class="text-white/60 text-sm sm:text-base mt-2 font-sans max-w-2xl">
+              WordPress &amp; Shopify style studio control center: publish articles, upload cover pictures, optimize Google SERP SEO, update site identity, and monitor ad scale.
+            </p>
+          </div>
+
+          <!-- Quick Actions & Status -->
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="liquid-glass-inner px-4 py-2.5 rounded-2xl flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-terra/20 border border-terra/30 flex items-center justify-center text-peach text-sm font-bold">
+                iA
+              </div>
+              <div>
+                <div class="text-xs font-semibold text-white">iAdvert Studio Admin</div>
+                <div class="text-[10px] text-accent-mint font-mono flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-accent-mint"></span> Local Storage Synced
+                </div>
+              </div>
+            </div>
+
+            <a
+              href={`${base}/blog`}
+              target="_blank"
+              class="liquid-glass-inner hover:bg-white/10 text-white/80 hover:text-white px-4 py-2.5 rounded-2xl text-xs font-mono inline-flex items-center gap-2 transition-all"
+            >
+              <span>View Public Blog</span>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Navigation Tabs (Liquid Glass Pill Bar) -->
+      <section class="mb-8">
+        <div class="liquid-glass p-1.5 rounded-2xl flex items-center gap-1.5 overflow-x-auto no-scrollbar" id="dashboard-nav-tabs">
+          <button
+            type="button"
+            data-tab="blog"
+            class="dash-tab active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-white/10 border border-white/15 shadow-sm transition-all whitespace-nowrap flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+            <span>Blog &amp; Posts CMS</span>
+            <span class="text-[10px] font-mono bg-peach/20 text-peach px-2 py-0.5 rounded-full" id="badge-post-count">5</span>
+          </button>
+
+          <button
+            type="button"
+            data-tab="seo"
+            class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-accent-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>SEO &amp; SERP Suite</span>
+          </button>
+
+          <button
+            type="button"
+            data-tab="settings"
+            class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-terra-bright" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span>Site &amp; Brand Settings</span>
+          </button>
+
+          <button
+            type="button"
+            data-tab="media"
+            class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>Media Library</span>
+          </button>
+
+          <button
+            type="button"
+            data-tab="analytics"
+            class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
+          >
+            <svg class="w-4 h-4 text-accent-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span>Meta Ads Analytics</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- TAB CONTENT PANELS -->
+
+      <!-- ========================================== -->
+      <!-- TAB 1: BLOG & POSTS CMS -->
+      <!-- ========================================== -->
+      <div id="tab-panel-blog" class="dash-panel space-y-8">
+        
+        <!-- Action Toolbar -->
+        <div class="liquid-glass rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              id="btn-create-post"
+              class="bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white text-xs sm:text-sm font-semibold tracking-wide uppercase px-5 py-2.5 rounded-xl border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105 inline-flex items-center gap-2"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Create New Post</span>
+            </button>
+
+            <!-- Category Filter -->
+            <div class="liquid-glass-inner px-2 py-1 rounded-xl flex items-center gap-1 text-xs font-mono" id="cms-category-filter">
+              <button type="button" data-cat="all" class="cat-filter-btn active px-3 py-1.5 rounded-lg text-white bg-white/10 font-bold border border-white/10 transition-all">All</button>
+              <button type="button" data-cat="Meta Ads" class="cat-filter-btn px-3 py-1.5 rounded-lg text-white/60 hover:text-white transition-all">Meta Ads</button>
+              <button type="button" data-cat="CAPI" class="cat-filter-btn px-3 py-1.5 rounded-lg text-white/60 hover:text-white transition-all">CAPI</button>
+              <button type="button" data-cat="Creative" class="cat-filter-btn px-3 py-1.5 rounded-lg text-white/60 hover:text-white transition-all">Creative</button>
+              <button type="button" data-cat="Strategy" class="cat-filter-btn px-3 py-1.5 rounded-lg text-white/60 hover:text-white transition-all">Strategy</button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <!-- Search bar -->
+            <div class="relative flex-1 md:w-64">
+              <input
+                type="text"
+                id="cms-search-input"
+                placeholder="Search articles..."
+                class="w-full bg-obsidian-950/70 border border-white/10 rounded-xl px-3.5 py-2 pl-9 text-xs font-mono text-white placeholder-white/40 focus:outline-none focus:border-peach"
+              />
+              <svg class="w-3.5 h-3.5 text-white/40 absolute left-3 top-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+
+            <!-- Export / Backup -->
+            <button
+              type="button"
+              id="btn-export-json"
+              title="Export all posts to JSON backup"
+              class="liquid-glass-inner hover:bg-white/10 text-white/70 hover:text-white px-3 py-2 rounded-xl text-xs font-mono flex items-center gap-1.5 transition-colors"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span class="hidden sm:inline">Export</span>
+            </button>
+
+            <button
+              type="button"
+              id="btn-reset-posts"
+              title="Reset to default 5 blog posts"
+              class="liquid-glass-inner hover:bg-white/10 text-white/50 hover:text-terra-bright px-3 py-2 rounded-xl text-xs font-mono transition-colors"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Articles Grid / Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cms-posts-container">
+          <!-- Dynamically populated by JS from localStorage -->
+        </div>
+
+      </div>
+
+      <!-- ========================================== -->
+      <!-- TAB 2: SEO & SERP SUITE -->
+      <!-- ========================================== -->
+      <div id="tab-panel-seo" class="dash-panel hidden space-y-8">
+        
+        <!-- Page Selector Header -->
+        <div class="liquid-glass rounded-3xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="font-display text-2xl font-bold text-white">Google SERP &amp; Meta Suite</h2>
+            <p class="text-white/60 text-xs sm:text-sm font-sans mt-1">Live search engine result page simulator &amp; automated snippet score generator</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <label for="seo-page-select" class="text-xs font-mono text-white/60">Target Page:</label>
+            <select
+              id="seo-page-select"
+              class="bg-obsidian-900 border border-white/15 text-white text-xs font-mono rounded-xl px-3.5 py-2 focus:outline-none focus:border-peach"
+            >
+              <option value="home">Homepage (https://iadverts.site/)</option>
+              <option value="blog">Blog Archive (https://iadverts.site/blog)</option>
+              <option value="tripled-roas">Article: Tripled ROAS Case Study</option>
+              <option value="capi-checklist">Article: CAPI Setup Checklist</option>
+              <option value="calculator">ROAS Simulator (/#calculator)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          <!-- Left: SEO Editor Inputs (Span 7) -->
+          <div class="lg:col-span-7 space-y-6">
+            <div class="liquid-glass rounded-3xl p-6 sm:p-7 space-y-5">
+              
+              <!-- Meta Title -->
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label for="seo-title-input" class="text-xs font-mono uppercase tracking-wider text-white/80">Meta Page Title</label>
+                  <span id="seo-title-counter" class="text-[11px] font-mono text-accent-mint font-bold">58 / 60 chars (Optimal)</span>
+                </div>
+                <input
+                  type="text"
+                  id="seo-title-input"
+                  value="How We Tripled ROAS for a D2C Beauty Brand in 45 Days | iAdvert Studio"
+                  class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-peach font-sans"
+                />
+                <div class="w-full bg-white/10 h-1.5 rounded-full mt-2 overflow-hidden">
+                  <div id="seo-title-bar" class="bg-accent-mint h-full transition-all duration-300" style="width: 96%"></div>
+                </div>
+              </div>
+
+              <!-- Meta Description -->
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label for="seo-desc-input" class="text-xs font-mono uppercase tracking-wider text-white/80">Meta Description</label>
+                  <span id="seo-desc-counter" class="text-[11px] font-mono text-accent-mint font-bold">152 / 160 chars (Optimal)</span>
+                </div>
+                <textarea
+                  id="seo-desc-input"
+                  rows="3"
+                  class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-peach font-sans leading-relaxed"
+                >Using AI UGC creative and cloud CAPI integration, we recovered 28% drop-off and turned casual browsers into repeat buyers while cutting CPA by 44%.</textarea>
+                <div class="w-full bg-white/10 h-1.5 rounded-full mt-2 overflow-hidden">
+                  <div id="seo-desc-bar" class="bg-accent-mint h-full transition-all duration-300" style="width: 95%"></div>
+                </div>
+              </div>
+
+              <!-- Focus Keywords -->
+              <div>
+                <label for="seo-keywords-input" class="text-xs font-mono uppercase tracking-wider text-white/80 block mb-2">Target Focus Keywords (comma-separated)</label>
+                <input
+                  type="text"
+                  id="seo-keywords-input"
+                  value="Meta Ads ROAS, CAPI Tracking, UGC Ads, Scaled E-Commerce, Bangladesh Agency"
+                  class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-peach focus:outline-none focus:border-peach"
+                />
+              </div>
+
+              <!-- OpenGraph Image URL -->
+              <div>
+                <label for="seo-og-image-input" class="text-xs font-mono uppercase tracking-wider text-white/80 block mb-2">OpenGraph Social Share Image (1200x630)</label>
+                <div class="flex items-center gap-2">
+                  <input
+                    type="text"
+                    id="seo-og-image-input"
+                    value="https://iadverts.site/assets/hero-3d-concept.jpg"
+                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-white/90 focus:outline-none focus:border-peach"
+                  />
+                  <button
+                    type="button"
+                    id="btn-seo-choose-image"
+                    class="liquid-glass-inner hover:bg-white/10 text-white/80 px-3.5 py-2.5 rounded-xl text-xs font-mono shrink-0"
+                  >
+                    Browse
+                  </button>
+                </div>
+              </div>
+
+              <!-- Copy Meta Tags Code -->
+              <div class="pt-3 border-t border-white/[0.08] flex items-center justify-between">
+                <span class="text-xs font-mono text-white/50">Auto-generated HTML snippet</span>
+                <button
+                  type="button"
+                  id="btn-copy-meta"
+                  class="bg-peach/10 hover:bg-peach/20 text-peach border border-peach/30 px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all flex items-center gap-2"
+                >
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Copy Meta Tags HTML</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- SEO Health Matrix Checklist -->
+            <div class="liquid-glass rounded-3xl p-6 space-y-3 font-mono text-xs">
+              <h3 class="text-sm font-display font-bold text-white mb-3">On-Page SEO Health Audit</h3>
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03]">
+                <span class="text-white/70">Title tag length</span>
+                <span class="text-accent-mint font-bold flex items-center gap-1">✓ 58 chars (Optimal)</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03]">
+                <span class="text-white/70">Meta description length</span>
+                <span class="text-accent-mint font-bold flex items-center gap-1">✓ 152 chars (Optimal)</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03]">
+                <span class="text-white/70">XML Sitemap Indexing</span>
+                <span class="text-accent-mint font-bold flex items-center gap-1">✓ /sitemap.xml (9 URLs Active)</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03]">
+                <span class="text-white/70">Search Engine Robots</span>
+                <span class="text-accent-mint font-bold flex items-center gap-1">✓ index, follow allowed</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.03]">
+                <span class="text-white/70">Canonical URL declaration</span>
+                <span class="text-accent-mint font-bold flex items-center gap-1">✓ https://iadverts.site/</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Live Previews (Span 5) -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <!-- Google SERP Card Simulator -->
+            <div class="liquid-glass rounded-3xl p-6">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-mono uppercase tracking-wider text-white/50 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-[#4285F4]" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"></path>
+                  </svg>
+                  Google Search Snippet
+                </span>
+                
+                <!-- View toggle -->
+                <div class="liquid-glass-inner p-1 rounded-xl flex items-center text-[10px] font-mono" id="serp-device-toggle">
+                  <button type="button" data-view="desktop" class="serp-view-btn active px-2.5 py-1 rounded-lg text-white bg-white/10 font-bold">Desktop</button>
+                  <button type="button" data-view="mobile" class="serp-view-btn px-2.5 py-1 rounded-lg text-white/60 hover:text-white">Mobile</button>
+                </div>
+              </div>
+
+              <!-- Google Mock Result Container -->
+              <div id="google-serp-preview-box" class="bg-[#202124] rounded-2xl p-5 border border-white/10 font-sans text-left transition-all">
+                <!-- Favicon & Breadcrumb -->
+                <div class="flex items-center gap-2.5 mb-2">
+                  <div class="w-6 h-6 rounded-full bg-terra/20 border border-terra/40 flex items-center justify-center text-[10px] text-peach font-bold">
+                    iA
+                  </div>
+                  <div>
+                    <div class="text-[12px] text-[#bdc1c6] font-medium leading-none">iAdvert Studio</div>
+                    <div class="text-[10px] text-[#9aa0a6] leading-none mt-0.5 truncate max-w-[280px]" id="serp-url-display">https://iadverts.site › blog › tripled-roas-beauty</div>
+                  </div>
+                </div>
+
+                <!-- Clickable Title -->
+                <h4 id="serp-title-display" class="text-[18px] text-[#8ab4f8] hover:underline cursor-pointer font-medium leading-snug mb-1">
+                  How We Tripled ROAS for a D2C Beauty Brand in 45 Days | iAdvert Studio
+                </h4>
+
+                <!-- Snippet Description -->
+                <p id="serp-desc-display" class="text-[13px] text-[#bdc1c6] leading-relaxed">
+                  Using AI UGC creative and cloud CAPI integration, we recovered 28% drop-off and turned casual browsers into repeat buyers while cutting CPA by 44%.
+                </p>
+              </div>
+            </div>
+
+            <!-- Social Card (Facebook / LinkedIn) Simulator -->
+            <div class="liquid-glass rounded-3xl p-6">
+              <span class="text-xs font-mono uppercase tracking-wider text-white/50 block mb-4">
+                Social Share Card Preview (OpenGraph)
+              </span>
+
+              <div class="bg-[#18191a] rounded-2xl overflow-hidden border border-white/10 font-sans">
+                <!-- Banner Image -->
+                <div class="relative h-44 w-full bg-obsidian-950 overflow-hidden">
+                  <img
+                    id="og-card-image"
+                    src={`${base}/assets/hero-3d-concept.jpg`}
+                    alt="Social Card Banner"
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <span class="absolute bottom-2 left-3 text-[10px] font-mono text-white/80 bg-black/60 px-2 py-0.5 rounded">
+                    1200 × 630
+                  </span>
+                </div>
+
+                <!-- Text payload -->
+                <div class="p-4 bg-[#242526]">
+                  <div class="text-[11px] font-mono uppercase text-white/40 tracking-wider">IADVERTS.SITE</div>
+                  <div id="og-card-title" class="text-sm font-bold text-white mt-1 leading-snug line-clamp-1">
+                    How We Tripled ROAS for a D2C Beauty Brand in 45 Days | iAdvert Studio
+                  </div>
+                  <div id="og-card-desc" class="text-xs text-white/60 mt-1 line-clamp-2 leading-relaxed">
+                    Using AI UGC creative and cloud CAPI integration, we recovered 28% drop-off and turned casual browsers into repeat buyers while cutting CPA by 44%.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ========================================== -->
+      <!-- TAB 3: SITE & BRAND SETTINGS -->
+      <!-- ========================================== -->
+      <div id="tab-panel-settings" class="dash-panel hidden space-y-8">
+        
+        <div class="liquid-glass rounded-3xl p-6 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.08] mb-8">
+            <div>
+              <h2 class="font-display text-2xl font-bold text-white">Brand &amp; Agency Settings</h2>
+              <p class="text-white/60 text-xs sm:text-sm font-sans mt-1">Global contact details, registered location, phone numbers, and Meta API credentials</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                id="btn-restore-brand"
+                class="liquid-glass-inner hover:bg-white/10 text-white/60 hover:text-white px-4 py-2.5 rounded-xl text-xs font-mono transition-colors"
+              >
+                Reset Defaults
+              </button>
+              <button
+                type="button"
+                id="btn-save-settings"
+                class="bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white text-xs sm:text-sm font-semibold tracking-wide uppercase px-6 py-2.5 rounded-xl border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105 inline-flex items-center gap-2"
+              >
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                  <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                <span>Save Changes</span>
+              </button>
+            </div>
+          </div>
+
+          <form id="brand-settings-form" class="space-y-8">
+            
+            <!-- Group 1: General Brand Info -->
+            <div>
+              <h3 class="text-sm font-mono text-peach uppercase tracking-wider mb-4 flex items-center gap-2">
+                <span>01.</span> Brand &amp; Agency Identity
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label for="setting-brand-name" class="block text-xs font-mono text-white/70 mb-2">Agency Brand Name</label>
+                  <input
+                    type="text"
+                    id="setting-brand-name"
+                    value="iAdvert Studio"
+                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-peach"
+                  />
+                </div>
+                <div>
+                  <label for="setting-founder" class="block text-xs font-mono text-white/70 mb-2">Founder / Managing Lead</label>
+                  <input
+                    type="text"
+                    id="setting-founder"
+                    value="Md. Shishir Ahmed (Ratul)"
+                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-peach"
+                  />
+                </div>
+                <div class="md:col-span-2">
+                  <label for="setting-tagline" class="block text-xs font-mono text-white/70 mb-2">Agency Tagline / Value Proposition</label>
+                  <input
+                    type="text"
+                    id="setting-tagline"
+                    value="High-Performance Meta Ads & Server-Side CAPI Attribution Agency"
+                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-peach"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Group 2: Contact Numbers & Address -->
+            <div>
+              <h3 class="text-sm font-mono text-peach uppercase tracking-wider mb-4 flex items-center gap-2">
+                <span>02.</span> Contact, WhatsApp &amp; Registered Address
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label for="setting-phone" class="block text-xs font-mono text-white/70 mb-2">Primary Phone Number</label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="setting-phone"
+                      value="+880 1738-632389"
+                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 pl-10 text-sm text-white font-mono focus:outline-none focus:border-peach"
+                    />
+                    <svg class="w-4 h-4 text-white/40 absolute left-3.5 top-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="setting-whatsapp" class="block text-xs font-mono text-white/70 mb-2">Official WhatsApp Number</label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="setting-whatsapp"
+                      value="+880 1301-843562"
+                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 pl-10 text-sm text-white font-mono focus:outline-none focus:border-peach"
+                    />
+                    <svg class="w-4 h-4 text-accent-mint absolute left-3.5 top-3" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path>
+                    </svg>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="setting-email" class="block text-xs font-mono text-white/70 mb-2">Primary Inquiry Email</label>
+                  <div class="relative">
+                    <input
+                      type="email"
+                      id="setting-email"
+                      value="inquiryiadverts@gmail.com"
+                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 pl-10 text-sm text-white font-mono focus:outline-none focus:border-peach"
+                    />
+                    <svg class="w-4 h-4 text-white/40 absolute left-3.5 top-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="setting-address" class="block text-xs font-mono text-white/70 mb-2">Physical Registered Location</label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="setting-address"
+                      value="Rajshahi, Bangladesh"
+                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 pl-10 text-sm text-white font-sans focus:outline-none focus:border-peach"
+                    />
+                    <svg class="w-4 h-4 text-terra-bright absolute left-3.5 top-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Group 3: Social Media Links -->
+            <div>
+              <h3 class="text-sm font-mono text-peach uppercase tracking-wider mb-4 flex items-center gap-2">
+                <span>03.</span> Social Media &amp; Channels
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                  <label for="setting-social-fb" class="block text-xs font-mono text-white/70 mb-2">Facebook Official Page</label>
+                  <input
+                    type="url"
+                    id="setting-social-fb"
+                    value="https://www.facebook.com/iadvertstudio"
+                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-white/90 focus:outline-none focus:border-peach"
+                  />
+                </div>
+                <div>
+                  <label for="setting-social-wa" class="block text-xs font-mono text-white/70 mb-2">WhatsApp Direct Click Link</label>
+                  <input
+                    type="url"
+                    id="setting-social-wa"
+                    value="https://wa.me/8801301843562"
+                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-white/90 focus:outline-none focus:border-peach"
+                  />
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+      <!-- ========================================== -->
+      <!-- TAB 4: MEDIA LIBRARY -->
+      <!-- ========================================== -->
+      <div id="tab-panel-media" class="dash-panel hidden space-y-8">
+        
+        <!-- Upload Bar -->
+        <div class="liquid-glass rounded-3xl p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h2 class="font-display text-2xl font-bold text-white">Media Asset Library</h2>
+              <p class="text-white/60 text-xs sm:text-sm font-sans mt-1">Upload brand images, article covers, and client campaign creatives with instant URL copying</p>
+            </div>
+            <div class="text-xs font-mono text-white/50" id="media-count-badge">
+              6 Assets in Library
+            </div>
+          </div>
+
+          <!-- Drag and drop zone -->
+          <div
+            id="media-dropzone"
+            class="border-2 border-dashed border-white/20 hover:border-peach/60 rounded-2xl p-8 text-center cursor-pointer transition-all bg-white/[0.02] hover:bg-white/[0.04] group"
+          >
+            <input type="file" id="media-file-input" accept="image/*" class="hidden" multiple />
+            <div class="w-12 h-12 rounded-2xl liquid-glass-icon mx-auto flex items-center justify-center text-peach group-hover:scale-110 transition-transform mb-3">
+              <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <div class="text-sm font-semibold text-white mb-1">
+              Drop new images here, or <span class="text-peach underline">browse files</span>
+            </div>
+            <p class="text-xs font-mono text-white/40">
+              Supports PNG, JPG, WebP, SVG (Simulated instant local upload)
+            </p>
+          </div>
+        </div>
+
+        <!-- Media Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5" id="media-assets-grid">
+          <!-- Dynamically populated or rendered -->
+        </div>
+
+      </div>
+
+      <!-- ========================================== -->
+      <!-- TAB 5: META ADS PERFORMANCE ANALYTICS -->
+      <!-- ========================================== -->
+      <div id="tab-panel-analytics" class="dash-panel hidden space-y-8">
+        
+        <!-- Account Switcher & Date Range -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+          <div class="flex items-center gap-3">
+            <div class="liquid-glass-inner px-4 py-2 rounded-xl flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-accent-mint animate-pulse"></span>
+              <span class="text-xs font-mono text-white">Aurora Skin Co. • D2C E-Commerce</span>
+            </div>
+            <span class="text-xs font-mono text-white/40">Meta Graph API v21.0</span>
+          </div>
+
+          <div class="liquid-glass-inner p-1 rounded-2xl flex items-center gap-1 text-xs font-mono" id="date-range-container">
+            <button type="button" data-range="7d" class="range-btn px-3 py-1.5 rounded-xl text-white/60 hover:text-white transition-all">7D</button>
+            <button type="button" data-range="30d" class="range-btn active px-3 py-1.5 rounded-xl text-white bg-white/10 font-bold border border-white/10 shadow-sm transition-all">30D</button>
+            <button type="button" data-range="90d" class="range-btn px-3 py-1.5 rounded-xl text-white/60 hover:text-white transition-all">90D</button>
+          </div>
+        </div>
+
+        <!-- KPI Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Total Spend -->
+          <div class="liquid-glass rounded-3xl p-6 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono uppercase tracking-wider text-white/50">Total Spend</span>
+              <div class="w-8 h-8 rounded-xl liquid-glass-icon flex items-center justify-center text-terra-bright">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="text-3xl font-display font-bold text-white tracking-tight" id="kpi-spend">$24,850</div>
+            <div class="flex items-center gap-2 mt-2 text-xs font-mono">
+              <span class="text-accent-mint font-bold">↑ +18.4%</span>
+              <span class="text-white/40">vs prior period</span>
+            </div>
+          </div>
+
+          <!-- Revenue -->
+          <div class="liquid-glass rounded-3xl p-6 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono uppercase tracking-wider text-white/50">Gross Revenue</span>
+              <div class="w-8 h-8 rounded-xl liquid-glass-icon flex items-center justify-center text-peach">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                  <polyline points="16 7 22 7 22 13"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="text-3xl font-display font-bold text-white tracking-tight" id="kpi-revenue">$148,200</div>
+            <div class="flex items-center gap-2 mt-2 text-xs font-mono">
+              <span class="text-accent-mint font-bold">↑ +34.2%</span>
+              <span class="text-white/40">vs prior period</span>
+            </div>
+          </div>
+
+          <!-- Blended ROAS -->
+          <div class="liquid-glass rounded-3xl p-6 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono uppercase tracking-wider text-white/50">Blended ROAS</span>
+              <div class="w-8 h-8 rounded-xl liquid-glass-icon flex items-center justify-center text-accent-mint">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="m10 15 5-3-5-3v6Z"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="text-3xl font-display font-bold text-peach tracking-tight" id="kpi-roas">5.96x</div>
+            <div class="flex items-center gap-2 mt-2 text-xs font-mono">
+              <span class="text-accent-mint font-bold">+1.96x</span>
+              <span class="text-white/40">above target (4.0x)</span>
+            </div>
+          </div>
+
+          <!-- CPA -->
+          <div class="liquid-glass rounded-3xl p-6 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono uppercase tracking-wider text-white/50">Cost Per Acquisition</span>
+              <div class="w-8 h-8 rounded-xl liquid-glass-icon flex items-center justify-center text-terra-bright">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <polyline points="16 11 18 13 22 9"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="text-3xl font-display font-bold text-white tracking-tight" id="kpi-cpa">$18.40</div>
+            <div class="flex items-center gap-2 mt-2 text-xs font-mono">
+              <span class="text-peach font-bold">↓ -24.8%</span>
+              <span class="text-white/40">cheaper acquisition</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trajectory Chart & Funnel -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Spend vs Revenue Chart -->
+          <div class="lg:col-span-8 liquid-glass rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <h3 class="font-display text-xl font-bold text-white">Spend vs. Revenue Trajectory</h3>
+                <p class="text-white/50 text-xs font-mono mt-1">Verified via CAPI Server Conversions + Shopify Sync</p>
+              </div>
+              <div class="flex items-center gap-4 text-xs font-mono">
+                <span class="flex items-center gap-1.5 text-white/70">
+                  <span class="w-3 h-3 rounded-full bg-peach"></span> Gross Revenue
+                </span>
+                <span class="flex items-center gap-1.5 text-white/70">
+                  <span class="w-3 h-3 rounded-full bg-terra-bright"></span> Ad Spend
+                </span>
+              </div>
+            </div>
+
+            <div class="w-full h-64 relative flex items-end pt-4 pb-2">
+              <svg class="w-full h-full overflow-visible" viewBox="0 0 700 220" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="revenueGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ffdad2" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="#ffdad2" stop-opacity="0.0" />
+                  </linearGradient>
+                  <linearGradient id="spendGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#e04832" stop-opacity="0.25" />
+                    <stop offset="100%" stop-color="#e04832" stop-opacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                <line x1="0" y1="40" x2="700" y2="40" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 4" />
+                <line x1="0" y1="90" x2="700" y2="90" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 4" />
+                <line x1="0" y1="140" x2="700" y2="140" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 4" />
+                <line x1="0" y1="190" x2="700" y2="190" stroke="rgba(255,255,255,0.06)" />
+
+                <path d="M 0 170 Q 120 160, 200 130 T 380 90 T 540 50 T 700 25 L 700 190 L 0 190 Z" fill="url(#revenueGlow)" />
+                <path d="M 0 170 Q 120 160, 200 130 T 380 90 T 540 50 T 700 25" fill="none" stroke="#ffdad2" stroke-width="3" stroke-linecap="round" />
+
+                <path d="M 0 185 Q 120 180, 200 172 T 380 155 T 540 142 T 700 130 L 700 190 L 0 190 Z" fill="url(#spendGlow)" />
+                <path d="M 0 185 Q 120 180, 200 172 T 380 155 T 540 142 T 700 130" fill="none" stroke="#e04832" stroke-width="2.5" stroke-linecap="round" />
+
+                <circle cx="200" cy="130" r="4.5" fill="#ffdad2" class="animate-pulse" />
+                <circle cx="380" cy="90" r="4.5" fill="#ffdad2" class="animate-pulse" />
+                <circle cx="540" cy="50" r="4.5" fill="#ffdad2" class="animate-pulse" />
+                <circle cx="700" cy="25" r="5" fill="#ffdad2" />
+              </svg>
+            </div>
+
+            <div class="flex justify-between text-[11px] font-mono text-white/40 pt-2 border-t border-white/[0.08]">
+              <span>Day 1</span>
+              <span>Day 7</span>
+              <span>Day 14</span>
+              <span>Day 21</span>
+              <span>Day 30</span>
+            </div>
+          </div>
+
+          <!-- Funnel Velocity -->
+          <div class="lg:col-span-4 liquid-glass rounded-3xl p-6 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-display text-xl font-bold text-white">Funnel Velocity</h3>
+                <span class="text-[10px] font-mono text-peach uppercase px-2 py-0.5 rounded-full liquid-glass-inner">30-Day</span>
+              </div>
+              <p class="text-white/60 text-xs font-sans mb-5">Predictive CAPI signal attribution</p>
+
+              <div class="space-y-3.5 font-mono text-xs">
+                <div>
+                  <div class="flex justify-between text-white/70 mb-1">
+                    <span>Reach Impressions</span>
+                    <span class="text-white font-bold">1,420,000</span>
+                  </div>
+                  <div class="h-1.5 w-full bg-white/[0.08] rounded-full overflow-hidden">
+                    <div class="h-full bg-white/40 w-full"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-white/70 mb-1">
+                    <span>3s Hook Retention</span>
+                    <span class="text-peach font-bold">48.6% (690K)</span>
+                  </div>
+                  <div class="h-1.5 w-full bg-white/[0.08] rounded-full overflow-hidden">
+                    <div class="h-full bg-peach w-[48.6%]"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-white/70 mb-1">
+                    <span>Store Clicks</span>
+                    <span class="text-white font-bold">3.4% (48.2K)</span>
+                  </div>
+                  <div class="h-1.5 w-full bg-white/[0.08] rounded-full overflow-hidden">
+                    <div class="h-full bg-white/60 w-[34%]"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-white/70 mb-1">
+                    <span>Cart Intent</span>
+                    <span class="text-terra-bright font-bold">9,650</span>
+                  </div>
+                  <div class="h-1.5 w-full bg-white/[0.08] rounded-full overflow-hidden">
+                    <div class="h-full bg-terra-bright w-[20%]"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex justify-between text-white/70 mb-1">
+                    <span>Purchases</span>
+                    <span class="text-accent-mint font-bold">4,210</span>
+                  </div>
+                  <div class="h-1.5 w-full bg-white/[0.08] rounded-full overflow-hidden">
+                    <div class="h-full bg-accent-mint w-[12%]"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 pt-3 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono">
+              <span class="text-white/50">Store Conversion:</span>
+              <span class="text-accent-mint font-bold">8.72%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Campaigns Table -->
+        <div class="liquid-glass rounded-3xl p-6 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h3 class="font-display text-xl font-bold text-white">Active Meta Campaigns</h3>
+              <p class="text-white/50 text-xs font-mono mt-1">Live algorithmic bid management and dayparting</p>
+            </div>
+            <div class="liquid-glass-inner p-1 rounded-2xl flex items-center gap-1 text-xs font-mono" id="campaign-filter-container">
+              <button type="button" data-filter="all" class="filter-btn active px-3 py-1.5 rounded-xl text-white bg-white/10 font-bold border border-white/10">All (4)</button>
+              <button type="button" data-filter="scale" class="filter-btn px-3 py-1.5 rounded-xl text-white/60 hover:text-white">Scaling</button>
+              <button type="button" data-filter="test" class="filter-btn px-3 py-1.5 rounded-xl text-white/60 hover:text-white">Testing</button>
+              <button type="button" data-filter="retarget" class="filter-btn px-3 py-1.5 rounded-xl text-white/60 hover:text-white">Retargeting</button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left font-sans text-sm">
+              <thead>
+                <tr class="border-b border-white/[0.08] text-white/40 text-[11px] font-mono uppercase tracking-wider">
+                  <th class="pb-3 pl-2">Campaign Name</th>
+                  <th class="pb-3 px-3">Status</th>
+                  <th class="pb-3 px-3">Daily Budget</th>
+                  <th class="pb-3 px-3">Spend</th>
+                  <th class="pb-3 px-3">Revenue</th>
+                  <th class="pb-3 px-3">ROAS</th>
+                  <th class="pb-3 pr-2 text-right">CPA</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/[0.05] text-xs sm:text-sm">
+                <tr class="hover:bg-white/[0.02] transition-colors" data-category="scale">
+                  <td class="py-4 pl-2 font-medium text-white">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-accent-mint animate-pulse"></span>
+                      <span>ASC - Advantage+ Creative Scale [ASC-01]</span>
+                    </div>
+                  </td>
+                  <td class="py-4 px-3"><span class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-accent-mint/10 text-accent-mint border border-accent-mint/20">Scaling</span></td>
+                  <td class="py-4 px-3 font-mono text-white/80">$400/day</td>
+                  <td class="py-4 px-3 font-mono text-white/80">$11,200</td>
+                  <td class="py-4 px-3 font-mono text-white font-bold">$72,800</td>
+                  <td class="py-4 px-3 font-mono text-peach font-bold text-base">6.50x</td>
+                  <td class="py-4 pr-2 text-right font-mono text-accent-mint font-bold">$16.80</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors" data-category="test">
+                  <td class="py-4 pl-2 font-medium text-white">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-accent-mint animate-pulse"></span>
+                      <span>TOF - UGC Angle Testing Sandbox [TOF-02]</span>
+                    </div>
+                  </td>
+                  <td class="py-4 px-3"><span class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-peach/10 text-peach border border-peach/20">Testing</span></td>
+                  <td class="py-4 px-3 font-mono text-white/80">$150/day</td>
+                  <td class="py-4 px-3 font-mono text-white/80">$4,200</td>
+                  <td class="py-4 px-3 font-mono text-white font-bold">$19,800</td>
+                  <td class="py-4 px-3 font-mono text-peach font-bold text-base">4.71x</td>
+                  <td class="py-4 pr-2 text-right font-mono text-white/80">$21.50</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors" data-category="retarget">
+                  <td class="py-4 pl-2 font-medium text-white">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-accent-mint animate-pulse"></span>
+                      <span>MOF - Video Viewers &amp; Engagers [MOF-01]</span>
+                    </div>
+                  </td>
+                  <td class="py-4 px-3"><span class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-terra-bright/10 text-terra-bright border border-terra-bright/20">Warm</span></td>
+                  <td class="py-4 px-3 font-mono text-white/80">$80/day</td>
+                  <td class="py-4 px-3 font-mono text-white/80">$2,240</td>
+                  <td class="py-4 px-3 font-mono text-white font-bold">$15,680</td>
+                  <td class="py-4 px-3 font-mono text-peach font-bold text-base">7.00x</td>
+                  <td class="py-4 pr-2 text-right font-mono text-accent-mint font-bold">$14.20</td>
+                </tr>
+                <tr class="hover:bg-white/[0.02] transition-colors" data-category="retarget">
+                  <td class="py-4 pl-2 font-medium text-white">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-accent-mint animate-pulse"></span>
+                      <span>BOF - High-Intent Cart Abandoners [BOF-01]</span>
+                    </div>
+                  </td>
+                  <td class="py-4 px-3"><span class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-accent-mint/10 text-accent-mint border border-accent-mint/20">Retarget</span></td>
+                  <td class="py-4 px-3 font-mono text-white/80">$120/day</td>
+                  <td class="py-4 px-3 font-mono text-white/80">$3,360</td>
+                  <td class="py-4 px-3 font-mono text-white font-bold">$28,560</td>
+                  <td class="py-4 px-3 font-mono text-peach font-bold text-base">8.50x</td>
+                  <td class="py-4 pr-2 text-right font-mono text-accent-mint font-bold">$11.40</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CREATE / EDIT BLOG POST -->
+  <!-- ========================================== -->
+  <div id="modal-post-editor" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 bg-obsidian-950/80 backdrop-blur-xl overflow-y-auto">
+    <div class="liquid-glass rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden border border-white/20 shadow-2xl my-auto animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Modal Header -->
+      <div class="p-6 border-b border-white/[0.08] flex items-center justify-between bg-obsidian-900/60">
+        <div>
+          <h3 id="modal-editor-title" class="font-display text-xl sm:text-2xl font-bold text-white">Create New Blog Article</h3>
+          <p class="text-xs font-mono text-white/50 mt-1">Markdown-powered content collection with instant frontmatter export</p>
+        </div>
+        <button type="button" id="btn-close-editor-modal" class="w-9 h-9 rounded-xl liquid-glass-inner text-white/60 hover:text-white flex items-center justify-center transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 sm:p-8 overflow-y-auto space-y-6">
+        <input type="hidden" id="edit-post-id" value="" />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Title -->
+          <div class="md:col-span-2">
+            <label for="edit-title" class="block text-xs font-mono text-white/80 mb-2">Article Headline / Title</label>
+            <input
+              type="text"
+              id="edit-title"
+              placeholder="e.g. How We Tripled ROAS for a D2C Beauty Brand in 45 Days"
+              class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-peach font-display font-medium"
+            />
+          </div>
+
+          <!-- Slug -->
+          <div>
+            <label for="edit-slug" class="block text-xs font-mono text-white/80 mb-2">URL Slug</label>
+            <div class="flex items-center">
+              <span class="bg-white/5 border border-r-0 border-white/15 px-3 py-2.5 rounded-l-xl text-xs font-mono text-white/40">/blog/</span>
+              <input
+                type="text"
+                id="edit-slug"
+                placeholder="tripled-roas-beauty"
+                class="w-full bg-obsidian-950/70 border border-white/15 rounded-r-xl px-4 py-2.5 text-xs font-mono text-peach focus:outline-none focus:border-peach"
+              />
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label for="edit-category" class="block text-xs font-mono text-white/80 mb-2">Topic Category</label>
+            <select
+              id="edit-category"
+              class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-peach"
+            >
+              <option value="Meta Ads">Meta Ads</option>
+              <option value="CAPI">CAPI &amp; Tracking</option>
+              <option value="Creative">Creative Psychology</option>
+              <option value="Strategy">Strategy &amp; Scale</option>
+              <option value="Education">Education &amp; Tips</option>
+            </select>
+          </div>
+
+          <!-- Read Time & Featured -->
+          <div>
+            <label for="edit-readtime" class="block text-xs font-mono text-white/80 mb-2">Estimated Read Time</label>
+            <input
+              type="text"
+              id="edit-readtime"
+              value="8 min read"
+              class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-peach"
+            />
+          </div>
+
+          <div class="flex items-center gap-3 pt-6">
+            <input
+              type="checkbox"
+              id="edit-featured"
+              class="w-4 h-4 rounded border-white/20 text-terra focus:ring-peach bg-obsidian-900"
+            />
+            <label for="edit-featured" class="text-xs font-mono text-white cursor-pointer">
+              Set as Featured Hero Article on /blog
+            </label>
+          </div>
+        </div>
+
+        <!-- Cover Image Chooser & Uploader -->
+        <div class="border border-white/15 rounded-2xl p-5 bg-white/[0.02]">
+          <label class="block text-xs font-mono uppercase tracking-wider text-peach mb-3">Cover Artwork &amp; Image</label>
+          
+          <div class="flex flex-col sm:flex-row items-center gap-5">
+            <!-- Current preview thumbnail -->
+            <div class="w-full sm:w-48 h-28 rounded-xl overflow-hidden border border-white/20 bg-obsidian-950 shrink-0 relative group">
+              <img
+                id="edit-cover-preview"
+                src={`${base}/assets/hero-3d-concept.jpg`}
+                alt="Cover Preview"
+                class="w-full h-full object-cover"
+              />
+              <span class="absolute bottom-1 right-1 bg-black/70 text-[9px] font-mono px-1.5 py-0.5 rounded text-white/80">
+                16:9 Cover
+              </span>
+            </div>
+
+            <div class="flex-1 w-full space-y-3">
+              <!-- URL input -->
+              <div>
+                <input
+                  type="text"
+                  id="edit-cover-url"
+                  value="/assets/hero-3d-concept.jpg"
+                  placeholder="Enter image URL or choose preset"
+                  class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-peach"
+                />
+              </div>
+
+              <!-- Quick Presets & File Upload Button -->
+              <div class="flex flex-wrap items-center gap-2">
+                <label
+                  for="edit-cover-file"
+                  class="bg-peach/10 hover:bg-peach/20 text-peach border border-peach/30 px-3 py-1.5 rounded-lg text-[11px] font-mono cursor-pointer transition-colors inline-flex items-center gap-1.5"
+                >
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <span>Upload Local Picture</span>
+                  <input type="file" id="edit-cover-file" accept="image/*" class="hidden" />
+                </label>
+
+                <button
+                  type="button"
+                  data-preset="/assets/hero-3d-concept.jpg"
+                  class="btn-cover-preset liquid-glass-inner px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-white/70 hover:text-white"
+                >
+                  3D Concept
+                </button>
+                <button
+                  type="button"
+                  data-preset="/assets/founder.jpg"
+                  class="btn-cover-preset liquid-glass-inner px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-white/70 hover:text-white"
+                >
+                  Founder
+                </button>
+                <button
+                  type="button"
+                  data-preset="/assets/logo.png"
+                  class="btn-cover-preset liquid-glass-inner px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-white/70 hover:text-white"
+                >
+                  Logo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Excerpt -->
+        <div>
+          <label for="edit-excerpt" class="block text-xs font-mono text-white/80 mb-2">Short Excerpt / Summary</label>
+          <textarea
+            id="edit-excerpt"
+            rows="2"
+            placeholder="A short punchy preview of the article..."
+            class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-peach font-sans leading-relaxed"
+          ></textarea>
+        </div>
+
+        <!-- Body Markdown Editor & Toolbar -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label for="edit-body" class="text-xs font-mono text-white/80">Article Content (Markdown)</label>
+            
+            <!-- Quick Markdown Formatting Tools -->
+            <div class="flex items-center gap-1 bg-white/5 border border-white/10 rounded-lg p-1 text-[11px] font-mono">
+              <button type="button" class="btn-md-format px-2 py-0.5 rounded hover:bg-white/10 text-white/80" data-format="bold"><b>B</b></button>
+              <button type="button" class="btn-md-format px-2 py-0.5 rounded hover:bg-white/10 text-white/80" data-format="italic"><i>I</i></button>
+              <button type="button" class="btn-md-format px-2 py-0.5 rounded hover:bg-white/10 text-white/80" data-format="h2">H2</button>
+              <button type="button" class="btn-md-format px-2 py-0.5 rounded hover:bg-white/10 text-white/80" data-format="h3">H3</button>
+              <button type="button" class="btn-md-format px-2 py-0.5 rounded hover:bg-white/10 text-white/80" data-format="quote">""</button>
+              <button type="button" class="btn-md-format px-2 py-0.5 rounded hover:bg-white/10 text-white/80" data-format="list">• List</button>
+              <button type="button" class="btn-md-format px-2 py-0.5 rounded hover:bg-white/10 text-white/80" data-format="link">Link</button>
+            </div>
+          </div>
+
+          <textarea
+            id="edit-body"
+            rows="10"
+            placeholder="## The Challenge&#10;&#10;Write markdown article here..."
+            class="w-full bg-obsidian-950/90 border border-white/15 rounded-xl px-4 py-3 text-xs sm:text-sm font-mono text-white focus:outline-none focus:border-peach leading-relaxed"
+          ></textarea>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-6 border-t border-white/[0.08] flex items-center justify-between bg-obsidian-900/60">
+        <button
+          type="button"
+          id="btn-download-md"
+          class="liquid-glass-inner hover:bg-white/10 text-white/70 hover:text-white px-4 py-2.5 rounded-xl text-xs font-mono inline-flex items-center gap-2 transition-colors"
+        >
+          <svg class="w-4 h-4 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Download .MD File</span>
+        </button>
+
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            id="btn-cancel-modal"
+            class="liquid-glass-inner hover:bg-white/10 text-white/70 hover:text-white px-5 py-2.5 rounded-xl text-xs font-mono transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            id="btn-save-post"
+            class="bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white text-xs sm:text-sm font-semibold tracking-wide uppercase px-6 py-2.5 rounded-xl border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105"
+          >
+            Save &amp; Publish
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: QUICK COVER IMAGE CHANGER -->
+  <!-- ========================================== -->
+  <div id="modal-cover-changer" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 bg-obsidian-950/80 backdrop-blur-xl">
+    <div class="liquid-glass rounded-3xl w-full max-w-lg p-6 sm:p-8 space-y-6 border border-white/20 shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-white/[0.08]">
+        <div>
+          <h3 class="font-display text-xl font-bold text-white">Change Cover Picture</h3>
+          <p class="text-xs font-mono text-peach truncate max-w-xs mt-0.5" id="changer-post-title">Article Title</p>
+        </div>
+        <button type="button" id="btn-close-cover-modal" class="w-8 h-8 rounded-xl liquid-glass-inner text-white/60 hover:text-white flex items-center justify-center">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <input type="hidden" id="changer-post-slug" value="" />
+
+      <!-- Current Image Preview -->
+      <div class="relative h-48 w-full rounded-2xl overflow-hidden border border-white/20 bg-obsidian-950">
+        <img id="changer-preview-img" src={`${base}/assets/hero-3d-concept.jpg`} alt="Preview" class="w-full h-full object-cover" />
+      </div>
+
+      <!-- Drag & drop upload or file input -->
+      <div
+        id="changer-dropzone"
+        class="border border-dashed border-white/25 hover:border-peach/60 rounded-xl p-5 text-center cursor-pointer transition-colors bg-white/[0.02]"
+      >
+        <input type="file" id="changer-file-input" accept="image/*" class="hidden" />
+        <svg class="w-6 h-6 mx-auto text-peach mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        <div class="text-xs font-medium text-white">Click or drag &amp; drop new photo</div>
+        <div class="text-[10px] font-mono text-white/40 mt-1">PNG, JPG, WebP (Simulated Base64)</div>
+      </div>
+
+      <!-- Direct URL Input -->
+      <div>
+        <label for="changer-url-input" class="block text-xs font-mono text-white/70 mb-1.5">Or enter Image URL</label>
+        <input
+          type="text"
+          id="changer-url-input"
+          value=""
+          placeholder="https://..."
+          class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-peach"
+        />
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button type="button" id="btn-cancel-cover" class="liquid-glass-inner text-white/70 hover:text-white px-4 py-2 rounded-xl text-xs font-mono">
+          Cancel
+        </button>
+        <button type="button" id="btn-apply-cover" class="bg-gradient-to-r from-terra-bright to-terra text-white px-5 py-2 rounded-xl text-xs font-mono font-semibold">
+          Apply Picture
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- FLOATING TOAST NOTIFICATION -->
+  <!-- ========================================== -->
+  <div id="dash-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="liquid-glass border border-peach/40 shadow-2xl rounded-2xl px-5 py-3.5 flex items-center gap-3 text-white text-xs sm:text-sm font-sans backdrop-blur-2xl">
+      <div class="w-6 h-6 rounded-full bg-accent-mint/20 border border-accent-mint flex items-center justify-center text-accent-mint shrink-0">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <span id="toast-message" class="font-medium">Changes saved successfully!</span>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<script>
+  // ================================================================
+  // INITIAL DEFAULT BLOG POSTS DATABASE
+  // ================================================================
+  interface BlogPostItem {
+    id: string;
+    slug: string;
+    title: string;
+    description: string;
+    category: string;
+    readTime: string;
+    pubDate: string;
+    image: string;
+    featured: boolean;
+    body: string;
+  }
+
+  const DEFAULT_POSTS: BlogPostItem[] = [
+    {
+      id: 'tripled-roas-beauty',
+      slug: 'tripled-roas-beauty',
+      title: 'How We Tripled ROAS for a D2C Beauty Brand in 45 Days',
+      description: 'Using AI-powered UGC creative and cloud CAPI integration, we recovered 28% drop-off and turned casual browsers into repeat customers — all while cutting CPA by 44%.',
+      category: 'Meta Ads',
+      readTime: '8 min read',
+      pubDate: '2026-11-15',
+      image: '/assets/hero-3d-concept.jpg',
+      featured: true,
+      body: `## The Challenge
+
+A fast-growing D2C beauty brand was struggling with diminishing returns on their Meta ad spend. Despite increasing budgets, their ROAS plateaued at 2.1x, and CPA kept creeping up month over month. iOS 14+ attribution gaps made it nearly impossible to optimize effectively.
+
+## Our Approach
+
+### 1. Creative Overhaul with AI-Powered UGC
+We replaced their polished studio creative with a systematic UGC testing framework. Using AI to identify winning hooks, angles, and formats, we produced 40+ UGC variants.
+
+### 2. Cloud CAPI Integration
+We implemented a server-side Conversions API layer using Stape.io + Meta's Events Manager. This recovered 28% signal loss from browser-based pixel blocking.
+
+### 3. Scientific CBO Architecture
+We restructured campaigns into a 3-tier CBO framework (TOF, MOF, BOF).`
+    },
+    {
+      id: 'capi-setup-checklist',
+      slug: 'capi-setup-checklist',
+      title: 'The Complete CAPI Setup Checklist for 2027',
+      description: 'A step-by-step walkthrough of the Conversions API implementation that protects your ad data against iOS changes and ensures accurate attribution.',
+      category: 'CAPI',
+      readTime: '12 min read',
+      pubDate: '2026-10-22',
+      image: '/assets/hero-3d-concept.jpg',
+      featured: false,
+      body: `## Why Browser Pixels Are Failing
+
+Third-party cookie depreciation, Safari ITP, and browser ad-blockers strip away between 15% and 35% of client-side tracking signals.
+
+## The 6-Step Implementation
+
+1. Provision cloud server container on AWS/GCP via Stape.io
+2. Generate secure long-lived Meta System User Token
+3. Configure dual tag firing with matching event_id
+4. Pass customer information parameters (em, ph, fn, ln, fbp, fbc)
+5. Verify Event Match Quality (EMQ score >= 8.5)
+6. Enable automatic deduplication in Meta Events Manager`
+    },
+    {
+      id: 'creative-psychology-ads',
+      slug: 'creative-psychology-ads',
+      title: 'Creative Psychology: Designing Ads That Stick',
+      description: 'From color psychology to hook placement, we break down the exact visual elements that make Meta ads impossible to scroll past.',
+      category: 'Creative',
+      readTime: '6 min read',
+      pubDate: '2026-09-30',
+      image: '/assets/hero-3d-concept.jpg',
+      featured: false,
+      body: `## The 3-Second War for Attention
+
+Your ad does not compete with other brands — it competes with close friends, viral memes, and algorithm dopamine feeds.
+
+### The Hook Triad:
+- Visual Pattern Interrupt: high contrast or unexpected kinetic motion
+- Text Hook: specific numeric claim or provocative question
+- Audio Layer: ASMR, native voiceover, or rhythmic sound effect`
+    },
+    {
+      id: 'scaling-playbook',
+      slug: 'scaling-playbook',
+      title: 'From $2K to $20K Monthly Ad Spend: A Scaling Playbook',
+      description: 'The systematic framework we use to scale ad budgets 10x without losing ROAS — including bid strategies and audience layering.',
+      category: 'Strategy',
+      readTime: '10 min read',
+      pubDate: '2026-09-05',
+      image: '/assets/hero-3d-concept.jpg',
+      featured: false,
+      body: `## The Plateau Problem
+
+Most media buyers scale vertically by increasing ad set budget by 50% in one click, resetting algorithmic learning and causing CPA spikes.
+
+### The 20% Compounding Scale Formula
+We scale winning ad sets by no more than 20% every 48 hours only when 3-day blended ROAS exceeds the benchmark target.`
+    },
+    {
+      id: 'meta-mistakes',
+      slug: 'meta-mistakes',
+      title: '5 Common Meta Ad Mistakes and How to Fix Them',
+      description: 'From wrong attribution windows to creative fatigue, we cover the most frequent errors that drain ad budgets — and the quick fixes.',
+      category: 'Education',
+      readTime: '5 min read',
+      pubDate: '2026-08-20',
+      image: '/assets/hero-3d-concept.jpg',
+      featured: false,
+      body: `## Common Pitfalls:
+1. Turning off ads too early during 50-conversion learning phase
+2. Audience overlap causing self-bidding wars
+3. Relying only on browser pixel without Conversions API
+4. Polish over authenticity in creative angles
+5. Ignoring post-click landing page speed`
+    }
+  ];
+
+  // DEFAULT MEDIA ASSETS
+  interface MediaAsset {
+    id: string;
+    name: string;
+    url: string;
+    dimensions: string;
+    size: string;
+  }
+
+  const DEFAULT_MEDIA: MediaAsset[] = [
+    { id: 'm1', name: 'hero-3d-concept.jpg', url: '/assets/hero-3d-concept.jpg', dimensions: '1920 × 1080', size: '89.8 KB' },
+    { id: 'm2', name: 'logo.png', url: '/assets/logo.png', dimensions: '1200 × 442', size: '98.2 KB' },
+    { id: 'm3', name: 'founder.jpg', url: '/assets/founder.jpg', dimensions: '800 × 800', size: '128.2 KB' },
+    { id: 'm4', name: 'social-proof-roas.jpg', url: '/assets/hero-3d-concept.jpg', dimensions: '1080 × 1080', size: '142.0 KB' },
+    { id: 'm5', name: 'capi-architecture.jpg', url: '/assets/hero-3d-concept.jpg', dimensions: '1200 × 800', size: '110.5 KB' },
+    { id: 'm6', name: 'creative-matrix.jpg', url: '/assets/hero-3d-concept.jpg', dimensions: '1080 × 1350', size: '185.0 KB' }
+  ];
+
+  // ================================================================
+  // LOCAL STORAGE STATE INITIALIZATION
+  // ================================================================
+  function getStoredPosts(): BlogPostItem[] {
+    const raw = localStorage.getItem('iadverts_cms_posts');
+    if (!raw) {
+      localStorage.setItem('iadverts_cms_posts', JSON.stringify(DEFAULT_POSTS));
+      return DEFAULT_POSTS;
+    }
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return DEFAULT_POSTS;
+    }
+  }
+
+  function saveStoredPosts(posts: BlogPostItem[]) {
+    localStorage.setItem('iadverts_cms_posts', JSON.stringify(posts));
+  }
+
+  function getStoredMedia(): MediaAsset[] {
+    const raw = localStorage.getItem('iadverts_cms_media');
+    if (!raw) {
+      localStorage.setItem('iadverts_cms_media', JSON.stringify(DEFAULT_MEDIA));
+      return DEFAULT_MEDIA;
+    }
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return DEFAULT_MEDIA;
+    }
+  }
+
+  function saveStoredMedia(media: MediaAsset[]) {
+    localStorage.setItem('iadverts_cms_media', JSON.stringify(media));
+  }
+
+  // Toast notification trigger
+  function showToast(message: string) {
+    const toast = document.getElementById('dash-toast');
+    const toastMsg = document.getElementById('toast-message');
+    if (toast && toastMsg) {
+      toastMsg.textContent = message;
+      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+      }, 3200);
+    }
+  }
+
+  // ================================================================
+  // TAB NAVIGATION SWITCHER
+  // ================================================================
+  const tabButtons = document.querySelectorAll<HTMLButtonElement>('.dash-tab');
+  const tabPanels = document.querySelectorAll<HTMLElement>('.dash-panel');
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.getAttribute('data-tab');
+      if (!tabId) return;
+
+      // Update button styling
+      tabButtons.forEach(b => {
+        b.classList.remove('active', 'text-white', 'bg-white/10', 'font-semibold', 'border', 'border-white/15', 'shadow-sm');
+        b.classList.add('text-white/70', 'font-medium');
+      });
+      btn.classList.add('active', 'text-white', 'bg-white/10', 'font-semibold', 'border', 'border-white/15', 'shadow-sm');
+      btn.classList.remove('text-white/70', 'font-medium');
+
+      // Show matching panel
+      tabPanels.forEach(panel => {
+        if (panel.id === `tab-panel-${tabId}`) {
+          panel.classList.remove('hidden');
+        } else {
+          panel.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // ================================================================
+  // BLOG POSTS CMS RENDERING & INTERACTIONS
+  // ================================================================
+  let currentCategory = 'all';
+  let searchQuery = '';
+
+  function renderPosts() {
+    const container = document.getElementById('cms-posts-container');
+    const badgeCount = document.getElementById('badge-post-count');
+    if (!container) return;
+
+    const posts = getStoredPosts();
+    if (badgeCount) badgeCount.textContent = posts.length.toString();
+
+    const filtered = posts.filter(post => {
+      const matchesCat = currentCategory === 'all' || post.category.toLowerCase() === currentCategory.toLowerCase();
+      const matchesSearch = !searchQuery || 
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        post.description.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCat && matchesSearch;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full liquid-glass rounded-3xl p-12 text-center">
+          <p class="text-white/60 font-sans">No blog posts found matching your criteria.</p>
+          <button type="button" id="btn-create-first-post" class="mt-4 bg-peach/10 text-peach px-4 py-2 rounded-xl text-xs font-mono border border-peach/30">
+            + Create New Post
+          </button>
+        </div>
+      `;
+      document.getElementById('btn-create-first-post')?.addEventListener('click', () => openEditorModal());
+      return;
+    }
+
+    container.innerHTML = filtered.map(post => `
+      <div class="liquid-glass rounded-3xl overflow-hidden flex flex-col group border border-white/10 hover:border-peach/30 transition-all duration-300">
+        <!-- Cover thumbnail with quick change overlay -->
+        <div class="relative h-44 overflow-hidden bg-obsidian-950">
+          <img
+            src="${post.image}"
+            alt="${post.title}"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onerror="this.src='/assets/hero-3d-concept.jpg'"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/80 via-transparent to-transparent"></div>
+          
+          <!-- Category & Featured -->
+          <div class="absolute top-3 left-3 flex items-center gap-1.5">
+            <span class="font-mono text-[10px] uppercase tracking-widest text-peach bg-obsidian-950/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+              ${post.category}
+            </span>
+            ${post.featured ? `
+              <span class="font-mono text-[10px] uppercase tracking-widest text-white bg-terra/80 px-2 py-0.5 rounded-full border border-peach/30">
+                Featured
+              </span>
+            ` : ''}
+          </div>
+
+          <!-- Quick Change Cover Button (Hover) -->
+          <button
+            type="button"
+            data-change-cover="${post.slug}"
+            title="Change cover picture"
+            class="absolute top-3 right-3 liquid-glass-inner hover:bg-white/20 text-white p-2 rounded-xl text-xs font-mono opacity-80 sm:opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
+          >
+            <svg class="w-3.5 h-3.5 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            <span class="text-[10px] hidden sm:inline">Change</span>
+          </button>
+        </div>
+
+        <!-- Content Details -->
+        <div class="p-5 sm:p-6 flex flex-col flex-1">
+          <h4 class="font-display text-base sm:text-lg font-bold text-white leading-snug line-clamp-2 mb-2 group-hover:text-peach transition-colors">
+            ${post.title}
+          </h4>
+          <p class="text-white/60 text-xs line-clamp-2 mb-4 font-sans leading-relaxed">
+            ${post.description}
+          </p>
+
+          <div class="mt-auto pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-white/40">
+            <span>${post.readTime}</span>
+            <span>${post.pubDate}</span>
+          </div>
+
+          <!-- Action Buttons Bar -->
+          <div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between gap-2 text-xs font-mono">
+            <div class="flex items-center gap-1.5">
+              <button
+                type="button"
+                data-edit-post="${post.slug}"
+                class="liquid-glass-inner hover:bg-white/10 text-white/80 hover:text-white px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition-colors"
+              >
+                <svg class="w-3 h-3 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+                <span>Edit</span>
+              </button>
+
+              <button
+                type="button"
+                data-download-post="${post.slug}"
+                title="Download as .md file"
+                class="liquid-glass-inner hover:bg-white/10 text-white/60 hover:text-white p-1.5 rounded-lg transition-colors"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <a
+                href="/blog/${post.slug}"
+                target="_blank"
+                class="text-peach hover:underline text-[11px] flex items-center gap-0.5"
+              >
+                <span>View</span>
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+
+              <button
+                type="button"
+                data-delete-post="${post.slug}"
+                title="Delete post"
+                class="text-white/30 hover:text-terra-bright p-1 transition-colors"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // Attach row events
+    container.querySelectorAll('[data-edit-post]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const slug = btn.getAttribute('data-edit-post');
+        if (slug) openEditorModal(slug);
+      });
+    });
+
+    container.querySelectorAll('[data-change-cover]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const slug = btn.getAttribute('data-change-cover');
+        if (slug) openCoverChangerModal(slug);
+      });
+    });
+
+    container.querySelectorAll('[data-download-post]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const slug = btn.getAttribute('data-download-post');
+        if (slug) downloadMarkdownFile(slug);
+      });
+    });
+
+    container.querySelectorAll('[data-delete-post]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const slug = btn.getAttribute('data-delete-post');
+        if (slug && confirm('Are you sure you want to delete this article?')) {
+          deletePost(slug);
+        }
+      });
+    });
+  }
+
+  // Category filter buttons
+  document.querySelectorAll<HTMLButtonElement>('.cat-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-filter-btn').forEach(b => {
+        b.classList.remove('active', 'text-white', 'bg-white/10', 'font-bold', 'border', 'border-white/10');
+        b.classList.add('text-white/60');
+      });
+      btn.classList.add('active', 'text-white', 'bg-white/10', 'font-bold', 'border', 'border-white/10');
+      btn.classList.remove('text-white/60');
+
+      currentCategory = btn.getAttribute('data-cat') || 'all';
+      renderPosts();
+    });
+  });
+
+  // Search input handler
+  document.getElementById('cms-search-input')?.addEventListener('input', (e) => {
+    searchQuery = (e.target as HTMLInputElement).value;
+    renderPosts();
+  });
+
+  // Export JSON backup
+  document.getElementById('btn-export-json')?.addEventListener('click', () => {
+    const posts = getStoredPosts();
+    const blob = new Blob([JSON.stringify(posts, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `iadvert-studio-blog-backup-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('All blog posts exported as JSON!');
+  });
+
+  // Reset to default posts
+  document.getElementById('btn-reset-posts')?.addEventListener('click', () => {
+    if (confirm('Reset blog posts to the original 5 standard articles?')) {
+      saveStoredPosts(DEFAULT_POSTS);
+      renderPosts();
+      showToast('Blog posts reset to default!');
+    }
+  });
+
+  // Delete post
+  function deletePost(slug: string) {
+    const posts = getStoredPosts().filter(p => p.slug !== slug);
+    saveStoredPosts(posts);
+    renderPosts();
+    showToast('Post deleted successfully.');
+  }
+
+  // Generate and download .md file
+  function downloadMarkdownFile(slug: string) {
+    const post = getStoredPosts().find(p => p.slug === slug);
+    if (!post) return;
+
+    const mdContent = `---
+title: '${post.title.replace(/'/g, "''")}'
+description: '${post.description.replace(/'/g, "''")}'
+pubDate: ${post.pubDate}
+category: '${post.category}'
+readTime: '${post.readTime}'
+image: '${post.image}'
+featured: ${post.featured}
+---
+
+${post.body}
+`;
+
+    const blob = new Blob([mdContent], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${post.slug}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast(`Downloaded ${post.slug}.md for Astro content collection!`);
+  }
+
+  // ================================================================
+  // FULL POST EDITOR MODAL
+  // ================================================================
+  const editorModal = document.getElementById('modal-post-editor');
+  const modalEditorTitle = document.getElementById('modal-editor-title');
+  const editPostId = document.getElementById('edit-post-id') as HTMLInputElement;
+  const editTitle = document.getElementById('edit-title') as HTMLInputElement;
+  const editSlug = document.getElementById('edit-slug') as HTMLInputElement;
+  const editCategory = document.getElementById('edit-category') as HTMLSelectElement;
+  const editReadTime = document.getElementById('edit-readtime') as HTMLInputElement;
+  const editFeatured = document.getElementById('edit-featured') as HTMLInputElement;
+  const editCoverUrl = document.getElementById('edit-cover-url') as HTMLInputElement;
+  const editCoverPreview = document.getElementById('edit-cover-preview') as HTMLImageElement;
+  const editExcerpt = document.getElementById('edit-excerpt') as HTMLTextAreaElement;
+  const editBody = document.getElementById('edit-body') as HTMLTextAreaElement;
+
+  function openEditorModal(slugToEdit?: string) {
+    if (!editorModal) return;
+
+    if (slugToEdit) {
+      const post = getStoredPosts().find(p => p.slug === slugToEdit);
+      if (post) {
+        modalEditorTitle!.textContent = 'Edit Blog Article';
+        editPostId.value = post.id;
+        editTitle.value = post.title;
+        editSlug.value = post.slug;
+        editCategory.value = post.category;
+        editReadTime.value = post.readTime;
+        editFeatured.checked = post.featured;
+        editCoverUrl.value = post.image;
+        editCoverPreview.src = post.image;
+        editExcerpt.value = post.description;
+        editBody.value = post.body;
+      }
+    } else {
+      modalEditorTitle!.textContent = 'Create New Blog Article';
+      editPostId.value = '';
+      editTitle.value = '';
+      editSlug.value = '';
+      editCategory.value = 'Meta Ads';
+      editReadTime.value = '6 min read';
+      editFeatured.checked = false;
+      editCoverUrl.value = '/assets/hero-3d-concept.jpg';
+      editCoverPreview.src = '/assets/hero-3d-concept.jpg';
+      editExcerpt.value = '';
+      editBody.value = `## Introduction\n\nWrite your insights here...\n\n### Key Takeaway\n\nScale consistently with Meta Ads.`;
+    }
+
+    editorModal.classList.remove('hidden');
+  }
+
+  function closeEditorModal() {
+    editorModal?.classList.add('hidden');
+  }
+
+  document.getElementById('btn-create-post')?.addEventListener('click', () => openEditorModal());
+  document.getElementById('btn-close-editor-modal')?.addEventListener('click', closeEditorModal);
+  document.getElementById('btn-cancel-modal')?.addEventListener('click', closeEditorModal);
+
+  // Auto slug generation from title if empty
+  editTitle?.addEventListener('input', () => {
+    if (!editPostId.value) {
+      editSlug.value = editTitle.value
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+    }
+  });
+
+  // Cover URL live preview
+  editCoverUrl?.addEventListener('input', () => {
+    editCoverPreview.src = editCoverUrl.value;
+  });
+
+  // Preset cover buttons
+  document.querySelectorAll('.btn-cover-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const preset = btn.getAttribute('data-preset');
+      if (preset) {
+        editCoverUrl.value = preset;
+        editCoverPreview.src = preset;
+      }
+    });
+  });
+
+  // Local image file upload (FileReader -> Base64)
+  document.getElementById('edit-cover-file')?.addEventListener('change', (e) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target?.result as string;
+        editCoverUrl.value = base64;
+        editCoverPreview.src = base64;
+        showToast('Image uploaded and previewed!');
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Markdown format buttons
+  document.querySelectorAll<HTMLButtonElement>('.btn-md-format').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const format = btn.getAttribute('data-format');
+      const start = editBody.selectionStart;
+      const end = editBody.selectionEnd;
+      const text = editBody.value;
+      const selected = text.substring(start, end);
+
+      let replacement = '';
+      switch (format) {
+        case 'bold': replacement = `**${selected || 'bold text'}**`; break;
+        case 'italic': replacement = `*${selected || 'italic text'}*`; break;
+        case 'h2': replacement = `\n## ${selected || 'Heading 2'}\n`; break;
+        case 'h3': replacement = `\n### ${selected || 'Heading 3'}\n`; break;
+        case 'quote': replacement = `\n> ${selected || 'Important quote'}\n`; break;
+        case 'list': replacement = `\n- ${selected || 'Bullet item'}\n`; break;
+        case 'link': replacement = `[${selected || 'Link text'}](https://iadverts.site)`; break;
+      }
+
+      editBody.value = text.substring(0, start) + replacement + text.substring(end);
+      editBody.focus();
+    });
+  });
+
+  // Save Post Button
+  document.getElementById('btn-save-post')?.addEventListener('click', () => {
+    if (!editTitle.value.trim()) {
+      alert('Please enter a title for the article.');
+      return;
+    }
+    const slug = editSlug.value.trim() || editTitle.value.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const posts = getStoredPosts();
+    const existingIndex = posts.findIndex(p => p.slug === slug || (editPostId.value && p.id === editPostId.value));
+
+    const updatedPost: BlogPostItem = {
+      id: editPostId.value || slug,
+      slug: slug,
+      title: editTitle.value.trim(),
+      description: editExcerpt.value.trim(),
+      category: editCategory.value,
+      readTime: editReadTime.value.trim() || '5 min read',
+      pubDate: new Date().toISOString().split('T')[0],
+      image: editCoverUrl.value.trim() || '/assets/hero-3d-concept.jpg',
+      featured: editFeatured.checked,
+      body: editBody.value.trim()
+    };
+
+    if (existingIndex >= 0) {
+      posts[existingIndex] = updatedPost;
+    } else {
+      posts.unshift(updatedPost);
+    }
+
+    // If featured, ensure only one post is featured
+    if (updatedPost.featured) {
+      posts.forEach(p => {
+        if (p.slug !== updatedPost.slug) p.featured = false;
+      });
+    }
+
+    saveStoredPosts(posts);
+    renderPosts();
+    closeEditorModal();
+    showToast('Post saved and published successfully!');
+  });
+
+  // Download markdown from modal
+  document.getElementById('btn-download-md')?.addEventListener('click', () => {
+    const slug = editSlug.value.trim() || 'post';
+    const mdContent = `---
+title: '${editTitle.value.replace(/'/g, "''")}'
+description: '${editExcerpt.value.replace(/'/g, "''")}'
+pubDate: ${new Date().toISOString().split('T')[0]}
+category: '${editCategory.value}'
+readTime: '${editReadTime.value}'
+image: '${editCoverUrl.value}'
+featured: ${editFeatured.checked}
+---
+
+${editBody.value}
+`;
+    const blob = new Blob([mdContent], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${slug}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast(`Downloaded ${slug}.md!`);
+  });
+
+  // ================================================================
+  // QUICK COVER IMAGE CHANGER MODAL
+  // ================================================================
+  const coverModal = document.getElementById('modal-cover-changer');
+  const changerPostTitle = document.getElementById('changer-post-title');
+  const changerPostSlug = document.getElementById('changer-post-slug') as HTMLInputElement;
+  const changerPreviewImg = document.getElementById('changer-preview-img') as HTMLImageElement;
+  const changerUrlInput = document.getElementById('changer-url-input') as HTMLInputElement;
+  const changerDropzone = document.getElementById('changer-dropzone');
+  const changerFileInput = document.getElementById('changer-file-input') as HTMLInputElement;
+
+  function openCoverChangerModal(slug: string) {
+    if (!coverModal) return;
+    const post = getStoredPosts().find(p => p.slug === slug);
+    if (!post) return;
+
+    changerPostSlug.value = post.slug;
+    changerPostTitle!.textContent = post.title;
+    changerPreviewImg.src = post.image;
+    changerUrlInput.value = post.image;
+
+    coverModal.classList.remove('hidden');
+  }
+
+  function closeCoverChangerModal() {
+    coverModal?.classList.add('hidden');
+  }
+
+  document.getElementById('btn-close-cover-modal')?.addEventListener('click', closeCoverChangerModal);
+  document.getElementById('btn-cancel-cover')?.addEventListener('click', closeCoverChangerModal);
+
+  changerUrlInput?.addEventListener('input', () => {
+    changerPreviewImg.src = changerUrlInput.value;
+  });
+
+  changerDropzone?.addEventListener('click', () => changerFileInput.click());
+  changerFileInput?.addEventListener('change', (e) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target?.result as string;
+        changerUrlInput.value = base64;
+        changerPreviewImg.src = base64;
+        showToast('Photo loaded into preview!');
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  document.getElementById('btn-apply-cover')?.addEventListener('click', () => {
+    const slug = changerPostSlug.value;
+    const newImage = changerUrlInput.value.trim() || changerPreviewImg.src;
+    const posts = getStoredPosts();
+    const target = posts.find(p => p.slug === slug);
+    if (target) {
+      target.image = newImage;
+      saveStoredPosts(posts);
+      renderPosts();
+      closeCoverChangerModal();
+      showToast('Cover picture updated successfully!');
+    }
+  });
+
+  // ================================================================
+  // SEO & SERP SUITE MANAGEMENT
+  // ================================================================
+  const seoPageSelect = document.getElementById('seo-page-select') as HTMLSelectElement;
+  const seoTitleInput = document.getElementById('seo-title-input') as HTMLInputElement;
+  const seoDescInput = document.getElementById('seo-desc-input') as HTMLTextAreaElement;
+  const seoKeywordsInput = document.getElementById('seo-keywords-input') as HTMLInputElement;
+  const seoOgImageInput = document.getElementById('seo-og-image-input') as HTMLInputElement;
+
+  const seoTitleCounter = document.getElementById('seo-title-counter');
+  const seoDescCounter = document.getElementById('seo-desc-counter');
+  const seoTitleBar = document.getElementById('seo-title-bar');
+  const seoDescBar = document.getElementById('seo-desc-bar');
+
+  const serpUrlDisplay = document.getElementById('serp-url-display');
+  const serpTitleDisplay = document.getElementById('serp-title-display');
+  const serpDescDisplay = document.getElementById('serp-desc-display');
+  const ogCardImage = document.getElementById('og-card-image') as HTMLImageElement;
+  const ogCardTitle = document.getElementById('og-card-title');
+  const ogCardDesc = document.getElementById('og-card-desc');
+
+  const SEO_PROFILES: Record<string, { title: string; desc: string; url: string; keywords: string; ogImage: string }> = {
+    'home': {
+      title: 'iAdvert Studio | High-Performance Meta Ads Agency & CAPI Tracking',
+      desc: 'We engineer high-converting Meta ad campaigns and server-side CAPI tracking for scaling brands. Predictable ROAS with zero signal loss.',
+      url: 'https://iadverts.site/',
+      keywords: 'Meta Ads Agency, Facebook Ads Agency Bangladesh, CAPI Tracking, ROAS Scaling',
+      ogImage: '/assets/hero-3d-concept.jpg'
+    },
+    'blog': {
+      title: 'Meta Ads Blog & Scaling Insights | iAdvert Studio',
+      desc: 'Proven frameworks, psychological creative strategies, server-side CAPI setups, and scaling playbooks from iAdvert Studio.',
+      url: 'https://iadverts.site/blog',
+      keywords: 'Meta Ads Blog, Ad Creative Psychology, CAPI Checklist, ROAS Strategies',
+      ogImage: '/assets/hero-3d-concept.jpg'
+    },
+    'tripled-roas': {
+      title: 'How We Tripled ROAS for a D2C Beauty Brand in 45 Days | iAdvert Studio',
+      desc: 'Using AI UGC creative and cloud CAPI integration, we recovered 28% drop-off and turned casual browsers into repeat buyers while cutting CPA by 44%.',
+      url: 'https://iadverts.site/blog/tripled-roas-beauty',
+      keywords: 'D2C ROAS Case Study, UGC Ads Testing, Server-Side CAPI, Scale E-Commerce',
+      ogImage: '/assets/hero-3d-concept.jpg'
+    },
+    'capi-checklist': {
+      title: 'The Complete CAPI Setup Checklist for 2027 | iAdvert Studio',
+      desc: 'A step-by-step walkthrough of the Conversions API implementation that protects your ad data against iOS changes and ensures accurate attribution.',
+      url: 'https://iadverts.site/blog/capi-setup-checklist',
+      keywords: 'CAPI Setup, Stape.io Meta Events, Conversions API Checklist, EMQ Score',
+      ogImage: '/assets/hero-3d-concept.jpg'
+    },
+    'calculator': {
+      title: 'Meta Ads ROAS Simulator & Revenue Calculator | iAdvert Studio',
+      desc: 'Calculate your projected revenue, blended ROAS, and customer acquisition costs before scaling your Meta ad spend.',
+      url: 'https://iadverts.site/#calculator',
+      keywords: 'ROAS Calculator, Meta Ad Spend Simulator, Ad Revenue Forecaster',
+      ogImage: '/assets/hero-3d-concept.jpg'
+    }
+  };
+
+  function updateSeoDisplays() {
+    const title = seoTitleInput.value;
+    const desc = seoDescInput.value;
+    const ogImg = seoOgImageInput.value;
+
+    // Counters & Status bars
+    if (seoTitleCounter) {
+      const len = title.length;
+      const status = len >= 50 && len <= 60 ? 'Optimal' : len < 50 ? 'Too short' : 'Too long';
+      seoTitleCounter.textContent = `${len} / 60 chars (${status})`;
+      seoTitleCounter.className = `text-[11px] font-mono font-bold ${len >= 50 && len <= 60 ? 'text-accent-mint' : 'text-peach'}`;
+      if (seoTitleBar) seoTitleBar.style.width = `${Math.min(100, (len / 60) * 100)}%`;
+    }
+
+    if (seoDescCounter) {
+      const len = desc.length;
+      const status = len >= 140 && len <= 160 ? 'Optimal' : len < 140 ? 'Too short' : 'Too long';
+      seoDescCounter.textContent = `${len} / 160 chars (${status})`;
+      seoDescCounter.className = `text-[11px] font-mono font-bold ${len >= 140 && len <= 160 ? 'text-accent-mint' : 'text-peach'}`;
+      if (seoDescBar) seoDescBar.style.width = `${Math.min(100, (len / 160) * 100)}%`;
+    }
+
+    // Google SERP live updates
+    if (serpTitleDisplay) serpTitleDisplay.textContent = title;
+    if (serpDescDisplay) serpDescDisplay.textContent = desc;
+
+    // Social card updates
+    if (ogCardTitle) ogCardTitle.textContent = title;
+    if (ogCardDesc) ogCardDesc.textContent = desc;
+    if (ogCardImage) ogCardImage.src = ogImg;
+  }
+
+  seoPageSelect?.addEventListener('change', () => {
+    const profile = SEO_PROFILES[seoPageSelect.value] || SEO_PROFILES['home'];
+    seoTitleInput.value = profile.title;
+    seoDescInput.value = profile.desc;
+    seoKeywordsInput.value = profile.keywords;
+    seoOgImageInput.value = profile.ogImage;
+    if (serpUrlDisplay) serpUrlDisplay.textContent = profile.url;
+    updateSeoDisplays();
+  });
+
+  seoTitleInput?.addEventListener('input', updateSeoDisplays);
+  seoDescInput?.addEventListener('input', updateSeoDisplays);
+  seoOgImageInput?.addEventListener('input', updateSeoDisplays);
+
+  // SERP device toggle (desktop / mobile view)
+  document.querySelectorAll<HTMLButtonElement>('.serp-view-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.serp-view-btn').forEach(b => {
+        b.classList.remove('active', 'text-white', 'bg-white/10', 'font-bold');
+        b.classList.add('text-white/60');
+      });
+      btn.classList.add('active', 'text-white', 'bg-white/10', 'font-bold');
+      btn.classList.remove('text-white/60');
+
+      const view = btn.getAttribute('data-view');
+      const serpBox = document.getElementById('google-serp-preview-box');
+      if (serpBox) {
+        if (view === 'mobile') {
+          serpBox.classList.add('max-w-xs', 'mx-auto', 'border-peach/30');
+        } else {
+          serpBox.classList.remove('max-w-xs', 'mx-auto', 'border-peach/30');
+        }
+      }
+    });
+  });
+
+  // Copy meta tags HTML to clipboard
+  document.getElementById('btn-copy-meta')?.addEventListener('click', () => {
+    const title = seoTitleInput.value;
+    const desc = seoDescInput.value;
+    const keywords = seoKeywordsInput.value;
+    const ogImg = seoOgImageInput.value;
+    const url = serpUrlDisplay?.textContent || 'https://iadverts.site/';
+
+    const metaTags = `<!-- Primary Meta Tags -->
+<title>${title}</title>
+<meta name="title" content="${title}">
+<meta name="description" content="${desc}">
+<meta name="keywords" content="${keywords}">
+<link rel="canonical" href="${url}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="${url}">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="${ogImg}">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="${url}">
+<meta property="twitter:title" content="${title}">
+<meta property="twitter:description" content="${desc}">
+<meta property="twitter:image" content="${ogImg}">`;
+
+    navigator.clipboard.writeText(metaTags).then(() => {
+      showToast('Meta tags HTML copied to clipboard!');
+    });
+  });
+
+  // ================================================================
+  // BRAND & SITE SETTINGS
+  // ================================================================
+  interface BrandSettings {
+    brandName: string;
+    founder: string;
+    tagline: string;
+    phone: string;
+    whatsapp: string;
+    email: string;
+    address: string;
+    socialFb: string;
+    socialWa: string;
+  }
+
+  const DEFAULT_SETTINGS: BrandSettings = {
+    brandName: 'iAdvert Studio',
+    founder: 'Md. Shishir Ahmed (Ratul)',
+    tagline: 'High-Performance Meta Ads & Server-Side CAPI Attribution Agency',
+    phone: '+880 1738-632389',
+    whatsapp: '+880 1301-843562',
+    email: 'inquiryiadverts@gmail.com',
+    address: 'Rajshahi, Bangladesh',
+    socialFb: 'https://www.facebook.com/iadvertstudio',
+    socialWa: 'https://wa.me/8801301843562'
+  };
+
+  function loadSettings() {
+    const raw = localStorage.getItem('iadverts_site_settings');
+    const s: BrandSettings = raw ? JSON.parse(raw) : DEFAULT_SETTINGS;
+
+    (document.getElementById('setting-brand-name') as HTMLInputElement).value = s.brandName;
+    (document.getElementById('setting-founder') as HTMLInputElement).value = s.founder;
+    (document.getElementById('setting-tagline') as HTMLInputElement).value = s.tagline;
+    (document.getElementById('setting-phone') as HTMLInputElement).value = s.phone;
+    (document.getElementById('setting-whatsapp') as HTMLInputElement).value = s.whatsapp;
+    (document.getElementById('setting-email') as HTMLInputElement).value = s.email;
+    (document.getElementById('setting-address') as HTMLInputElement).value = s.address;
+    (document.getElementById('setting-social-fb') as HTMLInputElement).value = s.socialFb;
+    (document.getElementById('setting-social-wa') as HTMLInputElement).value = s.socialWa;
+  }
+
+  function saveSettings() {
+    const s: BrandSettings = {
+      brandName: (document.getElementById('setting-brand-name') as HTMLInputElement).value.trim(),
+      founder: (document.getElementById('setting-founder') as HTMLInputElement).value.trim(),
+      tagline: (document.getElementById('setting-tagline') as HTMLInputElement).value.trim(),
+      phone: (document.getElementById('setting-phone') as HTMLInputElement).value.trim(),
+      whatsapp: (document.getElementById('setting-whatsapp') as HTMLInputElement).value.trim(),
+      email: (document.getElementById('setting-email') as HTMLInputElement).value.trim(),
+      address: (document.getElementById('setting-address') as HTMLInputElement).value.trim(),
+      socialFb: (document.getElementById('setting-social-fb') as HTMLInputElement).value.trim(),
+      socialWa: (document.getElementById('setting-social-wa') as HTMLInputElement).value.trim()
+    };
+    localStorage.setItem('iadverts_site_settings', JSON.stringify(s));
+    showToast('Brand settings & Rajshahi address saved!');
+  }
+
+  document.getElementById('btn-save-settings')?.addEventListener('click', saveSettings);
+  document.getElementById('btn-restore-brand')?.addEventListener('click', () => {
+    if (confirm('Reset contact and address to default values?')) {
+      localStorage.setItem('iadverts_site_settings', JSON.stringify(DEFAULT_SETTINGS));
+      loadSettings();
+      showToast('Settings restored to defaults.');
+    }
+  });
+
+  // ================================================================
+  // MEDIA LIBRARY MANAGER
+  // ================================================================
+  function renderMedia() {
+    const grid = document.getElementById('media-assets-grid');
+    const countBadge = document.getElementById('media-count-badge');
+    if (!grid) return;
+
+    const mediaList = getStoredMedia();
+    if (countBadge) countBadge.textContent = `${mediaList.length} Assets in Library`;
+
+    grid.innerHTML = mediaList.map(asset => `
+      <div class="liquid-glass rounded-2xl overflow-hidden border border-white/10 group flex flex-col justify-between">
+        <div class="relative h-32 bg-obsidian-950 overflow-hidden flex items-center justify-center p-2">
+          <img
+            src="${asset.url}"
+            alt="${asset.name}"
+            class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+            onerror="this.src='/assets/hero-3d-concept.jpg'"
+          />
+        </div>
+        <div class="p-3 bg-obsidian-900/60 border-t border-white/[0.06] text-xs font-mono">
+          <div class="text-white font-medium truncate mb-1" title="${asset.name}">${asset.name}</div>
+          <div class="flex items-center justify-between text-[10px] text-white/40 mb-2.5">
+            <span>${asset.dimensions}</span>
+            <span>${asset.size}</span>
+          </div>
+          <button
+            type="button"
+            data-copy-url="${asset.url}"
+            class="w-full liquid-glass-inner hover:bg-white/10 text-peach text-[11px] py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors"
+          >
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span>Copy URL</span>
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('[data-copy-url]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-copy-url');
+        if (url) {
+          navigator.clipboard.writeText(url).then(() => {
+            showToast('Asset URL copied to clipboard!');
+          });
+        }
+      });
+    });
+  }
+
+  // Media drag and drop
+  const mediaDropzone = document.getElementById('media-dropzone');
+  const mediaFileInput = document.getElementById('media-file-input') as HTMLInputElement;
+
+  mediaDropzone?.addEventListener('click', () => mediaFileInput.click());
+  mediaFileInput?.addEventListener('change', (e) => {
+    const files = (e.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const base64 = event.target?.result as string;
+          const media = getStoredMedia();
+          media.unshift({
+            id: 'm_' + Date.now() + Math.random().toString(36).substring(7),
+            name: file.name,
+            url: base64,
+            dimensions: '1920 × 1080',
+            size: `${(file.size / 1024).toFixed(1)} KB`
+          });
+          saveStoredMedia(media);
+          renderMedia();
+          showToast(`Uploaded ${file.name} to media library!`);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  });
+
+  // ================================================================
+  // META ADS ANALYTICS LOGIC (From previous implementation)
+  // ================================================================
+  const rangeBtns = document.querySelectorAll('.range-btn');
+  const kpiSpend = document.getElementById('kpi-spend');
+  const kpiRevenue = document.getElementById('kpi-revenue');
+  const kpiRoas = document.getElementById('kpi-roas');
+  const kpiCpa = document.getElementById('kpi-cpa');
+
+  const rangeData: Record<string, { spend: string; revenue: string; roas: string; cpa: string }> = {
+    '7d': { spend: '$6,420', revenue: '$41,200', roas: '6.41x', cpa: '$16.20' },
+    '30d': { spend: '$24,850', revenue: '$148,200', roas: '5.96x', cpa: '$18.40' },
+    '90d': { spend: '$68,400', revenue: '$382,900', roas: '5.59x', cpa: '$19.10' }
+  };
+
+  rangeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      rangeBtns.forEach(b => {
+        b.classList.remove('active', 'text-white', 'bg-white/10', 'font-bold', 'border', 'border-white/10', 'shadow-sm');
+        b.classList.add('text-white/60');
+      });
+      btn.classList.add('active', 'text-white', 'bg-white/10', 'font-bold', 'border', 'border-white/10', 'shadow-sm');
+      btn.classList.remove('text-white/60');
+
+      const range = btn.getAttribute('data-range') ?? '30d';
+      const data = rangeData[range];
+      if (data && kpiSpend && kpiRevenue && kpiRoas && kpiCpa) {
+        kpiSpend.textContent = data.spend;
+        kpiRevenue.textContent = data.revenue;
+        kpiRoas.textContent = data.roas;
+        kpiCpa.textContent = data.cpa;
+      }
+    });
+  });
+
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const tableRows = document.querySelectorAll<HTMLTableRowElement>('tbody tr[data-category]');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => {
+        b.classList.remove('active', 'text-white', 'bg-white/10', 'font-bold', 'border', 'border-white/10');
+        b.classList.add('text-white/60');
+      });
+      btn.classList.add('active', 'text-white', 'bg-white/10', 'font-bold', 'border', 'border-white/10');
+      btn.classList.remove('text-white/60');
+
+      const filter = btn.getAttribute('data-filter') ?? 'all';
+      tableRows.forEach(row => {
+        const cat = row.getAttribute('data-category');
+        if (filter === 'all' || cat === filter) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Initial runs on DOM load
+  renderPosts();
+  renderMedia();
+  loadSettings();
+  updateSeoDisplays();
+</script>
