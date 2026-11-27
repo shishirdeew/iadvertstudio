@@ -154,7 +154,7 @@
     if (dispRoas) dispRoas.innerText = roas.toFixed(1) + 'x';
 
     const revenue = Math.round(spend * roas);
-    const orders = Math.round(revenue / aov);
+    const orders = aov > 0 ? Math.round(revenue / aov) : 0;
     const profit = Math.round(revenue - spend);
 
     if (dispRevenue) dispRevenue.innerText = '$' + revenue.toLocaleString('en-US');
