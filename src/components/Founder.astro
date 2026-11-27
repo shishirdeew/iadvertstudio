@@ -1,5 +1,7 @@
 ---
+import { DEFAULT_CONFIG } from '../lib/siteConfig';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cfg = DEFAULT_CONFIG.sections.founder;
 ---
 <section class="relative py-24 max-w-7xl mx-auto px-6" id="founder">
   <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10">
@@ -17,10 +19,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             class="relative block rounded-2xl"
           >
             <img
-              src={`${base}/assets/founder.jpg`}
-              alt="Ratul Ahmed Shishir - Founder & CEO of iAdvert Studio"
+              src={`${base}${cfg.image}`}
+              alt="{cfg.name} - Founder & CEO of iAdvert Studio"
               width="1145"
               height="1374"
+              data-wp-img="founder"
               class="relative w-64 h-64 sm:w-72 sm:h-72 object-cover rounded-2xl border-2 border-terra/60 shadow-2xl transition-transform duration-300 group-hover:scale-[1.02]"
               loading="lazy"
             />
@@ -30,17 +33,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <!-- Founder Bio -->
       <div class="md:col-span-8 flex flex-col items-start">
-        <div class="font-mono text-xs text-terra-bright uppercase tracking-widest mb-2">THE STRATEGIST BEHIND THE SYSTEM</div>
-        <h3 id="live-founder-name" class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">Ratul Ahmed Shishir</h3>
+        <div class="font-mono text-xs text-terra-bright uppercase tracking-widest mb-2">{cfg.tagline}</div>
+        <h3 id="live-founder-name" data-cfg="sections.founder.name" class="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">{cfg.name}</h3>
 
 
-        <blockquote id="live-founder-quote" class="text-white/70 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-terra-bright pl-4">
-          "Agencies that claim to handle graphics, logos, websites, and SEO all at once cannot truly specialize in any. I have spent the last several years focusing exclusively on the internal algorithms, high-conversion copywriting, and server-side tracking mechanisms of Meta and Facebook ads. My single goal: to deliver the maximum cash return for every 1 taka of ad spend."
+        <blockquote id="live-founder-quote" data-cfg="sections.founder.quote" class="text-white/70 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-terra-bright pl-4">
+          {cfg.quote}
         </blockquote>
 
         <div class="flex flex-wrap items-center gap-4">
           <a 
-            href="https://wa.me/8801301843562" 
+            href={`https://wa.me/${DEFAULT_CONFIG.brand.whatsapp.replace(/\D/g, '')}`}
             target="_blank"
             class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white font-medium text-xs sm:text-sm px-5 py-2.5 rounded-full border border-white/15 transition-all hover:scale-105"
           >

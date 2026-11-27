@@ -1,1354 +1,1688 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import { DEFAULT_CONFIG } from '../lib/siteConfig';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const homeUrl = base || '/';
 ---
 
-<Layout
-  title="Admin Control Center | iAdvert Studio"
-  description="Private administrative management panel for iAdvert Studio. Restricted access."
->
-  <Navbar />
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WordPress 6.6 Admin Dashboard | iAdvert Studio</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="robots" content="noindex, nofollow" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,700;1,500&family=Playfair+Display:wght@600;700&family=Syne:wght@600;700;800&family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              wpdark: '#1d2327',
+              wpsidebar: '#101517',
+              wpblue: '#2271b1',
+              wphover: '#135e96',
+              terra: '#e04832',
+              peach: '#ffdad2',
+              mint: '#2ed573'
+            },
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              display: ['"Lora"', 'serif'],
+              mono: ['"JetBrains Mono"', 'monospace']
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: #101517; }
+      ::-webkit-scrollbar-thumb { background: #2c3338; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #3c434a; }
+      .wp-sub-active { background: #2271b1 !important; color: #ffffff !important; }
+      .drag-over { border-color: #2271b1 !important; background: rgba(34, 113, 177, 0.1) !important; }
+    </style>
+  </head>
+  <body class="bg-[#101517] text-[#f0f0f1] font-sans antialiased min-h-screen flex flex-col selection:bg-wpblue selection:text-white">
 
-  <main class="pt-28 md:pt-36 pb-24 min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <!-- ================================================================ -->
+    <!-- MASTER SECURITY LOCK GATE -->
+    <!-- ================================================================ -->
+    <div id="wp-auth-gate" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0c0a10] p-4">
+      <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-8 max-w-sm w-full shadow-2xl text-center">
+        <!-- WordPress Iconic Logo -->
+        <div class="w-16 h-16 rounded-full bg-[#2271b1]/20 border border-[#2271b1]/50 mx-auto flex items-center justify-center text-white mb-5 shadow-lg">
+          <svg class="w-9 h-9 fill-current" viewBox="0 0 24 24">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878L5.61 8.877C6.398 8.835 7.37 8.76 7.37 8.76c.484-.04.423-.748-.06-.748 0 0-1.474.12-2.422.12-.14 0-.363-.02-.625-.04C6.07 4.928 8.832 3.4 12 3.4c2.613 0 4.961 1.042 6.674 2.735L14.7 17.587l-2.607-7.79c.484-.04.484-.748 0-.748 0 0-1.473.12-2.42.12-.122 0-.283-.02-.485-.02L12 2zm0 18.6c-.663 0-1.304-.073-1.921-.212L13.883 9.4l3.774 10.384C16.14 20.25 14.16 20.6 12 20.6zm7.264-4.83l-3.21-8.815c.485-.04.908-.08.908-.08.484-.04.423-.748-.06-.748 0 0-1.474.12-2.422.12-.08 0-.203-.02-.343-.02l3.447 9.897c.72-1.127 1.258-2.39 1.564-3.754.076-.34.116-.69.116-1.04v-.002c0-.55-.084-1.077-.234-1.572.58 1.88.89 3.876.89 5.944 0 .02 0 .04-.002.06a8.558 8.558 0 0 1-.654.99zM3.4 12c0 1.547.398 2.997 1.087 4.267L9.58 4.28C5.976 5.378 3.4 8.41 3.4 12z"></path>
+          </svg>
+        </div>
 
-      <!-- ================================================================ -->
-      <!-- SECURITY LOCK GATE (Visible when unauthenticated) -->
-      <!-- ================================================================ -->
-      <div id="admin-auth-gate" class="min-h-[65vh] flex items-center justify-center">
-        <div class="liquid-glass rounded-3xl p-8 sm:p-12 max-w-md w-full border border-terra/30 shadow-2xl relative overflow-hidden text-center">
-          <!-- Ambient Glow -->
-          <div class="absolute -top-20 -left-20 w-44 h-44 bg-terra-bright/20 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-peach/20 rounded-full blur-3xl pointer-events-none"></div>
+        <h2 class="text-xl font-bold text-white mb-1">WordPress 6.6 CMS</h2>
+        <p class="text-xs text-white/50 mb-6 font-mono">iAdvert Studio • Administrator Gateway</p>
 
-          <!-- Lock Icon -->
-          <div class="w-16 h-16 rounded-2xl liquid-glass-icon mx-auto flex items-center justify-center text-peach mb-6 shadow-[0_0_25px_rgba(255,218,210,0.2)]">
-            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
+        <form id="wp-login-form" class="space-y-4 text-left">
+          <div>
+            <label class="block text-xs font-mono text-white/70 mb-1.5">Username</label>
+            <input type="text" value="admin" readonly class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs font-mono text-white/80 focus:outline-none" />
           </div>
-
-          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-glass-inner text-[11px] font-mono text-terra-bright uppercase tracking-widest mb-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-terra-bright animate-ping"></span>
-            RESTRICTED ADMIN STUDIO
+          <div>
+            <label for="wp-login-pwd" class="block text-xs font-mono text-white/70 mb-1.5">Master Security Password</label>
+            <input type="password" id="wp-login-pwd" placeholder="Enter password..." class="w-full bg-[#101517] border border-white/20 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-wpblue" required />
           </div>
-
-          <h1 class="font-display text-2xl sm:text-3xl font-bold text-white mb-2">
-            Control Center <span class="text-peach font-bold italic">ACCESS.</span>
-          </h1>
-
-          <p class="text-white/60 text-xs sm:text-sm font-sans mb-8 leading-relaxed">
-            This administration gateway is restricted to Ratul Ahmed Shishir. Please enter the studio master security key.
-          </p>
-
-          <form id="admin-login-form" class="space-y-4">
-            <div class="relative">
-              <input
-                type="password"
-                id="admin-password-input"
-                placeholder="Enter Admin Password..."
-                class="w-full bg-obsidian-950/80 border border-white/20 rounded-2xl px-4 py-3 pl-11 text-sm text-white placeholder-white/40 font-mono focus:outline-none focus:border-peach"
-                autocomplete="current-password"
-                required
-              />
-              <svg class="w-4 h-4 text-white/40 absolute left-4 top-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              <button
-                type="button"
-                id="btn-toggle-pwd"
-                class="absolute right-3.5 top-3.5 text-white/40 hover:text-white text-xs font-mono"
-              >
-                Show
-              </button>
-            </div>
-
-            <div id="login-error-msg" class="hidden text-xs font-mono text-terra-bright bg-terra/10 border border-terra/30 p-2.5 rounded-xl">
-              Invalid security key. Please check and retry.
-            </div>
-
-            <button
-              type="submit"
-              class="w-full bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white font-semibold text-sm py-3.5 rounded-2xl border border-peach/25 shadow-xl shadow-terra/30 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
-            >
-              <span>Unlock Admin Suite</span>
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M5 12h14M12 5l7 7-7 7"></path>
-              </svg>
-            </button>
-          </form>
-
-          <div class="mt-6 pt-5 border-t border-white/[0.08] text-[11px] font-mono text-white/40">
-            Default Master Key: <span class="text-peach select-all">admin@iadvert2027</span>
+          <div id="wp-login-error" class="hidden text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-800/50 p-2 rounded">
+            Incorrect master password.
           </div>
+          <button type="submit" class="w-full bg-[#2271b1] hover:bg-[#135e96] text-white font-medium text-xs py-2.5 rounded-lg transition-colors">
+            Log In to WP Dashboard
+          </button>
+        </form>
+
+        <div class="mt-5 pt-4 border-t border-white/10 text-[10px] font-mono text-white/40">
+          Default Master Key: <span class="text-peach select-all">admin@iadvert2027</span>
         </div>
       </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- AUTHENTICATED WP ADMIN SUITE -->
+    <!-- ================================================================ -->
+    <div id="wp-app-container" class="hidden flex-col flex-1 min-h-screen">
 
       <!-- ================================================================ -->
-      <!-- MAIN ADMIN CONTROL SUITE (Hidden until authenticated) -->
+      <!-- TOP WORDPRESS ADMIN BAR -->
       <!-- ================================================================ -->
-      <div id="admin-main-suite" class="hidden space-y-8 animate-in fade-in duration-300">
+      <header class="h-8 bg-[#1d2327] border-b border-[#2c3338] flex items-center justify-between px-3 text-xs text-[#c3c4c7] select-none shrink-0 z-50">
+        <div class="flex items-center gap-4">
+          <!-- WP W Logo -->
+          <a href="#" class="hover:text-white flex items-center gap-1.5" title="WordPress 6.6">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878L5.61 8.877C6.398 8.835 7.37 8.76 7.37 8.76c.484-.04.423-.748-.06-.748 0 0-1.474.12-2.422.12-.14 0-.363-.02-.625-.04C6.07 4.928 8.832 3.4 12 3.4c2.613 0 4.961 1.042 6.674 2.735L14.7 17.587l-2.607-7.79c.484-.04.484-.748 0-.748 0 0-1.473.12-2.42.12-.122 0-.283-.02-.485-.02L12 2zm0 18.6c-.663 0-1.304-.073-1.921-.212L13.883 9.4l3.774 10.384C16.14 20.25 14.16 20.6 12 20.6z"></path></svg>
+          </a>
 
-        <!-- Top Header & Admin Bar -->
-        <section class="pb-6 border-b border-white/[0.08]">
-          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div>
-              <div class="flex flex-wrap items-center gap-2.5 mb-2">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-glass-inner text-[11px] font-mono text-accent-mint">
-                  <span class="w-2 h-2 rounded-full bg-accent-mint animate-pulse shadow-[0_0_8px_rgba(46,213,115,0.8)]"></span>
-                  ADMIN SESSION ACTIVE
+          <!-- Site Title with Home Icon -->
+          <a href={homeUrl} target="_blank" class="hover:text-white flex items-center gap-1.5 font-medium text-white" title="Visit Site">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>iAdvert Studio</span>
+          </a>
+
+          <!-- Comments Bubble -->
+          <div class="hidden sm:flex items-center gap-1 hover:text-white cursor-pointer" title="0 Comments in moderation">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span class="bg-[#2c3338] text-[10px] px-1.5 py-0.2 rounded-full">0</span>
+          </div>
+
+          <!-- + New Dropdown Button -->
+          <button type="button" id="wp-top-btn-new" class="flex items-center gap-1 hover:text-white font-medium">
+            <span class="text-white">+</span>
+            <span>New</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Live Status -->
+          <span class="hidden md:inline-flex items-center gap-1.5 text-[11px] font-mono text-mint">
+            <span class="w-2 h-2 rounded-full bg-mint animate-pulse"></span>
+            Astro Static Live Sync Active
+          </span>
+
+          <!-- Publish Site Config -->
+          <button type="button" id="btn-wp-publish-config" class="flex items-center gap-1.5 bg-[#2271b1] hover:bg-[#135e96] text-white font-medium text-[11px] px-2.5 py-1 rounded transition-colors" title="Generate and download site-config.json containing all edits, then deploy">
+            <span class="font-bold">↑</span>
+            <span>Publish Config</span>
+          </button>
+
+          <!-- User Profile & Log Out -->
+          <div class="flex items-center gap-2">
+            <span class="text-white font-medium">Howdy, Ratul Ahmed Shishir</span>
+            <div class="w-5 h-5 rounded-full bg-terra/40 text-peach text-[10px] font-bold flex items-center justify-center border border-white/20">R</div>
+            <button type="button" id="btn-wp-logout" class="text-red-400 hover:text-red-300 ml-2 font-mono text-[11px]">Log Out</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="flex flex-1">
+        
+        <!-- ================================================================ -->
+        <!-- LEFT WORDPRESS SIDEBAR (11 SECTIONS) -->
+        <!-- ================================================================ -->
+        <aside class="w-56 bg-[#1d2327] border-r border-[#2c3338] shrink-0 select-none flex flex-col justify-between py-2 text-[13px] font-sans">
+          <nav class="space-y-0.5" id="wp-sidebar-nav">
+            
+            <!-- 1. DASHBOARD -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-dashboard" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-white bg-[#2271b1] font-medium hover:bg-[#2271b1]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                  <span>Dashboard</span>
                 </span>
-                <span class="text-white/40 text-xs font-mono">•</span>
-                <span class="text-white/60 text-xs font-mono">Hidden From Public</span>
-                <span class="text-white/40 text-xs font-mono">•</span>
-                <span class="text-peach text-xs font-mono">Owner: Ratul Ahmed Shishir</span>
-              </div>
-              <h1 class="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                Studio Management <span class="text-peach font-bold italic">PANEL.</span>
-              </h1>
-              <p class="text-white/60 text-xs sm:text-sm mt-1 font-sans max-w-2xl">
-                Complete WordPress, Shopify &amp; Wix style studio controller: manage blog articles, edit homepage sections, configure Google SEO, upload media, and monitor ad scale.
-              </p>
-            </div>
-
-            <!-- Quick Controls & Logout -->
-            <div class="flex flex-wrap items-center gap-3">
-              <a
-                href={homeUrl}
-                target="_blank"
-                class="liquid-glass-inner hover:bg-white/10 text-white/80 hover:text-white px-4 py-2.5 rounded-2xl text-xs font-mono inline-flex items-center gap-2 transition-all"
-              >
-                <span>View Public Site</span>
-                <svg class="w-3.5 h-3.5 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                  <polyline points="15 3 21 3 21 9"></polyline>
-                  <line x1="10" y1="14" x2="21" y2="3"></line>
-                </svg>
-              </a>
-
-              <button
-                type="button"
-                id="btn-admin-logout"
-                class="bg-terra/10 hover:bg-terra/20 text-terra-bright border border-terra/30 px-4 py-2.5 rounded-2xl text-xs font-mono font-semibold transition-all inline-flex items-center gap-2"
-              >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                  <polyline points="16 17 21 12 16 7"></polyline>
-                  <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
-                <span>Lock &amp; Logout</span>
               </button>
             </div>
-          </div>
-        </section>
 
-        <!-- Navigation Tabs (Pill Bar) -->
-        <section>
-          <div class="liquid-glass p-1.5 rounded-2xl flex items-center gap-1.5 overflow-x-auto no-scrollbar" id="dashboard-nav-tabs">
-            <button
-              type="button"
-              data-tab="blog"
-              class="dash-tab active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-white/10 border border-white/15 shadow-sm transition-all whitespace-nowrap flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 20h9"></path>
-                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-              </svg>
-              <span>Blog &amp; Posts (CMS)</span>
-              <span class="text-[10px] font-mono bg-peach/20 text-peach px-2 py-0.5 rounded-full" id="badge-post-count">5</span>
-            </button>
+            <!-- SEPARATOR -->
+            <div class="h-px bg-[#2c3338] my-1"></div>
 
-            <button
-              type="button"
-              data-tab="customizer"
-              class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-terra-bright" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="m4.93 4.93 4.24 4.24"></path>
-                <path d="m14.83 9.17 4.24-4.24"></path>
-                <path d="m14.83 14.83 4.24 4.24"></path>
-                <path d="m9.17 14.83-4.24 4.24"></path>
-              </svg>
-              <span>Site &amp; Page Customizer</span>
-            </button>
-
-            <button
-              type="button"
-              data-tab="seo"
-              class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-accent-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <span>Google SERP &amp; SEO</span>
-            </button>
-
-            <button
-              type="button"
-              data-tab="media"
-              class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg>
-              <span>Media Library</span>
-            </button>
-
-            <button
-              type="button"
-              data-tab="settings"
-              class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-terra-bright" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-              </svg>
-              <span>Brand Identity</span>
-            </button>
-
-            <button
-              type="button"
-              data-tab="security"
-              class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              <span>Security &amp; Key</span>
-            </button>
-
-            <button
-              type="button"
-              data-tab="analytics"
-              class="dash-tab px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white/70 hover:text-white hover:bg-white/[0.04] transition-all whitespace-nowrap flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-accent-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
-              </svg>
-              <span>Ad Performance</span>
-            </button>
-          </div>
-        </section>
-
-        <!-- ================================================================ -->
-        <!-- TAB 1: BLOG & POSTS CMS -->
-        <!-- ================================================================ -->
-        <div id="tab-panel-blog" class="dash-panel space-y-8">
-          <div class="liquid-glass rounded-3xl p-5 sm:p-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-            <div class="flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                id="btn-create-post"
-                class="bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white text-xs sm:text-sm font-semibold tracking-wide uppercase px-5 py-2.5 rounded-xl border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105 inline-flex items-center gap-2"
-              >
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-                <span>Write New Article</span>
-              </button>
-
-              <div class="liquid-glass-inner px-2 py-1 rounded-xl flex items-center gap-1 text-xs font-mono" id="cms-category-filter">
-                <button type="button" data-cat="all" class="cat-filter-btn active px-3 py-1.5 rounded-lg text-white bg-white/10 font-bold border border-white/10">All</button>
-                <button type="button" data-cat="Meta Ads" class="cat-filter-btn px-3 py-1.5 rounded-lg text-white/60 hover:text-white">Meta Ads</button>
-                <button type="button" data-cat="CAPI" class="cat-filter-btn px-3 py-1.5 rounded-lg text-white/60 hover:text-white">CAPI</button>
-                <button type="button" data-cat="Creative" class="cat-filter-btn px-3 py-1.5 rounded-lg text-white/60 hover:text-white">Creative</button>
-                <button type="button" data-cat="Strategy" class="cat-filter-btn px-3 py-1.5 rounded-lg text-white/60 hover:text-white">Strategy</button>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2.5">
-              <div class="relative flex-1 md:w-64">
-                <input
-                  type="text"
-                  id="cms-search-input"
-                  placeholder="Search articles & tags..."
-                  class="w-full bg-obsidian-950/70 border border-white/10 rounded-xl px-3.5 py-2 pl-9 text-xs font-mono text-white placeholder-white/40 focus:outline-none focus:border-peach"
-                />
-                <svg class="w-3.5 h-3.5 text-white/40 absolute left-3 top-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-              </div>
-
-              <button
-                type="button"
-                id="btn-export-json"
-                title="Export posts as JSON"
-                class="liquid-glass-inner hover:bg-white/10 text-white/70 hover:text-white px-3 py-2 rounded-xl text-xs font-mono flex items-center gap-1.5"
-              >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                <span class="hidden sm:inline">Export</span>
+            <!-- 2. POSTS (Articles) -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-posts" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                  <span>Posts</span>
+                </span>
+                <span class="bg-[#2c3338] text-[10px] text-white/80 px-1.5 py-0.2 rounded-full" id="wp-sidebar-post-count">5</span>
               </button>
             </div>
-          </div>
 
-          <!-- Articles Cards Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="cms-posts-container">
-            <!-- Populated via JavaScript -->
+            <!-- 3. MEDIA -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-media" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                  <span>Media</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- 4. PAGES -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-pages" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  <span>Pages</span>
+                </span>
+                <span class="text-[10px] font-mono text-white/50">4</span>
+              </button>
+            </div>
+
+            <!-- 5. COMMENTS -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-comments" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                  <span>Comments</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- SEPARATOR -->
+            <div class="h-px bg-[#2c3338] my-1"></div>
+
+            <!-- 6. APPEARANCE (Site Editor, Styles, Patterns) -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-appearance" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"></path></svg>
+                  <span class="font-semibold text-white">Appearance</span>
+                </span>
+                <span class="text-[9px] uppercase bg-terra/40 text-peach px-1 rounded">Editor</span>
+              </button>
+            </div>
+
+            <!-- 7. PLUGINS -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-plugins" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"></path></svg>
+                  <span>Plugins</span>
+                </span>
+                <span class="bg-mint/20 text-mint text-[10px] px-1 rounded">6 Active</span>
+              </button>
+            </div>
+
+            <!-- 8. USERS -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-users" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <span>Users</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- 9. TOOLS -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-tools" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span>Tools</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- 10. SETTINGS -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-settings" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                  <span>Settings</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- SEPARATOR -->
+            <div class="h-px bg-[#2c3338] my-1"></div>
+
+            <!-- 11. AD OPS & CAPI ENGINE (Studio Special) -->
+            <div class="wp-menu-group">
+              <button type="button" data-pane="pane-analytics" class="wp-menu-btn w-full px-3 py-2 text-left flex items-center justify-between text-[#c3c4c7] hover:text-[#72aee6] hover:bg-[#13171a]">
+                <span class="flex items-center gap-2.5">
+                  <svg class="w-4 h-4 text-mint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                  <span class="text-mint font-semibold">Meta Analytics</span>
+                </span>
+                <span class="text-[9px] bg-mint/20 text-mint px-1 rounded">5.96x</span>
+              </button>
+            </div>
+
+          </nav>
+
+          <!-- Sidebar Bottom Footnote -->
+          <div class="px-3 py-2 text-[11px] font-mono text-white/30 border-t border-[#2c3338]">
+            WordPress 6.6.2 • Astro Engine
           </div>
-        </div>
+        </aside>
 
         <!-- ================================================================ -->
-        <!-- TAB 2: SITE & PAGE CONTENT CUSTOMIZER (Wix/Shopify Style) -->
+        <!-- MAIN WORKSPACE CONTENT PANE -->
         <!-- ================================================================ -->
-        <div id="tab-panel-customizer" class="dash-panel hidden space-y-8">
-          <div class="liquid-glass rounded-3xl p-6 sm:p-8">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.08] mb-8">
-              <div>
-                <h2 class="font-display text-2xl font-bold text-white">Visual Website Customizer</h2>
-                <p class="text-white/60 text-xs sm:text-sm font-sans mt-1">Change headlines, trust badges, services, case studies &amp; founder quote across the live website</p>
-              </div>
-              <div class="flex items-center gap-3">
-                <button
-                  type="button"
-                  id="btn-restore-customizer"
-                  class="liquid-glass-inner hover:bg-white/10 text-white/60 hover:text-white px-4 py-2.5 rounded-xl text-xs font-mono"
-                >
-                  Reset Defaults
-                </button>
-                <button
-                  type="button"
-                  id="btn-save-customizer"
-                  class="bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white text-xs sm:text-sm font-semibold tracking-wide uppercase px-6 py-2.5 rounded-xl border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105 flex items-center gap-2"
-                >
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                  </svg>
-                  <span>Apply to Live Site</span>
-                </button>
+        <main class="flex-1 bg-[#101517] overflow-y-auto p-6 sm:p-8">
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 1: DASHBOARD HOME (Overview, Quick Draft, Site Health) -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-dashboard" class="wp-pane space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+              <h1 class="text-2xl font-bold text-white">Dashboard</h1>
+              <span class="text-xs font-mono text-white/50">WordPress 6.6.2 running on Astro static engine</span>
+            </div>
+
+            <!-- Welcome Banner -->
+            <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+              <div class="max-w-2xl">
+                <h2 class="text-xl font-bold text-white mb-2">Welcome to your site control room, Ratul!</h2>
+                <p class="text-xs text-white/60 leading-relaxed mb-5">
+                  We've assembled some links to get you started customizing every aspect of your site: write blog articles, change images anywhere, adjust colors and fonts, or manage Meta ads.
+                </p>
+                <div class="flex flex-wrap items-center gap-3">
+                  <button type="button" class="btn-quick-switch bg-[#2271b1] hover:bg-[#135e96] text-white text-xs px-4 py-2 rounded-lg font-medium" data-target="pane-appearance">Open Site Editor &amp; Styles</button>
+                  <button type="button" class="btn-quick-switch bg-white/5 hover:bg-white/10 text-white text-xs px-4 py-2 rounded-lg font-medium border border-white/15" data-target="pane-posts">Write a Blog Post</button>
+                  <a href={homeUrl} target="_blank" class="text-xs text-wpblue hover:underline py-2">View your site ↗</a>
+                </div>
               </div>
             </div>
 
-            <form id="site-customizer-form" class="space-y-8">
+            <!-- At a Glance & Quick Draft Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
               
-              <!-- Section 1: Hero Banner -->
-              <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                <h3 class="text-sm font-mono text-peach uppercase tracking-wider flex items-center gap-2">
-                  <span>01.</span> Hero Section &amp; Headlines
+              <!-- At a Glance -->
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-white mb-4 pb-2 border-b border-white/10">At a Glance</h3>
+                <div class="grid grid-cols-2 gap-4 text-xs font-mono mb-4">
+                  <div class="flex items-center gap-2"><span class="text-peach font-bold" id="dash-stat-posts">5</span> <span>Posts Published</span></div>
+                  <div class="flex items-center gap-2"><span class="text-peach font-bold">4</span> <span>Static Pages</span></div>
+                  <div class="flex items-center gap-2"><span class="text-mint font-bold" id="dash-stat-media">6</span> <span>Media Assets</span></div>
+                  <div class="flex items-center gap-2"><span class="text-mint font-bold">6</span> <span>Plugins Active</span></div>
+                </div>
+                <p class="text-xs text-white/40 pt-3 border-t border-white/[0.08]">
+                  Theme: <strong class="text-white/80">iAdvert Apple Liquid Glass</strong> with Block Theme Site Editor support.
+                </p>
+              </div>
+
+              <!-- Quick Draft -->
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-white mb-3">Quick Draft</h3>
+                <form id="wp-quick-draft-form" class="space-y-3">
+                  <input type="text" id="quick-draft-title" placeholder="Title" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-wpblue" />
+                  <textarea id="quick-draft-content" rows="3" placeholder="What's on your mind?" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-wpblue"></textarea>
+                  <button type="submit" class="bg-white/10 hover:bg-white/20 text-white text-xs px-3.5 py-1.5 rounded-lg font-medium">Save Draft</button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 2: POSTS (WordPress Blog Posts Manager) -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-posts" class="wp-pane hidden space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+              <div class="flex items-center gap-3">
+                <h1 class="text-2xl font-bold text-white">Posts</h1>
+                <button type="button" id="btn-add-new-post" class="border border-[#2271b1] text-[#72aee6] hover:bg-[#2271b1] hover:text-white px-3 py-1 rounded text-xs transition-colors">Add New Post</button>
+              </div>
+              <div class="text-xs font-mono text-white/50">All (<span id="posts-count-display">5</span>) | Published</div>
+            </div>
+
+            <!-- Posts Table -->
+            <div class="bg-[#1d2327] border border-white/10 rounded-2xl overflow-hidden">
+              <table class="w-full text-left text-xs font-sans">
+                <thead class="bg-[#181d20] border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
+                  <tr>
+                    <th class="py-3 px-4 w-12">Cover</th>
+                    <th class="py-3 px-4">Title</th>
+                    <th class="py-3 px-4">Author</th>
+                    <th class="py-3 px-4">Categories</th>
+                    <th class="py-3 px-4">Tags</th>
+                    <th class="py-3 px-4">Date</th>
+                    <th class="py-3 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="wp-posts-tbody" class="divide-y divide-white/[0.06]">
+                  <!-- Populated dynamically via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 3: MEDIA (WordPress Media Library) -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-media" class="wp-pane hidden space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+              <div class="flex items-center gap-3">
+                <h1 class="text-2xl font-bold text-white">Media Library</h1>
+                <label for="wp-media-upload-input" class="border border-[#2271b1] text-[#72aee6] hover:bg-[#2271b1] hover:text-white px-3 py-1 rounded text-xs cursor-pointer transition-colors">
+                  Add New Media File
+                  <input type="file" id="wp-media-upload-input" accept="image/*" class="hidden" multiple />
+                </label>
+              </div>
+              <span class="text-xs font-mono text-white/40" id="media-library-count">6 items</span>
+            </div>
+
+            <!-- Drag & drop upload box -->
+            <div id="wp-media-dropzone" class="border-2 border-dashed border-white/20 hover:border-wpblue rounded-2xl p-8 text-center cursor-pointer bg-white/[0.01] hover:bg-white/[0.03] transition-colors">
+              <div class="w-10 h-10 rounded-full bg-[#2271b1]/20 text-[#72aee6] mx-auto flex items-center justify-center mb-2">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              </div>
+              <p class="text-xs font-semibold text-white">Drop image files here to upload</p>
+              <p class="text-[11px] font-mono text-white/40 mt-1">Maximum upload size: 128 MB (PNG, JPG, WebP, SVG)</p>
+            </div>
+
+            <!-- Media Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4" id="wp-media-grid">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 4: PAGES (Static Pages List) -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-pages" class="wp-pane hidden space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+              <h1 class="text-2xl font-bold text-white">Pages</h1>
+              <span class="text-xs font-mono text-white/40">4 Pages Published</span>
+            </div>
+
+            <div class="bg-[#1d2327] border border-white/10 rounded-2xl overflow-hidden">
+              <table class="w-full text-left text-xs font-sans">
+                <thead class="bg-[#181d20] border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
+                  <tr>
+                    <th class="py-3 px-4">Title</th>
+                    <th class="py-3 px-4">URL Slug</th>
+                    <th class="py-3 px-4">Author</th>
+                    <th class="py-3 px-4">Status</th>
+                    <th class="py-3 px-4 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/[0.06]">
+                  <tr>
+                    <td class="py-3.5 px-4 font-semibold text-white">Front Page — Home</td>
+                    <td class="py-3.5 px-4 font-mono text-peach">/</td>
+                    <td class="py-3.5 px-4">Ratul Ahmed Shishir</td>
+                    <td class="py-3.5 px-4"><span class="bg-mint/20 text-mint text-[10px] px-2 py-0.5 rounded font-mono">Published</span></td>
+                    <td class="py-3.5 px-4 text-right"><button type="button" class="btn-quick-switch text-wpblue hover:underline font-mono" data-target="pane-appearance">Customize in Site Editor →</button></td>
+                  </tr>
+                  <tr>
+                    <td class="py-3.5 px-4 font-semibold text-white">Blog Archive</td>
+                    <td class="py-3.5 px-4 font-mono text-peach">/blog</td>
+                    <td class="py-3.5 px-4">Ratul Ahmed Shishir</td>
+                    <td class="py-3.5 px-4"><span class="bg-mint/20 text-mint text-[10px] px-2 py-0.5 rounded font-mono">Published</span></td>
+                    <td class="py-3.5 px-4 text-right"><a href="/blog" target="_blank" class="text-wpblue hover:underline font-mono">View Page ↗</a></td>
+                  </tr>
+                  <tr>
+                    <td class="py-3.5 px-4 font-semibold text-white">Privacy Policy</td>
+                    <td class="py-3.5 px-4 font-mono text-peach">/privacy-policy</td>
+                    <td class="py-3.5 px-4">Ratul Ahmed Shishir</td>
+                    <td class="py-3.5 px-4"><span class="bg-mint/20 text-mint text-[10px] px-2 py-0.5 rounded font-mono">Published</span></td>
+                    <td class="py-3.5 px-4 text-right"><a href="/privacy-policy" target="_blank" class="text-wpblue hover:underline font-mono">View Page ↗</a></td>
+                  </tr>
+                  <tr>
+                    <td class="py-3.5 px-4 font-semibold text-white">404 Error Template</td>
+                    <td class="py-3.5 px-4 font-mono text-peach">/404</td>
+                    <td class="py-3.5 px-4">Ratul Ahmed Shishir</td>
+                    <td class="py-3.5 px-4"><span class="bg-mint/20 text-mint text-[10px] px-2 py-0.5 rounded font-mono">Published</span></td>
+                    <td class="py-3.5 px-4 text-right"><a href="/404" target="_blank" class="text-wpblue hover:underline font-mono">View Page ↗</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 5: COMMENTS -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-comments" class="wp-pane hidden space-y-6">
+            <h1 class="text-2xl font-bold text-white">Comments</h1>
+            <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-8 text-center text-white/50 text-xs">
+              No comments awaiting moderation. All clean!
+            </div>
+          </div>
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 6: APPEARANCE & SITE EDITOR (Styles, Fonts, Colors, Patterns) -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-appearance" class="wp-pane hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+              <div>
+                <h1 class="text-2xl font-bold text-white flex items-center gap-2">
+                  <span>Site Editor &amp; Styles</span>
+                  <span class="text-xs bg-[#2271b1] text-white px-2 py-0.5 rounded font-normal">Block Theme</span>
+                </h1>
+                <p class="text-xs text-white/50 mt-1">Customize global colors, fonts, homepage patterns &amp; replace images anywhere</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" id="btn-reset-styles" class="bg-white/5 hover:bg-white/10 text-white text-xs px-3 py-1.5 rounded border border-white/15">Reset to Defaults</button>
+                <button type="button" id="btn-save-all-appearance" class="bg-[#2271b1] hover:bg-[#135e96] text-white text-xs px-5 py-2 rounded font-semibold shadow-lg">Save &amp; Publish</button>
+              </div>
+            </div>
+
+            <!-- Appearance Sub-Tabs -->
+            <div class="flex items-center gap-2 border-b border-white/10 pb-2 text-xs font-medium" id="appearance-subtabs">
+              <button type="button" data-sub="sub-styles" class="subtab-btn active px-3 py-1.5 rounded-lg bg-[#2271b1] text-white">1. Global Styles (Colors &amp; Fonts)</button>
+              <button type="button" data-sub="sub-patterns" class="subtab-btn px-3 py-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/5">2. Patterns &amp; Section Reorder (Drag &amp; Drop)</button>
+              <button type="button" data-sub="sub-images" class="subtab-btn px-3 py-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/5">3. Site Images Replacer</button>
+              <button type="button" data-sub="sub-content" class="subtab-btn px-3 py-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/5">4. Section Text &amp; Copy</button>
+            </div>
+
+            <!-- Subtab 1: GLOBAL STYLES (Colors & Typography) -->
+            <div id="sub-styles" class="subtab-panel space-y-6">
+              
+              <!-- Color Palettes -->
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 space-y-5">
+                <h3 class="text-sm font-bold text-white flex items-center justify-between">
+                  <span>Color Palette</span>
+                  <span class="text-xs text-white/40 font-mono">Live CSS Variable overrides</span>
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div class="md:col-span-2">
-                    <label for="cust-hero-tag" class="block text-xs font-mono text-white/70 mb-1.5">Top Floating Badge</label>
-                    <input
-                      type="text"
-                      id="cust-hero-tag"
-                      value="100% SPECIALIZED IN META &amp; FACEBOOK ADS"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-xs font-mono text-peach"
-                    />
+
+                <!-- Presets -->
+                <div>
+                  <span class="text-xs font-mono text-white/60 block mb-2">Preset Variations:</span>
+                  <div class="flex flex-wrap gap-2 text-xs font-mono">
+                    <button type="button" class="btn-color-preset px-3 py-1.5 rounded-lg bg-black border border-terra/60 text-peach" data-terra="#e04832" data-peach="#ffdad2" data-bg="#0c0a10">Default Obsidian Terra</button>
+                    <button type="button" class="btn-color-preset px-3 py-1.5 rounded-lg bg-[#051610] border border-mint text-mint" data-terra="#00E599" data-peach="#A3FFD6" data-bg="#030f0a">Cyber Emerald</button>
+                    <button type="button" class="btn-color-preset px-3 py-1.5 rounded-lg bg-[#0e0c1f] border border-[#a855f7] text-[#e9d5ff]" data-terra="#9333ea" data-peach="#f3e8ff" data-bg="#080712">Royal Purple</button>
+                    <button type="button" class="btn-color-preset px-3 py-1.5 rounded-lg bg-[#0f172a] border border-[#38bdf8] text-[#bae6fd]" data-terra="#0284c7" data-peach="#e0f2fe" data-bg="#030712">Deep Sapphire</button>
                   </div>
+                </div>
+
+                <!-- Custom Pickers -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-white/[0.08]">
                   <div>
-                    <label for="cust-hero-headline-1" class="block text-xs font-mono text-white/70 mb-1.5">Main Headline (Line 1)</label>
-                    <input
-                      type="text"
-                      id="cust-hero-headline-1"
-                      value="We Scale Brands with"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-sm text-white"
-                    />
+                    <label class="block text-xs font-mono text-white/70 mb-1.5">Primary Accent (Terra)</label>
+                    <div class="flex items-center gap-2">
+                      <input type="color" id="style-color-terra" value="#e04832" class="w-8 h-8 rounded border border-white/20 bg-transparent cursor-pointer" />
+                      <input type="text" id="style-hex-terra" value="#e04832" class="w-24 bg-[#101517] border border-white/15 rounded px-2 py-1 text-xs font-mono text-white" />
+                    </div>
                   </div>
+
                   <div>
-                    <label for="cust-hero-headline-2" class="block text-xs font-mono text-white/70 mb-1.5">Highlighted Headline (Terra &amp; Peach)</label>
-                    <input
-                      type="text"
-                      id="cust-hero-headline-2"
-                      value="HIGH-PERFORMANCE META ADS."
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-sm text-terra-bright font-bold"
-                    />
+                    <label class="block text-xs font-mono text-white/70 mb-1.5">Secondary Highlight (Peach)</label>
+                    <div class="flex items-center gap-2">
+                      <input type="color" id="style-color-peach" value="#ffdad2" class="w-8 h-8 rounded border border-white/20 bg-transparent cursor-pointer" />
+                      <input type="text" id="style-hex-peach" value="#ffdad2" class="w-24 bg-[#101517] border border-white/15 rounded px-2 py-1 text-xs font-mono text-white" />
+                    </div>
                   </div>
-                  <div class="md:col-span-2">
-                    <label for="cust-hero-subtitle" class="block text-xs font-mono text-white/70 mb-1.5">Subtitle Paragraph</label>
-                    <textarea
-                      id="cust-hero-subtitle"
-                      rows="2"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-xs text-white leading-relaxed"
-                    >Stop guessing your Facebook ad spend. Build a profitable sales machine with psychological creative hooks, data-driven CBO architecture, and bulletproof server-side CAPI tracking.</textarea>
-                  </div>
+
                   <div>
-                    <label for="cust-hero-cta" class="block text-xs font-mono text-white/70 mb-1.5">Primary CTA Button Text</label>
-                    <input
-                      type="text"
-                      id="cust-hero-cta"
-                      value="Get Free 20-Min Audit"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-xs text-white"
-                    />
+                    <label class="block text-xs font-mono text-white/70 mb-1.5">Status Accent (Mint)</label>
+                    <div class="flex items-center gap-2">
+                      <input type="color" id="style-color-mint" value="#2ed573" class="w-8 h-8 rounded border border-white/20 bg-transparent cursor-pointer" />
+                      <input type="text" id="style-hex-mint" value="#2ed573" class="w-24 bg-[#101517] border border-white/15 rounded px-2 py-1 text-xs font-mono text-white" />
+                    </div>
                   </div>
+
                   <div>
-                    <label for="cust-hero-metrics" class="block text-xs font-mono text-white/70 mb-1.5">Trust Metrics (Spend, ROAS, Accuracy)</label>
-                    <div class="grid grid-cols-3 gap-2">
-                      <input type="text" id="cust-metric-1" value="$100k+" class="bg-obsidian-950/70 border border-white/15 rounded-xl px-2 py-2 text-xs font-mono text-peach text-center" />
-                      <input type="text" id="cust-metric-2" value="3.8x – 6.2x" class="bg-obsidian-950/70 border border-white/15 rounded-xl px-2 py-2 text-xs font-mono text-peach text-center" />
-                      <input type="text" id="cust-metric-3" value="99.8%" class="bg-obsidian-950/70 border border-white/15 rounded-xl px-2 py-2 text-xs font-mono text-accent-mint text-center" />
+                    <label class="block text-xs font-mono text-white/70 mb-1.5">Site Background (Obsidian)</label>
+                    <div class="flex items-center gap-2">
+                      <input type="color" id="style-color-bg" value="#0c0a10" class="w-8 h-8 rounded border border-white/20 bg-transparent cursor-pointer" />
+                      <input type="text" id="style-hex-bg" value="#0c0a10" class="w-24 bg-[#101517] border border-white/15 rounded px-2 py-1 text-xs font-mono text-white" />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- Section 2: Founder Section -->
-              <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                <h3 class="text-sm font-mono text-peach uppercase tracking-wider flex items-center gap-2">
-                  <span>02.</span> Founder Profile &amp; Bio
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Typography Engine -->
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 space-y-5">
+                <h3 class="text-sm font-bold text-white">Typography &amp; Fonts</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label for="cust-founder-name" class="block text-xs font-mono text-white/70 mb-1.5">Managing Director / Founder</label>
-                    <input
-                      type="text"
-                      id="cust-founder-name"
-                      value="Ratul Ahmed Shishir"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-sm text-white font-semibold"
-                    />
+                    <label for="style-font-heading" class="block text-xs font-mono text-white/70 mb-2">Display &amp; Headings Font</label>
+                    <select id="style-font-heading" class="w-full bg-[#101517] border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-wpblue font-mono">
+                      <option value="Lora">Lora (Current Editorial Default)</option>
+                      <option value="Playfair Display">Playfair Display (Luxury Serif)</option>
+                      <option value="Syne">Syne (Ultra Modern Geometric)</option>
+                      <option value="Outfit">Outfit (Clean Neo-Grotesque)</option>
+                      <option value="Plus Jakarta Sans">Plus Jakarta Sans (Tech Modern)</option>
+                      <option value="Inter">Inter (Silicon Valley Sans)</option>
+                    </select>
                   </div>
+
                   <div>
-                    <label for="cust-founder-tagline" class="block text-xs font-mono text-white/70 mb-1.5">Founder Tagline</label>
-                    <input
-                      type="text"
-                      id="cust-founder-tagline"
-                      value="THE STRATEGIST BEHIND THE SYSTEM"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-xs font-mono text-terra-bright"
-                    />
-                  </div>
-                  <div class="md:col-span-2">
-                    <label for="cust-founder-quote" class="block text-xs font-mono text-white/70 mb-1.5">Founder Personal Quote</label>
-                    <textarea
-                      id="cust-founder-quote"
-                      rows="3"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-xs text-white leading-relaxed font-sans"
-                    >"Agencies that claim to handle graphics, logos, websites, and SEO all at once cannot truly specialize in any. I have spent the last several years focusing exclusively on the internal algorithms, high-conversion copywriting, and server-side tracking mechanisms of Meta and Facebook ads. My single goal: to deliver the maximum cash return for every 1 taka of ad spend."</textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Section 3: Final Conversion CTA -->
-              <div class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                <h3 class="text-sm font-mono text-peach uppercase tracking-wider flex items-center gap-2">
-                  <span>03.</span> Final Call to Action (CTA) Section
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div class="md:col-span-2">
-                    <label for="cust-cta-headline" class="block text-xs font-mono text-white/70 mb-1.5">CTA Main Heading</label>
-                    <input
-                      type="text"
-                      id="cust-cta-headline"
-                      value="Ready to Build a Predictable REVENUE ENGINE WITH META ADS?"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-sm text-white"
-                    />
-                  </div>
-                  <div>
-                    <label for="cust-cta-btn" class="block text-xs font-mono text-white/70 mb-1.5">CTA Button Label</label>
-                    <input
-                      type="text"
-                      id="cust-cta-btn"
-                      value="Book 20-Min Strategy Audit on WhatsApp"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-xs text-white"
-                    />
-                  </div>
-                  <div>
-                    <label for="cust-cta-features" class="block text-xs font-mono text-white/70 mb-1.5">Sub-Feature Bullet Points</label>
-                    <input
-                      type="text"
-                      id="cust-cta-features"
-                      value="✓ Free 1-on-1 Consultation • ✓ Actionable Scaling Roadmap • ✓ Zero Obligation"
-                      class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2 text-xs font-mono text-white/60"
-                    />
-                  </div>
-                </div>
-              </div>
-
-            </form>
-          </div>
-        </div>
-
-        <!-- ================================================================ -->
-        <!-- TAB 3: SEO & SERP SUITE -->
-        <!-- ================================================================ -->
-        <div id="tab-panel-seo" class="dash-panel hidden space-y-8">
-          <div class="liquid-glass rounded-3xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h2 class="font-display text-2xl font-bold text-white">Google SERP &amp; Meta Suite</h2>
-              <p class="text-white/60 text-xs sm:text-sm font-sans mt-1">Live search engine result page simulator &amp; automated snippet score generator</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <label for="seo-page-select" class="text-xs font-mono text-white/60">Target Page:</label>
-              <select
-                id="seo-page-select"
-                class="bg-obsidian-900 border border-white/15 text-white text-xs font-mono rounded-xl px-3.5 py-2 focus:outline-none focus:border-peach"
-              >
-                <option value="home">Homepage (https://iadverts.site/)</option>
-                <option value="blog">Blog Archive (https://iadverts.site/blog)</option>
-                <option value="tripled-roas">Article: Tripled ROAS Case Study</option>
-                <option value="capi-checklist">Article: CAPI Setup Checklist</option>
-                <option value="calculator">ROAS Simulator (/#calculator)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div class="lg:col-span-7 space-y-6">
-              <div class="liquid-glass rounded-3xl p-6 sm:p-7 space-y-5">
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <label for="seo-title-input" class="text-xs font-mono uppercase tracking-wider text-white/80">Meta Page Title</label>
-                    <span id="seo-title-counter" class="text-[11px] font-mono text-accent-mint font-bold">58 / 60 chars (Optimal)</span>
-                  </div>
-                  <input
-                    type="text"
-                    id="seo-title-input"
-                    value="iAdvert Studio | Premier Meta &amp; Facebook Ads Agency"
-                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-peach"
-                  />
-                  <div class="w-full bg-white/10 h-1.5 rounded-full mt-2 overflow-hidden">
-                    <div id="seo-title-bar" class="bg-accent-mint h-full transition-all duration-300" style="width: 96%"></div>
+                    <label for="style-font-body" class="block text-xs font-mono text-white/70 mb-2">Body Text Font</label>
+                    <select id="style-font-body" class="w-full bg-[#101517] border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-wpblue font-mono">
+                      <option value="Plus Jakarta Sans">Plus Jakarta Sans (Default)</option>
+                      <option value="Inter">Inter (Ultra Legible)</option>
+                      <option value="Outfit">Outfit (Geometric Sans)</option>
+                    </select>
                   </div>
                 </div>
 
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <label for="seo-desc-input" class="text-xs font-mono uppercase tracking-wider text-white/80">Meta Description</label>
-                    <span id="seo-desc-counter" class="text-[11px] font-mono text-accent-mint font-bold">152 / 160 chars (Optimal)</span>
-                  </div>
-                  <textarea
-                    id="seo-desc-input"
-                    rows="3"
-                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-peach leading-relaxed"
-                  >We scale brands with high-performance Meta and Facebook ads. Psychological creative, scientific CBO architecture, and bulletproof CAPI tracking.</textarea>
-                  <div class="w-full bg-white/10 h-1.5 rounded-full mt-2 overflow-hidden">
-                    <div id="seo-desc-bar" class="bg-accent-mint h-full transition-all duration-300" style="width: 95%"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <label for="seo-keywords-input" class="text-xs font-mono uppercase tracking-wider text-white/80 block mb-2">Target Keywords</label>
-                  <input
-                    type="text"
-                    id="seo-keywords-input"
-                    value="Meta Ads Agency, Facebook Ads Bangladesh, CAPI Setup, Scale ROAS"
-                    class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-peach focus:outline-none focus:border-peach"
-                  />
-                </div>
-
-                <div class="pt-3 border-t border-white/[0.08] flex items-center justify-between">
-                  <span class="text-xs font-mono text-white/50">One-click Code Generator</span>
-                  <button
-                    type="button"
-                    id="btn-copy-meta"
-                    class="bg-peach/10 hover:bg-peach/20 text-peach border border-peach/30 px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all flex items-center gap-2"
-                  >
-                    <span>Copy Meta Tags HTML</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Previews -->
-            <div class="lg:col-span-5 space-y-6">
-              <div class="liquid-glass rounded-3xl p-6">
-                <span class="text-xs font-mono uppercase tracking-wider text-white/50 block mb-4">Google SERP Snippet Preview</span>
-                <div id="google-serp-preview-box" class="bg-[#202124] rounded-2xl p-5 border border-white/10 font-sans text-left">
-                  <div class="flex items-center gap-2.5 mb-2">
-                    <div class="w-6 h-6 rounded-full bg-terra/20 border border-terra/40 flex items-center justify-center text-[10px] text-peach font-bold">iA</div>
-                    <div>
-                      <div class="text-[12px] text-[#bdc1c6] font-medium leading-none">iAdvert Studio</div>
-                      <div class="text-[10px] text-[#9aa0a6] leading-none mt-0.5 truncate max-w-[280px]" id="serp-url-display">https://iadverts.site/</div>
-                    </div>
-                  </div>
-                  <h4 id="serp-title-display" class="text-[18px] text-[#8ab4f8] hover:underline cursor-pointer font-medium leading-snug mb-1">
-                    iAdvert Studio | Premier Meta &amp; Facebook Ads Agency
+                <!-- Live Font & Color Preview Box -->
+                <div class="mt-4 p-6 rounded-xl border border-white/10 bg-[#101517]" id="live-styles-preview-box">
+                  <span class="text-[10px] font-mono uppercase text-white/40 block mb-2">Live Typography &amp; Palette Preview</span>
+                  <h4 class="text-2xl sm:text-3xl font-bold text-white mb-2" id="preview-heading">
+                    We Scale Brands with <span class="text-peach italic">HIGH-PERFORMANCE</span> <span class="text-terra">META ADS.</span>
                   </h4>
-                  <p id="serp-desc-display" class="text-[13px] text-[#bdc1c6] leading-relaxed">
-                    We scale brands with high-performance Meta and Facebook ads. Psychological creative, scientific CBO architecture, and bulletproof CAPI tracking.
+                  <p class="text-xs text-white/70 leading-relaxed max-w-lg" id="preview-body">
+                    Stop guessing your Facebook ad spend. Build a profitable sales machine with psychological creative hooks, data-driven CBO architecture, and bulletproof server-side CAPI tracking.
                   </p>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- ================================================================ -->
-        <!-- TAB 4: MEDIA LIBRARY -->
-        <!-- ================================================================ -->
-        <div id="tab-panel-media" class="dash-panel hidden space-y-8">
-          <div class="liquid-glass rounded-3xl p-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <!-- Subtab 2: PATTERNS & SECTION REORDER (Drag & Drop) -->
+            <div id="sub-patterns" class="subtab-panel hidden space-y-6">
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 class="text-sm font-bold text-white">Homepage Block Patterns Layout</h3>
+                    <p class="text-xs text-white/50 mt-0.5">Drag and drop or click Up/Down to rearrange the order of sections on your homepage</p>
+                  </div>
+                  <span class="text-xs font-mono text-peach">7 Sections</span>
+                </div>
+
+                <!-- Draggable / Reorderable List -->
+                <div class="space-y-2.5 font-mono text-xs" id="wp-sections-order-list">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Subtab 3: SITE IMAGES REPLACER -->
+            <div id="sub-images" class="subtab-panel hidden space-y-6">
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 space-y-6">
+                <div>
+                  <h3 class="text-sm font-bold text-white">Site Images &amp; Artwork Replacer</h3>
+                  <p class="text-xs text-white/50 mt-0.5">Upload new image files or paste direct URLs to change pictures anywhere on the site</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  
+                  <!-- Logo -->
+                  <div class="p-4 rounded-xl border border-white/10 bg-[#101517] space-y-3">
+                    <span class="font-bold text-white text-xs block">Site Brand Logo</span>
+                    <div class="h-16 bg-[#0c0a10] rounded-lg p-2 flex items-center justify-center border border-white/10">
+                      <img id="img-preview-logo" src="/assets/logo.png" alt="Logo" class="max-h-full object-contain" />
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="text" id="input-img-logo" value="/assets/logo.png" class="flex-1 bg-[#1d2327] border border-white/15 rounded px-2.5 py-1.5 text-xs text-white font-mono" />
+                      <label class="bg-[#2271b1] text-white px-3 py-1.5 rounded text-xs cursor-pointer">
+                        Upload
+                        <input type="file" class="hidden file-img-replacer" data-target="logo" accept="image/*" />
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Founder Photo -->
+                  <div class="p-4 rounded-xl border border-white/10 bg-[#101517] space-y-3">
+                    <span class="font-bold text-white text-xs block">Founder Portrait (Ratul Ahmed Shishir)</span>
+                    <div class="h-28 bg-[#0c0a10] rounded-lg p-2 flex items-center justify-center border border-white/10">
+                      <img id="img-preview-founder" src="/assets/founder.jpg" alt="Founder" class="max-h-full object-cover rounded" />
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="text" id="input-img-founder" value="/assets/founder.jpg" class="flex-1 bg-[#1d2327] border border-white/15 rounded px-2.5 py-1.5 text-xs text-white font-mono" />
+                      <label class="bg-[#2271b1] text-white px-3 py-1.5 rounded text-xs cursor-pointer">
+                        Upload
+                        <input type="file" class="hidden file-img-replacer" data-target="founder" accept="image/*" />
+                      </label>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Subtab 4: SECTION TEXT & COPY -->
+            <div id="sub-content" class="subtab-panel hidden space-y-6">
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 space-y-6">
+                <div>
+                  <h3 class="text-sm font-bold text-white">Homepage Content &amp; Copy</h3>
+                  <p class="text-xs text-white/50 mt-0.5">Edit texts, headlines, quotes, and buttons across the site</p>
+                </div>
+
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-xs font-mono text-white/70 mb-1">Hero Badge</label>
+                    <input type="text" id="wp-text-heroTag" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-peach font-mono" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-mono text-white/70 mb-1">Hero Subtitle</label>
+                    <textarea id="wp-text-heroSubtitle" rows="2" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white"></textarea>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-mono text-white/70 mb-1">Hero CTA Button</label>
+                    <input type="text" id="wp-text-heroCta" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-mono text-white/70 mb-1">Founder Personal Quote</label>
+                    <textarea id="wp-text-founderQuote" rows="3" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white"></textarea>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-mono text-white/70 mb-1">Final CTA Headline</label>
+                    <input type="text" id="wp-text-ctaHeadline" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 7: PLUGINS -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-plugins" class="wp-pane hidden space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+              <h1 class="text-2xl font-bold text-white">Installed Plugins</h1>
+              <span class="text-xs font-mono text-mint">6 Active Plugins</span>
+            </div>
+
+            <div class="bg-[#1d2327] border border-white/10 rounded-2xl overflow-hidden">
+              <table class="w-full text-left text-xs font-sans">
+                <thead class="bg-[#181d20] border-b border-white/10 text-white/50 font-mono uppercase text-[11px]">
+                  <tr>
+                    <th class="py-3 px-4">Plugin</th>
+                    <th class="py-3 px-4">Description</th>
+                    <th class="py-3 px-4">Version</th>
+                    <th class="py-3 px-4">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/[0.06]">
+                  <tr>
+                    <td class="py-3 px-4 font-bold text-white">Meta Graph API &amp; CAPI Gateway</td>
+                    <td class="py-3 px-4 text-white/70">Connects Shopify &amp; Stape.io server conversions.</td>
+                    <td class="py-3 px-4 font-mono text-white/50">21.0.4</td>
+                    <td class="py-3 px-4"><span class="text-mint font-semibold">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-4 font-bold text-white">Astro Drag-and-Drop Site Builder</td>
+                    <td class="py-3 px-4 text-white/70">Enables dynamic reordering and visual editing.</td>
+                    <td class="py-3 px-4 font-mono text-white/50">6.6.2</td>
+                    <td class="py-3 px-4"><span class="text-mint font-semibold">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 px-4 font-bold text-white">Yoast / Rank Math SEO Simulator</td>
+                    <td class="py-3 px-4 text-white/70">Generates Google SERP desktop/mobile snippet previews.</td>
+                    <td class="py-3 px-4 font-mono text-white/50">3.4.1</td>
+                    <td class="py-3 px-4"><span class="text-mint font-semibold">Active</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 8: USERS & PROFILE -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-users" class="wp-pane hidden space-y-6">
+            <h1 class="text-2xl font-bold text-white">Profile &amp; Users</h1>
+
+            <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 max-w-xl space-y-4">
               <div>
-                <h2 class="font-display text-2xl font-bold text-white">Media Asset Library</h2>
-                <p class="text-white/60 text-xs sm:text-sm font-sans mt-1">Upload brand images, article covers, and client campaign creatives with instant URL copying</p>
+                <label class="block text-xs font-mono text-white/70 mb-1">Username</label>
+                <input type="text" value="admin" readonly class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white/50 font-mono" />
               </div>
-              <div class="text-xs font-mono text-white/50" id="media-count-badge">6 Assets</div>
-            </div>
-
-            <div
-              id="media-dropzone"
-              class="border-2 border-dashed border-white/20 hover:border-peach/60 rounded-2xl p-8 text-center cursor-pointer transition-all bg-white/[0.02] hover:bg-white/[0.04] group"
-            >
-              <input type="file" id="media-file-input" accept="image/*" class="hidden" multiple />
-              <div class="w-12 h-12 rounded-2xl liquid-glass-icon mx-auto flex items-center justify-center text-peach group-hover:scale-110 transition-transform mb-3">
-                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-              </div>
-              <div class="text-sm font-semibold text-white mb-1">
-                Drop new images here, or <span class="text-peach underline">browse files</span>
-              </div>
-              <p class="text-xs font-mono text-white/40">PNG, JPG, WebP, SVG</p>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5" id="media-assets-grid">
-            <!-- Populated via JS -->
-          </div>
-        </div>
-
-        <!-- ================================================================ -->
-        <!-- TAB 5: BRAND IDENTITY & CONTACT SETTINGS -->
-        <!-- ================================================================ -->
-        <div id="tab-panel-settings" class="dash-panel hidden space-y-8">
-          <div class="liquid-glass rounded-3xl p-6 sm:p-8">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.08] mb-8">
               <div>
-                <h2 class="font-display text-2xl font-bold text-white">Brand &amp; Agency Settings</h2>
-                <p class="text-white/60 text-xs sm:text-sm font-sans mt-1">Official contact details, registered location, phone numbers, and WhatsApp</p>
+                <label class="block text-xs font-mono text-white/70 mb-1">Display Name Publicly As</label>
+                <input type="text" id="wp-user-display" value="Ratul Ahmed Shishir" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white font-mono" />
               </div>
-              <button
-                type="button"
-                id="btn-save-settings"
-                class="bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white text-xs sm:text-sm font-semibold tracking-wide uppercase px-6 py-2.5 rounded-xl border border-peach/20 shadow-lg shadow-terra/30 transition-all hover:scale-105"
-              >
-                Save Settings
-              </button>
-            </div>
-
-            <form id="brand-settings-form" class="space-y-6">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                  <label for="setting-brand-name" class="block text-xs font-mono text-white/70 mb-2">Agency Brand Name</label>
-                  <input type="text" id="setting-brand-name" value="iAdvert Studio" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white" />
-                </div>
-                <div>
-                  <label for="setting-founder" class="block text-xs font-mono text-white/70 mb-2">Managing Director / Founder</label>
-                  <input type="text" id="setting-founder" value="Ratul Ahmed Shishir" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white" />
-                </div>
-                <div>
-                  <label for="setting-phone" class="block text-xs font-mono text-white/70 mb-2">Official Phone Number</label>
-                  <input type="text" id="setting-phone" value="+880 1301-843562" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white font-mono" />
-                </div>
-                <div>
-                  <label for="setting-whatsapp" class="block text-xs font-mono text-white/70 mb-2">Official WhatsApp Number</label>
-                  <input type="text" id="setting-whatsapp" value="+880 1301-843562" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white font-mono" />
-                </div>
-                <div>
-                  <label for="setting-email" class="block text-xs font-mono text-white/70 mb-2">Primary Inquiry Email</label>
-                  <input type="email" id="setting-email" value="inquiryiadverts@gmail.com" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white font-mono" />
-                </div>
-                <div>
-                  <label for="setting-address" class="block text-xs font-mono text-white/70 mb-2">Physical Registered Location</label>
-                  <input type="text" id="setting-address" value="Rajshahi, Bangladesh" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white" />
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- ================================================================ -->
-        <!-- TAB 6: SECURITY & MASTER KEY -->
-        <!-- ================================================================ -->
-        <div id="tab-panel-security" class="dash-panel hidden space-y-8">
-          <div class="liquid-glass rounded-3xl p-6 sm:p-8 max-w-2xl">
-            <h2 class="font-display text-2xl font-bold text-white mb-2">Admin Security &amp; Master Key</h2>
-            <p class="text-white/60 text-xs sm:text-sm font-sans mb-8">Change the password required to access this control suite. Keep this password secret.</p>
-
-            <form id="change-pwd-form" class="space-y-5">
               <div>
-                <label for="new-admin-password" class="block text-xs font-mono text-white/80 mb-2">New Master Admin Password</label>
-                <input
-                  type="text"
-                  id="new-admin-password"
-                  placeholder="Enter new strong password..."
-                  class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-sm font-mono text-peach focus:outline-none focus:border-peach"
-                />
+                <label class="block text-xs font-mono text-white/70 mb-1">Email</label>
+                <input type="email" value="inquiryiadverts@gmail.com" readonly class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white/50 font-mono" />
               </div>
-
-              <div class="pt-2 flex items-center gap-3">
-                <button
-                  type="button"
-                  id="btn-update-password"
-                  class="bg-gradient-to-r from-terra-bright to-terra text-white text-xs font-semibold uppercase px-5 py-2.5 rounded-xl border border-peach/20"
-                >
-                  Update Master Password
-                </button>
-                <button
-                  type="button"
-                  id="btn-reset-default-pwd"
-                  class="liquid-glass-inner text-white/60 hover:text-white text-xs font-mono px-4 py-2.5 rounded-xl"
-                >
-                  Reset to Default Key
-                </button>
+              <div>
+                <label class="block text-xs font-mono text-white/70 mb-1">Change Master Password</label>
+                <input type="password" id="wp-user-new-pwd" placeholder="Enter new password..." class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white font-mono" />
               </div>
-            </form>
-
-            <div class="mt-8 pt-6 border-t border-white/[0.08] space-y-3">
-              <h3 class="text-xs font-mono uppercase text-white/50 tracking-wider">Secret Shortcut Access</h3>
-              <p class="text-xs font-sans text-white/60 leading-relaxed">
-                You can quickly open this dashboard anytime by pressing <kbd class="px-2 py-0.5 rounded bg-white/10 font-mono text-peach">Ctrl + Shift + A</kbd> anywhere on the site, or clicking the copyright notice in the footer 3 times!
-              </p>
+              <button type="button" id="btn-wp-update-profile" class="bg-[#2271b1] hover:bg-[#135e96] text-white text-xs px-4 py-2 rounded-lg font-medium">Update Profile &amp; Key</button>
             </div>
           </div>
-        </div>
 
-        <!-- ================================================================ -->
-        <!-- TAB 7: AD PERFORMANCE ANALYTICS -->
-        <!-- ================================================================ -->
-        <div id="tab-panel-analytics" class="dash-panel hidden space-y-8">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            <div class="liquid-glass rounded-3xl p-6">
-              <span class="text-xs font-mono uppercase text-white/50 block mb-2">Total Spend</span>
-              <div class="text-3xl font-display font-bold text-white">$24,850</div>
-              <span class="text-accent-mint text-xs font-mono mt-1 block">↑ +18.4% vs prior</span>
-            </div>
-            <div class="liquid-glass rounded-3xl p-6">
-              <span class="text-xs font-mono uppercase text-white/50 block mb-2">Gross Revenue</span>
-              <div class="text-3xl font-display font-bold text-white">$148,200</div>
-              <span class="text-accent-mint text-xs font-mono mt-1 block">↑ +34.2% vs prior</span>
-            </div>
-            <div class="liquid-glass rounded-3xl p-6">
-              <span class="text-xs font-mono uppercase text-white/50 block mb-2">Blended ROAS</span>
-              <div class="text-3xl font-display font-bold text-peach">5.96x</div>
-              <span class="text-accent-mint text-xs font-mono mt-1 block">+1.96x above target</span>
-            </div>
-            <div class="liquid-glass rounded-3xl p-6">
-              <span class="text-xs font-mono uppercase text-white/50 block mb-2">Blended CPA</span>
-              <div class="text-3xl font-display font-bold text-white">$18.40</div>
-              <span class="text-peach text-xs font-mono mt-1 block">↓ -24.8% acquisition</span>
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 9: TOOLS (Import/Export & Backup) -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-tools" class="wp-pane hidden space-y-6">
+            <h1 class="text-2xl font-bold text-white">Tools &amp; Backup</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 space-y-3">
+                <h3 class="text-sm font-bold text-white">Export Website Data</h3>
+                <p class="text-xs text-white/60 leading-relaxed">Download a complete JSON archive of your blog articles, customizer copy, global styles, and settings.</p>
+                <button type="button" id="btn-wp-export-all" class="bg-[#2271b1] hover:bg-[#135e96] text-white text-xs px-4 py-2 rounded-lg font-medium">Download JSON Backup</button>
+              </div>
+
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 space-y-3">
+                <h3 class="text-sm font-bold text-white">Site Health Check</h3>
+                <div class="space-y-2 text-xs font-mono">
+                  <div class="flex items-center justify-between text-mint"><span>✓ HTTPS SSL Active</span><span>OK</span></div>
+                  <div class="flex items-center justify-between text-mint"><span>✓ CAPI Latency: 38ms</span><span>OK</span></div>
+                  <div class="flex items-center justify-between text-mint"><span>✓ Robots.txt Protected</span><span>OK</span></div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 10: SETTINGS (General, Phone, Address) -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-settings" class="wp-pane hidden space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+              <h1 class="text-2xl font-bold text-white">General Settings</h1>
+              <button type="button" id="btn-save-wp-settings" class="bg-[#2271b1] hover:bg-[#135e96] text-white text-xs px-4 py-2 rounded-lg font-medium">Save Changes</button>
+            </div>
+
+            <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-6 max-w-2xl space-y-4">
+              <div>
+                <label class="block text-xs font-mono text-white/70 mb-1">Site Title</label>
+                <input type="text" id="wp-set-title" value="iAdvert Studio" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-white/70 mb-1">Tagline</label>
+                <input type="text" id="wp-set-tagline" value="High-Performance Meta Ads &amp; Server-Side CAPI Attribution Agency" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-white/70 mb-1">Official Contact Phone</label>
+                <input type="text" id="wp-set-phone" value="+880 1301-843562" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white font-mono" />
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-white/70 mb-1">Official WhatsApp Number</label>
+                <input type="text" id="wp-set-whatsapp" value="+880 1301-843562" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white font-mono" />
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-white/70 mb-1">Registered Location (Address)</label>
+                <input type="text" id="wp-set-address" value="Rajshahi, Bangladesh" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs text-white font-mono" />
+              </div>
+            </div>
+          </div>
+
+          <!-- ------------------------------------------------------------- -->
+          <!-- PANE 11: META ANALYTICS -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="pane-analytics" class="wp-pane hidden space-y-6">
+            <h1 class="text-2xl font-bold text-white">Meta Ads Performance &amp; CAPI</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-5"><span class="text-xs font-mono text-white/50 block">Spend</span><div class="text-2xl font-bold text-white">$24,850</div></div>
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-5"><span class="text-xs font-mono text-white/50 block">Revenue</span><div class="text-2xl font-bold text-white">$148,200</div></div>
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-5"><span class="text-xs font-mono text-white/50 block">ROAS</span><div class="text-2xl font-bold text-peach">5.96x</div></div>
+              <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-5"><span class="text-xs font-mono text-white/50 block">CPA</span><div class="text-2xl font-bold text-mint">$18.40</div></div>
+            </div>
+          </div>
+
+        </main>
       </div>
 
     </div>
-  </main>
 
-  <!-- ================================================================ -->
-  <!-- MODAL: WRITE / EDIT ARTICLE -->
-  <!-- ================================================================ -->
-  <div id="modal-post-editor" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 bg-obsidian-950/80 backdrop-blur-xl overflow-y-auto">
-    <div class="liquid-glass rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden border border-white/20 shadow-2xl my-auto">
-      <div class="p-6 border-b border-white/[0.08] flex items-center justify-between bg-obsidian-900/60">
-        <div>
-          <h3 id="modal-editor-title" class="font-display text-xl sm:text-2xl font-bold text-white">Write New Article</h3>
-          <p class="text-xs font-mono text-white/50 mt-1">WordPress style markdown post with tag &amp; cover support</p>
+    <!-- ================================================================ -->
+    <!-- MODAL: ADD / EDIT POST (Full Block / Markdown Editor) -->
+    <!-- ================================================================ -->
+    <div id="wp-modal-post-editor" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+      <div class="bg-[#1d2327] border border-white/15 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden shadow-2xl my-auto">
+        <div class="p-4 border-b border-white/10 flex items-center justify-between bg-[#181d20]">
+          <h3 id="wp-editor-heading" class="text-base font-bold text-white">Add New Post</h3>
+          <button type="button" id="btn-close-post-modal" class="text-white/60 hover:text-white px-2 py-1 text-sm">✕</button>
         </div>
-        <button type="button" id="btn-close-editor-modal" class="w-9 h-9 rounded-xl liquid-glass-inner text-white/60 hover:text-white flex items-center justify-center">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-      </div>
-
-      <div class="p-6 sm:p-8 overflow-y-auto space-y-6">
-        <input type="hidden" id="edit-post-id" value="" />
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="md:col-span-2">
-            <label for="edit-title" class="block text-xs font-mono text-white/80 mb-2">Article Headline</label>
-            <input type="text" id="edit-title" placeholder="How We Tripled ROAS..." class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-base text-white focus:outline-none focus:border-peach" />
-          </div>
-
+        <div class="p-6 overflow-y-auto space-y-4">
+          <input type="hidden" id="wp-edit-id" value="" />
           <div>
-            <label for="edit-slug" class="block text-xs font-mono text-white/80 mb-2">URL Slug</label>
-            <div class="flex items-center">
-              <span class="bg-white/5 border border-r-0 border-white/15 px-3 py-2.5 rounded-l-xl text-xs font-mono text-white/40">/blog/</span>
-              <input type="text" id="edit-slug" placeholder="tripled-roas" class="w-full bg-obsidian-950/70 border border-white/15 rounded-r-xl px-4 py-2.5 text-xs font-mono text-peach focus:outline-none focus:border-peach" />
+            <label class="block text-xs font-mono text-white/70 mb-1">Post Title</label>
+            <input type="text" id="wp-edit-title" placeholder="Add title..." class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-base font-bold text-white focus:outline-none focus:border-wpblue" />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-mono text-white/70 mb-1">Slug</label>
+              <input type="text" id="wp-edit-slug" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-peach font-mono" />
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-white/70 mb-1">Category</label>
+              <select id="wp-edit-category" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white">
+                <option value="Meta Ads">Meta Ads</option>
+                <option value="CAPI">CAPI &amp; Tracking</option>
+                <option value="Creative">Creative Psychology</option>
+                <option value="Strategy">Strategy &amp; Scale</option>
+                <option value="Education">Education</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-white/70 mb-1">Tags</label>
+              <input type="text" id="wp-edit-tags" value="Meta Ads, ROAS" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white font-mono" />
             </div>
           </div>
-
-          <div>
-            <label for="edit-category" class="block text-xs font-mono text-white/80 mb-2">Category</label>
-            <select id="edit-category" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-peach">
-              <option value="Meta Ads">Meta Ads</option>
-              <option value="CAPI">CAPI &amp; Tracking</option>
-              <option value="Creative">Creative Psychology</option>
-              <option value="Strategy">Strategy &amp; Scale</option>
-              <option value="Education">Education &amp; Tips</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="edit-tags" class="block text-xs font-mono text-white/80 mb-2">Post Tags (comma separated)</label>
-            <input type="text" id="edit-tags" value="Meta Ads, ROAS, Scaling" placeholder="Meta Ads, CAPI, E-commerce" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-peach focus:outline-none focus:border-peach" />
-          </div>
-
-          <div>
-            <label for="edit-readtime" class="block text-xs font-mono text-white/80 mb-2">Reading Time</label>
-            <input type="text" id="edit-readtime" value="8 min read" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-peach" />
-          </div>
-
-          <div class="flex items-center gap-3 pt-2">
-            <input type="checkbox" id="edit-featured" class="w-4 h-4 rounded border-white/20 text-terra" />
-            <label for="edit-featured" class="text-xs font-mono text-white cursor-pointer">Set as Featured Hero Article on /blog</label>
-          </div>
-        </div>
-
-        <!-- Cover Chooser -->
-        <div class="border border-white/15 rounded-2xl p-5 bg-white/[0.02]">
-          <label class="block text-xs font-mono uppercase text-peach mb-3">Cover Artwork &amp; Image</label>
-          <div class="flex flex-col sm:flex-row items-center gap-5">
-            <div class="w-full sm:w-48 h-28 rounded-xl overflow-hidden border border-white/20 bg-obsidian-950 shrink-0">
-              <img id="edit-cover-preview" src={`${base}/assets/hero-3d-concept.jpg`} alt="Cover" class="w-full h-full object-cover" />
-            </div>
-            <div class="flex-1 w-full space-y-3">
-              <input type="text" id="edit-cover-url" value="/assets/hero-3d-concept.jpg" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-3.5 py-2 text-xs font-mono text-white" />
-              <div class="flex flex-wrap items-center gap-2">
-                <label for="edit-cover-file" class="bg-peach/10 hover:bg-peach/20 text-peach border border-peach/30 px-3 py-1.5 rounded-lg text-[11px] font-mono cursor-pointer inline-flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                  <span>Upload Picture</span>
-                  <input type="file" id="edit-cover-file" accept="image/*" class="hidden" />
-                </label>
-              </div>
+          <!-- Cover Image -->
+          <div class="p-3 rounded-lg border border-white/10 bg-[#101517] flex items-center gap-4">
+            <img id="wp-edit-cover-preview" src="/assets/hero-3d-concept.jpg" class="w-24 h-16 object-cover rounded border border-white/20" />
+            <div class="flex-1 space-y-1.5">
+              <input type="text" id="wp-edit-cover-url" value="/assets/hero-3d-concept.jpg" class="w-full bg-[#1d2327] border border-white/15 rounded px-2.5 py-1 text-xs text-white font-mono" />
+              <label class="inline-block bg-[#2271b1] text-white text-[10px] px-2.5 py-1 rounded cursor-pointer">
+                Upload Custom Cover
+                <input type="file" id="wp-edit-cover-file" accept="image/*" class="hidden" />
+              </label>
             </div>
           </div>
+          <div>
+            <label class="block text-xs font-mono text-white/70 mb-1">Excerpt</label>
+            <textarea id="wp-edit-excerpt" rows="2" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-1.5 text-xs text-white"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-white/70 mb-1">Content (Markdown / Block text)</label>
+            <textarea id="wp-edit-body" rows="8" class="w-full bg-[#101517] border border-white/15 rounded-lg px-3 py-2 text-xs font-mono text-white leading-relaxed"></textarea>
+          </div>
         </div>
-
-        <!-- Excerpt -->
-        <div>
-          <label for="edit-excerpt" class="block text-xs font-mono text-white/80 mb-2">Short Excerpt</label>
-          <textarea id="edit-excerpt" rows="2" class="w-full bg-obsidian-950/70 border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white leading-relaxed"></textarea>
-        </div>
-
-        <!-- Markdown Body -->
-        <div>
-          <label for="edit-body" class="block text-xs font-mono text-white/80 mb-2">Article Body (Markdown)</label>
-          <textarea id="edit-body" rows="9" class="w-full bg-obsidian-950/90 border border-white/15 rounded-xl px-4 py-3 text-xs sm:text-sm font-mono text-white leading-relaxed"></textarea>
-        </div>
-      </div>
-
-      <div class="p-6 border-t border-white/[0.08] flex items-center justify-between bg-obsidian-900/60">
-        <button type="button" id="btn-download-md" class="liquid-glass-inner text-white/70 hover:text-white px-4 py-2 rounded-xl text-xs font-mono inline-flex items-center gap-1.5">
-          <span>Download .MD File</span>
-        </button>
-        <div class="flex items-center gap-3">
-          <button type="button" id="btn-cancel-modal" class="liquid-glass-inner text-white/70 hover:text-white px-5 py-2.5 rounded-xl text-xs font-mono">Cancel</button>
-          <button type="button" id="btn-save-post" class="bg-gradient-to-r from-terra-bright to-terra text-white text-xs sm:text-sm font-semibold uppercase px-6 py-2.5 rounded-xl border border-peach/20">Save &amp; Publish</button>
+        <div class="p-4 border-t border-white/10 flex items-center justify-between bg-[#181d20]">
+          <button type="button" id="btn-wp-download-md" class="text-xs text-white/70 hover:text-white font-mono">Download as .md file</button>
+          <div class="flex items-center gap-2">
+            <button type="button" id="btn-wp-cancel-post" class="bg-white/5 hover:bg-white/10 text-white text-xs px-3 py-1.5 rounded">Cancel</button>
+            <button type="button" id="btn-wp-save-post" class="bg-[#2271b1] hover:bg-[#135e96] text-white text-xs px-4 py-1.5 rounded font-medium">Publish Post</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- FLOATING TOAST -->
-  <div id="dash-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="liquid-glass border border-peach/40 shadow-2xl rounded-2xl px-5 py-3.5 flex items-center gap-3 text-white text-xs sm:text-sm backdrop-blur-2xl">
-      <span class="w-2 h-2 rounded-full bg-accent-mint animate-pulse"></span>
-      <span id="toast-message" class="font-medium">Settings saved!</span>
+    <!-- TOAST NOTIFICATION -->
+    <div id="wp-toast" class="fixed bottom-5 right-5 z-[150] bg-[#1d2327] border border-[#2271b1] text-white text-xs px-4 py-2.5 rounded-lg shadow-2xl opacity-0 pointer-events-none transition-all duration-300">
+      Settings Saved!
     </div>
-  </div>
 
-  <Footer />
-</Layout>
+    <!-- SERIALIZED DEFAULT CONFIG (build-time) — client merges localStorage edits on top -->
+    <script id="wp-default-config" type="application/json" set:html={JSON.stringify(DEFAULT_CONFIG)}></script>
 
-<script>
-  // ================================================================
-  // ADMIN AUTHENTICATION GATE
-  // ================================================================
-  const DEFAULT_ADMIN_KEY = 'admin@iadvert2027';
-
-  function getStoredAdminKey(): string {
-    return localStorage.getItem('iadverts_admin_password') || DEFAULT_ADMIN_KEY;
-  }
-
-  function isAdminLoggedIn(): boolean {
-    return localStorage.getItem('iadverts_admin_authenticated') === 'true';
-  }
-
-  const authGate = document.getElementById('admin-auth-gate');
-  const mainSuite = document.getElementById('admin-main-suite');
-  const loginForm = document.getElementById('admin-login-form');
-  const pwdInput = document.getElementById('admin-password-input') as HTMLInputElement;
-  const errorMsg = document.getElementById('login-error-msg');
-  const togglePwdBtn = document.getElementById('btn-toggle-pwd');
-  const logoutBtn = document.getElementById('btn-admin-logout');
-
-  function checkAuth() {
-    if (isAdminLoggedIn()) {
-      authGate?.classList.add('hidden');
-      mainSuite?.classList.remove('hidden');
-    } else {
-      authGate?.classList.remove('hidden');
-      mainSuite?.classList.add('hidden');
-    }
-  }
-
-  // Toggle show/hide password
-  togglePwdBtn?.addEventListener('click', () => {
-    if (pwdInput.type === 'password') {
-      pwdInput.type = 'text';
-      togglePwdBtn.textContent = 'Hide';
-    } else {
-      pwdInput.type = 'password';
-      togglePwdBtn.textContent = 'Show';
-    }
-  });
-
-  // Handle Login
-  loginForm?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const entered = pwdInput.value.trim();
-    const correct = getStoredAdminKey();
-
-    if (entered === correct) {
-      localStorage.setItem('iadverts_admin_authenticated', 'true');
-      errorMsg?.classList.add('hidden');
-      checkAuth();
-      showToast('Welcome, Ratul Ahmed Shishir!');
-    } else {
-      errorMsg?.classList.remove('hidden');
-      pwdInput.focus();
-    }
-  });
-
-  // Handle Logout
-  logoutBtn?.addEventListener('click', () => {
-    localStorage.removeItem('iadverts_admin_authenticated');
-    checkAuth();
-    showToast('Session locked and logged out.');
-  });
-
-  // Toast
-  function showToast(message: string) {
-    const toast = document.getElementById('dash-toast');
-    const toastMsg = document.getElementById('toast-message');
-    if (toast && toastMsg) {
-      toastMsg.textContent = message;
-      toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
-      toast.classList.add('translate-y-0', 'opacity-100');
-      setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
-      }, 3000);
-    }
-  }
-
-  // ================================================================
-  // TAB NAVIGATION
-  // ================================================================
-  const tabButtons = document.querySelectorAll<HTMLButtonElement>('.dash-tab');
-  const tabPanels = document.querySelectorAll<HTMLElement>('.dash-panel');
-
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tabId = btn.getAttribute('data-tab');
-      if (!tabId) return;
-
-      tabButtons.forEach(b => {
-        b.classList.remove('active', 'text-white', 'bg-white/10', 'font-semibold', 'border', 'border-white/15', 'shadow-sm');
-        b.classList.add('text-white/70', 'font-medium');
-      });
-      btn.classList.add('active', 'text-white', 'bg-white/10', 'font-semibold', 'border', 'border-white/15', 'shadow-sm');
-      btn.classList.remove('text-white/70', 'font-medium');
-
-      tabPanels.forEach(panel => {
-        if (panel.id === `tab-panel-${tabId}`) {
-          panel.classList.remove('hidden');
-        } else {
-          panel.classList.add('hidden');
-        }
-      });
-    });
-  });
-
-  // ================================================================
-  // BLOG POSTS (CMS)
-  // ================================================================
-  interface BlogPostItem {
-    id: string;
-    slug: string;
-    title: string;
-    description: string;
-    category: string;
-    tags: string;
-    readTime: string;
-    pubDate: string;
-    image: string;
-    featured: boolean;
-    body: string;
-  }
-
-  const DEFAULT_POSTS: BlogPostItem[] = [
-    {
-      id: 'tripled-roas-beauty',
-      slug: 'tripled-roas-beauty',
-      title: 'How We Tripled ROAS for a D2C Beauty Brand in 45 Days',
-      description: 'Using AI UGC creative and cloud CAPI integration, we recovered 28% drop-off and turned casual browsers into repeat customers — cutting CPA by 44%.',
-      category: 'Meta Ads',
-      tags: 'Meta Ads, UGC, Scaling, Beauty',
-      readTime: '8 min read',
-      pubDate: '2026-11-15',
-      image: '/assets/hero-3d-concept.jpg',
-      featured: true,
-      body: `## The Challenge\n\nA fast-growing D2C beauty brand was struggling with diminishing returns on their Meta ad spend...`
-    },
-    {
-      id: 'capi-setup-checklist',
-      slug: 'capi-setup-checklist',
-      title: 'The Complete CAPI Setup Checklist for 2027',
-      description: 'A step-by-step walkthrough of the Conversions API implementation that protects your ad data against iOS changes and ensures accurate attribution.',
-      category: 'CAPI',
-      tags: 'CAPI, Tracking, Stape.io, Meta Events',
-      readTime: '12 min read',
-      pubDate: '2026-10-22',
-      image: '/assets/hero-3d-concept.jpg',
-      featured: false,
-      body: `## Why Browser Pixels Are Failing\n\nThird-party cookie depreciation and browser ad-blockers strip away 15% to 35% of tracking signals...`
-    },
-    {
-      id: 'creative-psychology-ads',
-      slug: 'creative-psychology-ads',
-      title: 'Creative Psychology: Designing Ads That Stick',
-      description: 'From color psychology to hook placement, we break down the exact visual elements that make Meta ads impossible to scroll past.',
-      category: 'Creative',
-      tags: 'Creative, Psychology, Hook Rate, Copywriting',
-      readTime: '6 min read',
-      pubDate: '2026-09-30',
-      image: '/assets/hero-3d-concept.jpg',
-      featured: false,
-      body: `## The 3-Second War for Attention\n\nYour ad does not compete with other brands — it competes with close friends and algorithmic dopamine feeds...`
-    },
-    {
-      id: 'scaling-playbook',
-      slug: 'scaling-playbook',
-      title: 'From $2K to $20K Monthly Ad Spend: A Scaling Playbook',
-      description: 'The systematic framework we use to scale ad budgets 10x without losing ROAS — including bid strategies and audience layering.',
-      category: 'Strategy',
-      tags: 'Scaling, CBO, Budget Allocation, ROAS',
-      readTime: '10 min read',
-      pubDate: '2026-09-05',
-      image: '/assets/hero-3d-concept.jpg',
-      featured: false,
-      body: `## The Plateau Problem\n\nMost media buyers scale vertically by increasing ad set budget by 50% in one click, resetting algorithmic learning...`
-    },
-    {
-      id: 'meta-mistakes',
-      slug: 'meta-mistakes',
-      title: '5 Common Meta Ad Mistakes and How to Fix Them',
-      description: 'From wrong attribution windows to creative fatigue, we cover the most frequent errors that drain ad budgets — and the quick fixes.',
-      category: 'Education',
-      tags: 'Mistakes, Learning Phase, Audience Overlap',
-      readTime: '5 min read',
-      pubDate: '2026-08-20',
-      image: '/assets/hero-3d-concept.jpg',
-      featured: false,
-      body: `## Common Pitfalls\n\n1. Turning off ads too early during 50-conversion learning phase...`
-    }
-  ];
-
-  function getStoredPosts(): BlogPostItem[] {
-    const raw = localStorage.getItem('iadverts_cms_posts');
-    if (!raw) {
-      localStorage.setItem('iadverts_cms_posts', JSON.stringify(DEFAULT_POSTS));
-      return DEFAULT_POSTS;
-    }
-    try { return JSON.parse(raw); } catch { return DEFAULT_POSTS; }
-  }
-
-  function saveStoredPosts(posts: BlogPostItem[]) {
-    localStorage.setItem('iadverts_cms_posts', JSON.stringify(posts));
-  }
-
-  function renderPosts() {
-    const container = document.getElementById('cms-posts-container');
-    const badgeCount = document.getElementById('badge-post-count');
-    if (!container) return;
-
-    const posts = getStoredPosts();
-    if (badgeCount) badgeCount.textContent = posts.length.toString();
-
-    container.innerHTML = posts.map(post => `
-      <div class="liquid-glass rounded-3xl overflow-hidden flex flex-col group border border-white/10 hover:border-peach/30 transition-all">
-        <div class="relative h-44 overflow-hidden bg-obsidian-950">
-          <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950/80 via-transparent to-transparent"></div>
-          <span class="absolute top-3 left-3 text-[10px] font-mono uppercase tracking-widest text-peach bg-obsidian-950/80 px-2.5 py-1 rounded-full border border-white/10">${post.category}</span>
-          ${post.featured ? '<span class="absolute top-3 right-3 text-[10px] font-mono text-white bg-terra/80 px-2 py-0.5 rounded-full border border-peach/30">Featured</span>' : ''}
+    <!-- PUBLISH RESULT MODAL -->
+    <div id="wp-modal-publish" class="fixed inset-0 z-[120] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+      <div class="bg-[#1d2327] border border-white/15 rounded-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden shadow-2xl my-auto">
+        <div class="p-4 border-b border-white/10 flex items-center justify-between bg-[#181d20]">
+          <h3 class="text-base font-bold text-white">Publish Site Config</h3>
+          <button type="button" id="btn-close-publish-modal" class="text-white/60 hover:text-white px-2 py-1 text-sm">✕</button>
         </div>
-        <div class="p-5 flex flex-col flex-1">
-          <h4 class="font-display text-base font-bold text-white mb-2 line-clamp-2">${post.title}</h4>
-          <p class="text-white/60 text-xs line-clamp-2 mb-3 font-sans">${post.description}</p>
-          <div class="text-[10px] font-mono text-peach/70 mb-4 truncate">${post.tags || '#MetaAds'}</div>
-          <div class="mt-auto pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
-            <button type="button" data-edit-post="${post.slug}" class="text-peach hover:underline flex items-center gap-1">Edit</button>
-            <button type="button" data-download-post="${post.slug}" class="text-white/50 hover:text-white">Download .md</button>
-            <button type="button" data-delete-post="${post.slug}" class="text-terra-bright/60 hover:text-terra-bright">Delete</button>
+        <div class="p-6 overflow-y-auto space-y-4 text-xs">
+          <div class="bg-[#2271b1]/10 border border-[#2271b1]/40 rounded-xl p-4 space-y-2">
+            <p class="text-white/90 font-semibold">Your edits are compiled into <code class="font-mono text-peach">site-config.json</code>.</p>
+            <p class="text-white/60 leading-relaxed">This file is what makes your live site reflect every change. Follow these steps to deploy:</p>
+            <ol class="text-white/70 list-decimal list-inside space-y-1 leading-relaxed">
+              <li>Click <strong class="text-white">Download site-config.json</strong> below.</li>
+              <li>Replace <code class="font-mono text-peach">public/site-config.json</code> in your repo with the downloaded file.</li>
+              <li>Commit &amp; push to GitHub (Vercel auto-deploys), or use <code class="font-mono text-peach">npm run deploy</code>.</li>
+            </ol>
+          </div>
+          <div>
+            <label class="block text-xs font-mono text-white/70 mb-1">Generated config preview</label>
+            <pre id="wp-publish-preview" class="bg-[#101517] border border-white/10 rounded-lg p-3 text-[10px] font-mono text-white/70 max-h-56 overflow-auto whitespace-pre-wrap break-all"></pre>
+          </div>
+        </div>
+        <div class="p-4 border-t border-white/10 flex items-center justify-between bg-[#181d20]">
+          <span class="text-[10px] font-mono text-white/40" id="wp-publish-meta">—</span>
+          <div class="flex items-center gap-2">
+            <button type="button" id="btn-wp-copy-config" class="bg-white/5 hover:bg-white/10 text-white text-xs px-3 py-1.5 rounded font-mono">Copy JSON</button>
+            <button type="button" id="btn-wp-download-config" class="bg-[#2271b1] hover:bg-[#135e96] text-white text-xs px-4 py-1.5 rounded font-medium">Download site-config.json</button>
           </div>
         </div>
       </div>
-    `).join('');
+    </div>
 
-    container.querySelectorAll('[data-edit-post]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const slug = btn.getAttribute('data-edit-post');
-        if (slug) openEditorModal(slug);
-      });
-    });
-
-    container.querySelectorAll('[data-download-post]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const slug = btn.getAttribute('data-download-post');
-        if (slug) downloadMarkdown(slug);
-      });
-    });
-
-    container.querySelectorAll('[data-delete-post]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const slug = btn.getAttribute('data-delete-post');
-        if (slug && confirm('Delete this post?')) {
-          const filtered = getStoredPosts().filter(p => p.slug !== slug);
-          saveStoredPosts(filtered);
-          renderPosts();
-          showToast('Article deleted.');
-        }
-      });
-    });
-  }
-
-  // Post Editor Modal
-  const editorModal = document.getElementById('modal-post-editor');
-  const editPostId = document.getElementById('edit-post-id') as HTMLInputElement;
-  const editTitle = document.getElementById('edit-title') as HTMLInputElement;
-  const editSlug = document.getElementById('edit-slug') as HTMLInputElement;
-  const editCategory = document.getElementById('edit-category') as HTMLSelectElement;
-  const editTags = document.getElementById('edit-tags') as HTMLInputElement;
-  const editReadTime = document.getElementById('edit-readtime') as HTMLInputElement;
-  const editFeatured = document.getElementById('edit-featured') as HTMLInputElement;
-  const editCoverUrl = document.getElementById('edit-cover-url') as HTMLInputElement;
-  const editCoverPreview = document.getElementById('edit-cover-preview') as HTMLImageElement;
-  const editExcerpt = document.getElementById('edit-excerpt') as HTMLTextAreaElement;
-  const editBody = document.getElementById('edit-body') as HTMLTextAreaElement;
-
-  function openEditorModal(slugToEdit?: string) {
-    if (slugToEdit) {
-      const p = getStoredPosts().find(post => post.slug === slugToEdit);
-      if (p) {
-        editPostId.value = p.id;
-        editTitle.value = p.title;
-        editSlug.value = p.slug;
-        editCategory.value = p.category;
-        editTags.value = p.tags || '';
-        editReadTime.value = p.readTime;
-        editFeatured.checked = p.featured;
-        editCoverUrl.value = p.image;
-        editCoverPreview.src = p.image;
-        editExcerpt.value = p.description;
-        editBody.value = p.body;
+    <!-- ================================================================ -->
+    <!-- SCRIPT LOGIC -->
+    <!-- ================================================================ -->
+    <script>
+      // 1. AUTHENTICATION
+      const MASTER_KEY_DEFAULT = 'admin@iadvert2027';
+      function getMasterKey() {
+        return localStorage.getItem('iadverts_admin_password') || MASTER_KEY_DEFAULT;
       }
-    } else {
-      editPostId.value = '';
-      editTitle.value = '';
-      editSlug.value = '';
-      editCategory.value = 'Meta Ads';
-      editTags.value = 'Meta Ads, Scaling, CAPI';
-      editReadTime.value = '6 min read';
-      editFeatured.checked = false;
-      editCoverUrl.value = '/assets/hero-3d-concept.jpg';
-      editCoverPreview.src = '/assets/hero-3d-concept.jpg';
-      editExcerpt.value = '';
-      editBody.value = '## The Strategy\n\nWrite content here...';
-    }
-    editorModal?.classList.remove('hidden');
-  }
+      function isAuthed() {
+        return localStorage.getItem('iadverts_admin_authenticated') === 'true';
+      }
+      const authGate = document.getElementById('wp-auth-gate');
+      const appContainer = document.getElementById('wp-app-container');
+      const loginForm = document.getElementById('wp-login-form');
+      const loginPwd = document.getElementById('wp-login-pwd') as HTMLInputElement;
+      const loginErr = document.getElementById('wp-login-error');
+      const logoutBtn = document.getElementById('btn-wp-logout');
 
-  document.getElementById('btn-create-post')?.addEventListener('click', () => openEditorModal());
-  document.getElementById('btn-close-editor-modal')?.addEventListener('click', () => editorModal?.classList.add('hidden'));
-  document.getElementById('btn-cancel-modal')?.addEventListener('click', () => editorModal?.classList.add('hidden'));
+      function refreshAuth() {
+        if (isAuthed()) {
+          authGate?.classList.add('hidden');
+          appContainer?.classList.remove('hidden');
+          appContainer?.classList.add('flex');
+        } else {
+          authGate?.classList.remove('hidden');
+          appContainer?.classList.add('hidden');
+          appContainer?.classList.remove('flex');
+        }
+      }
 
-  editCoverUrl?.addEventListener('input', () => { editCoverPreview.src = editCoverUrl.value; });
-  document.getElementById('edit-cover-file')?.addEventListener('change', (e) => {
-    const file = (e.target as HTMLInputElement).files?.[0];
-    if (file) {
-      const r = new FileReader();
-      r.onload = (ev) => {
-        const b64 = ev.target?.result as string;
-        editCoverUrl.value = b64;
-        editCoverPreview.src = b64;
+      loginForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (loginPwd.value.trim() === getMasterKey()) {
+          localStorage.setItem('iadverts_admin_authenticated', 'true');
+          loginErr?.classList.add('hidden');
+          refreshAuth();
+          toast('Welcome to WordPress 6.6 Admin!');
+        } else {
+          loginErr?.classList.remove('hidden');
+          loginPwd.focus();
+        }
+      });
+
+      logoutBtn?.addEventListener('click', () => {
+        localStorage.removeItem('iadverts_admin_authenticated');
+        refreshAuth();
+      });
+
+      function toast(msg: string) {
+        const t = document.getElementById('wp-toast');
+        if (t) {
+          t.textContent = msg;
+          t.classList.remove('opacity-0', 'pointer-events-none');
+          setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 2800);
+        }
+      }
+
+      // 2. SIDEBAR NAVIGATION
+      const menuBtns = document.querySelectorAll('.wp-menu-btn');
+      const panes = document.querySelectorAll('.wp-pane');
+
+      function switchPane(targetId: string) {
+        panes.forEach(p => {
+          if (p.id === targetId) p.classList.remove('hidden');
+          else p.classList.add('hidden');
+        });
+        menuBtns.forEach(b => {
+          if (b.getAttribute('data-pane') === targetId) {
+            b.classList.add('bg-[#2271b1]', 'text-white');
+            b.classList.remove('text-[#c3c4c7]', 'hover:bg-[#13171a]');
+          } else {
+            b.classList.remove('bg-[#2271b1]', 'text-white');
+            b.classList.add('text-[#c3c4c7]', 'hover:bg-[#13171a]');
+          }
+        });
+      }
+
+      menuBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-pane');
+          if (target) switchPane(target);
+        });
+      });
+
+      document.querySelectorAll('.btn-quick-switch').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.getAttribute('data-target');
+          if (t) switchPane(t);
+        });
+      });
+
+      // 3. POSTS MANAGEMENT (WordPress Posts)
+      const DEFAULT_POSTS = [
+        { id: 'tripled-roas-beauty', slug: 'tripled-roas-beauty', title: 'How We Tripled ROAS for a D2C Beauty Brand in 45 Days', category: 'Meta Ads', tags: 'Meta Ads, Scaling', pubDate: '2026-11-15', image: '/assets/hero-3d-concept.jpg', excerpt: 'Using AI UGC creative and cloud CAPI...', body: '## The Challenge\n\nFull case details...' },
+        { id: 'capi-setup-checklist', slug: 'capi-setup-checklist', title: 'The Complete CAPI Setup Checklist for 2027', category: 'CAPI', tags: 'CAPI, Tracking', pubDate: '2026-10-22', image: '/assets/hero-3d-concept.jpg', excerpt: 'A step-by-step walkthrough of CAPI...', body: '## Implementation...' },
+        { id: 'creative-psychology-ads', slug: 'creative-psychology-ads', title: 'Creative Psychology: Designing Ads That Stick', category: 'Creative', tags: 'Creative, Hooks', pubDate: '2026-09-30', image: '/assets/hero-3d-concept.jpg', excerpt: 'From color psychology to hook placement...', body: '## The 3-Second War...' },
+        { id: 'scaling-playbook', slug: 'scaling-playbook', title: 'From $2K to $20K Monthly Ad Spend: A Scaling Playbook', category: 'Strategy', tags: 'Scaling, CBO', pubDate: '2026-09-05', image: '/assets/hero-3d-concept.jpg', excerpt: 'The systematic framework we use...', body: '## The Scaling Formula...' },
+        { id: 'meta-mistakes', slug: 'meta-mistakes', title: '5 Common Meta Ad Mistakes and How to Fix Them', category: 'Education', tags: 'Mistakes, Learning', pubDate: '2026-08-20', image: '/assets/hero-3d-concept.jpg', excerpt: 'From wrong attribution windows to creative fatigue...', body: '## Pitfalls...' }
+      ];
+
+      function getPosts() {
+        const raw = localStorage.getItem('iadverts_cms_posts');
+        if (!raw) {
+          localStorage.setItem('iadverts_cms_posts', JSON.stringify(DEFAULT_POSTS));
+          return DEFAULT_POSTS;
+        }
+        try { return JSON.parse(raw); } catch { return DEFAULT_POSTS; }
+      }
+      function savePosts(p: any) {
+        localStorage.setItem('iadverts_cms_posts', JSON.stringify(p));
+      }
+
+      function renderPostsTable() {
+        const tbody = document.getElementById('wp-posts-tbody');
+        const countDisplay = document.getElementById('posts-count-display');
+        const sidebarCount = document.getElementById('wp-sidebar-post-count');
+        const dashStat = document.getElementById('dash-stat-posts');
+        if (!tbody) return;
+
+        const posts = getPosts();
+        if (countDisplay) countDisplay.textContent = posts.length.toString();
+        if (sidebarCount) sidebarCount.textContent = posts.length.toString();
+        if (dashStat) dashStat.textContent = posts.length.toString();
+
+        tbody.innerHTML = posts.map((post: any) => `
+          <tr class="hover:bg-white/[0.02] transition-colors">
+            <td class="py-2.5 px-4"><img src="${post.image}" class="w-10 h-7 object-cover rounded border border-white/20" /></td>
+            <td class="py-2.5 px-4 font-semibold text-white">${post.title}</td>
+            <td class="py-2.5 px-4 text-white/70">Ratul Ahmed Shishir</td>
+            <td class="py-2.5 px-4 font-mono text-peach">${post.category}</td>
+            <td class="py-2.5 px-4 font-mono text-white/50 text-[11px]">${post.tags || 'Meta Ads'}</td>
+            <td class="py-2.5 px-4 font-mono text-white/40">${post.pubDate}</td>
+            <td class="py-2.5 px-4 text-right space-x-2 font-mono text-[11px]">
+              <button type="button" data-edit-post="${post.slug}" class="text-wpblue hover:underline">Edit</button>
+              <button type="button" data-del-post="${post.slug}" class="text-red-400 hover:underline">Trash</button>
+              <a href="/blog/${post.slug}" target="_blank" class="text-white/40 hover:text-white">View</a>
+            </td>
+          </tr>
+        `).join('');
+
+        tbody.querySelectorAll('[data-edit-post]').forEach(b => {
+          b.addEventListener('click', () => {
+            const slug = b.getAttribute('data-edit-post');
+            if (slug) openEditor(slug);
+          });
+        });
+
+        tbody.querySelectorAll('[data-del-post]').forEach(b => {
+          b.addEventListener('click', () => {
+            const slug = b.getAttribute('data-del-post');
+            if (slug && confirm('Move this post to Trash?')) {
+              const updated = getPosts().filter((p: any) => p.slug !== slug);
+              savePosts(updated);
+              renderPostsTable();
+              toast('Post moved to Trash.');
+            }
+          });
+        });
+      }
+
+      // Post Editor Modal
+      const postModal = document.getElementById('wp-modal-post-editor');
+      const editHeading = document.getElementById('wp-editor-heading');
+      const editId = document.getElementById('wp-edit-id') as HTMLInputElement;
+      const editTitle = document.getElementById('wp-edit-title') as HTMLInputElement;
+      const editSlug = document.getElementById('wp-edit-slug') as HTMLInputElement;
+      const editCat = document.getElementById('wp-edit-category') as HTMLSelectElement;
+      const editTags = document.getElementById('wp-edit-tags') as HTMLInputElement;
+      const editCoverUrl = document.getElementById('wp-edit-cover-url') as HTMLInputElement;
+      const editCoverPreview = document.getElementById('wp-edit-cover-preview') as HTMLImageElement;
+      const editExcerpt = document.getElementById('wp-edit-excerpt') as HTMLTextAreaElement;
+      const editBody = document.getElementById('wp-edit-body') as HTMLTextAreaElement;
+
+      function openEditor(slug?: string) {
+        if (!postModal) return;
+        if (slug) {
+          const p = getPosts().find((post: any) => post.slug === slug);
+          if (p) {
+            editHeading!.textContent = 'Edit Post';
+            editId.value = p.id;
+            editTitle.value = p.title;
+            editSlug.value = p.slug;
+            editCat.value = p.category;
+            editTags.value = p.tags || '';
+            editCoverUrl.value = p.image;
+            editCoverPreview.src = p.image;
+            editExcerpt.value = p.excerpt || '';
+            editBody.value = p.body || '';
+          }
+        } else {
+          editHeading!.textContent = 'Add New Post';
+          editId.value = '';
+          editTitle.value = '';
+          editSlug.value = '';
+          editCat.value = 'Meta Ads';
+          editTags.value = 'Meta Ads, Scaling';
+          editCoverUrl.value = '/assets/hero-3d-concept.jpg';
+          editCoverPreview.src = '/assets/hero-3d-concept.jpg';
+          editExcerpt.value = '';
+          editBody.value = '## Summary\n\nWrite article here...';
+        }
+        postModal.classList.remove('hidden');
+      }
+
+      document.getElementById('btn-add-new-post')?.addEventListener('click', () => openEditor());
+      document.getElementById('wp-top-btn-new')?.addEventListener('click', () => openEditor());
+      document.getElementById('btn-close-post-modal')?.addEventListener('click', () => postModal?.classList.add('hidden'));
+      document.getElementById('btn-wp-cancel-post')?.addEventListener('click', () => postModal?.classList.add('hidden'));
+
+      editCoverUrl?.addEventListener('input', () => { editCoverPreview.src = editCoverUrl.value; });
+      document.getElementById('wp-edit-cover-file')?.addEventListener('change', (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          const r = new FileReader();
+          r.onload = (ev) => {
+            const b64 = ev.target?.result as string;
+            editCoverUrl.value = b64;
+            editCoverPreview.src = b64;
+          };
+          r.readAsDataURL(file);
+        }
+      });
+
+      document.getElementById('btn-wp-save-post')?.addEventListener('click', () => {
+        if (!editTitle.value.trim()) return alert('Please enter a title.');
+        const slug = editSlug.value.trim() || editTitle.value.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const posts = getPosts();
+        const idx = posts.findIndex((p: any) => p.slug === slug || (editId.value && p.id === editId.value));
+        const item = {
+          id: editId.value || slug,
+          slug: slug,
+          title: editTitle.value.trim(),
+          category: editCat.value,
+          tags: editTags.value.trim(),
+          image: editCoverUrl.value.trim() || '/assets/hero-3d-concept.jpg',
+          excerpt: editExcerpt.value.trim(),
+          body: editBody.value.trim(),
+          pubDate: new Date().toISOString().split('T')[0]
+        };
+        if (idx >= 0) posts[idx] = item;
+        else posts.unshift(item);
+        savePosts(posts);
+        renderPostsTable();
+        postModal?.classList.add('hidden');
+        toast('Post published successfully!');
+      });
+
+      // 4. APPEARANCE & GLOBAL STYLES (Colors & Fonts)
+      interface GlobalStyles {
+        terraColor: string;
+        peachColor: string;
+        mintColor: string;
+        bgColor: string;
+        headingFont: string;
+        bodyFont: string;
+      }
+
+      const DEFAULT_STYLES: GlobalStyles = {
+        terraColor: '#e04832',
+        peachColor: '#ffdad2',
+        mintColor: '#2ed573',
+        bgColor: '#0c0a10',
+        headingFont: 'Lora',
+        bodyFont: 'Plus Jakarta Sans'
       };
-      r.readAsDataURL(file);
-    }
-  });
 
-  document.getElementById('btn-save-post')?.addEventListener('click', () => {
-    if (!editTitle.value.trim()) return alert('Please enter a title.');
-    const slug = editSlug.value.trim() || editTitle.value.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const posts = getStoredPosts();
-    const idx = posts.findIndex(p => p.slug === slug || (editPostId.value && p.id === editPostId.value));
+      function getStyles(): GlobalStyles {
+        const raw = localStorage.getItem('wp_global_styles');
+        if (!raw) return DEFAULT_STYLES;
+        try { return JSON.parse(raw); } catch { return DEFAULT_STYLES; }
+      }
 
-    const item: BlogPostItem = {
-      id: editPostId.value || slug,
-      slug: slug,
-      title: editTitle.value.trim(),
-      description: editExcerpt.value.trim(),
-      category: editCategory.value,
-      tags: editTags.value.trim(),
-      readTime: editReadTime.value.trim(),
-      pubDate: new Date().toISOString().split('T')[0],
-      image: editCoverUrl.value.trim() || '/assets/hero-3d-concept.jpg',
-      featured: editFeatured.checked,
-      body: editBody.value.trim()
-    };
+      function applyStylesToUI() {
+        const s = getStyles();
+        (document.getElementById('style-color-terra') as HTMLInputElement).value = s.terraColor;
+        (document.getElementById('style-hex-terra') as HTMLInputElement).value = s.terraColor;
+        (document.getElementById('style-color-peach') as HTMLInputElement).value = s.peachColor;
+        (document.getElementById('style-hex-peach') as HTMLInputElement).value = s.peachColor;
+        (document.getElementById('style-color-mint') as HTMLInputElement).value = s.mintColor;
+        (document.getElementById('style-hex-mint') as HTMLInputElement).value = s.mintColor;
+        (document.getElementById('style-color-bg') as HTMLInputElement).value = s.bgColor;
+        (document.getElementById('style-hex-bg') as HTMLInputElement).value = s.bgColor;
+        (document.getElementById('style-font-heading') as HTMLSelectElement).value = s.headingFont;
+        (document.getElementById('style-font-body') as HTMLSelectElement).value = s.bodyFont;
 
-    if (idx >= 0) posts[idx] = item;
-    else posts.unshift(item);
+        // Preview box
+        const prevHeading = document.getElementById('preview-heading');
+        const prevBody = document.getElementById('preview-body');
+        if (prevHeading) {
+          prevHeading.style.fontFamily = s.headingFont;
+        }
+        if (prevBody) {
+          prevBody.style.fontFamily = s.bodyFont;
+        }
+      }
 
-    saveStoredPosts(posts);
-    renderPosts();
-    editorModal?.classList.add('hidden');
-    showToast('Article saved & published!');
-  });
+      // Sync color pickers & hex inputs
+      ['terra', 'peach', 'mint', 'bg'].forEach(c => {
+        const picker = document.getElementById(`style-color-${c}`) as HTMLInputElement;
+        const hex = document.getElementById(`style-hex-${c}`) as HTMLInputElement;
+        picker?.addEventListener('input', () => {
+          hex.value = picker.value;
+          saveAndApplyCurrentStyles();
+        });
+        hex?.addEventListener('input', () => {
+          if (hex.value.startsWith('#') && hex.value.length === 7) {
+            picker.value = hex.value;
+            saveAndApplyCurrentStyles();
+          }
+        });
+      });
 
-  function downloadMarkdown(slug: string) {
-    const p = getStoredPosts().find(post => post.slug === slug);
-    if (!p) return;
-    const content = `---\ntitle: '${p.title.replace(/'/g, "''")}'\ndescription: '${p.description.replace(/'/g, "''")}'\npubDate: ${p.pubDate}\ncategory: '${p.category}'\nreadTime: '${p.readTime}'\nimage: '${p.image}'\nfeatured: ${p.featured}\n---\n\n${p.body}\n`;
-    const blob = new Blob([content], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${p.slug}.md`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast(`Downloaded ${p.slug}.md!`);
-  }
+      document.getElementById('style-font-heading')?.addEventListener('change', () => saveAndApplyCurrentStyles());
+      document.getElementById('style-font-body')?.addEventListener('change', () => saveAndApplyCurrentStyles());
 
-  // ================================================================
-  // SITE CONTENT CUSTOMIZER (Wix/Shopify Style)
-  // ================================================================
-  interface SiteContentConfig {
-    heroTag: string;
-    heroHeadline1: string;
-    heroHeadline2: string;
-    heroSubtitle: string;
-    heroCta: string;
-    metric1: string;
-    metric2: string;
-    metric3: string;
-    founderName: string;
-    founderTagline: string;
-    founderQuote: string;
-    ctaHeadline: string;
-    ctaBtn: string;
-    ctaFeatures: string;
-  }
+      // Presets
+      document.querySelectorAll('.btn-color-preset').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const t = btn.getAttribute('data-terra') || '#e04832';
+          const p = btn.getAttribute('data-peach') || '#ffdad2';
+          const bg = btn.getAttribute('data-bg') || '#0c0a10';
+          (document.getElementById('style-color-terra') as HTMLInputElement).value = t;
+          (document.getElementById('style-hex-terra') as HTMLInputElement).value = t;
+          (document.getElementById('style-color-peach') as HTMLInputElement).value = p;
+          (document.getElementById('style-hex-peach') as HTMLInputElement).value = p;
+          (document.getElementById('style-color-bg') as HTMLInputElement).value = bg;
+          (document.getElementById('style-hex-bg') as HTMLInputElement).value = bg;
+          saveAndApplyCurrentStyles();
+          toast('Color preset applied!');
+        });
+      });
 
-  const DEFAULT_SITE_CONTENT: SiteContentConfig = {
-    heroTag: '100% SPECIALIZED IN META & FACEBOOK ADS',
-    heroHeadline1: 'We Scale Brands with',
-    heroHeadline2: 'HIGH-PERFORMANCE META ADS.',
-    heroSubtitle: 'Stop guessing your Facebook ad spend. Build a profitable sales machine with psychological creative hooks, data-driven CBO architecture, and bulletproof server-side CAPI tracking.',
-    heroCta: 'Get Free 20-Min Audit',
-    metric1: '$100k+',
-    metric2: '3.8x – 6.2x',
-    metric3: '99.8%',
-    founderName: 'Ratul Ahmed Shishir',
-    founderTagline: 'THE STRATEGIST BEHIND THE SYSTEM',
-    founderQuote: '"Agencies that claim to handle graphics, logos, websites, and SEO all at once cannot truly specialize in any. I have spent the last several years focusing exclusively on the internal algorithms, high-conversion copywriting, and server-side tracking mechanisms of Meta and Facebook ads. My single goal: to deliver the maximum cash return for every 1 taka of ad spend."',
-    ctaHeadline: 'Ready to Build a Predictable REVENUE ENGINE WITH META ADS?',
-    ctaBtn: 'Book 20-Min Strategy Audit on WhatsApp',
-    ctaFeatures: '✓ Free 1-on-1 Consultation • ✓ Actionable Scaling Roadmap • ✓ Zero Obligation'
-  };
+      function saveAndApplyCurrentStyles() {
+        const s: GlobalStyles = {
+          terraColor: (document.getElementById('style-hex-terra') as HTMLInputElement).value.trim(),
+          peachColor: (document.getElementById('style-hex-peach') as HTMLInputElement).value.trim(),
+          mintColor: (document.getElementById('style-hex-mint') as HTMLInputElement).value.trim(),
+          bgColor: (document.getElementById('style-hex-bg') as HTMLInputElement).value.trim(),
+          headingFont: (document.getElementById('style-font-heading') as HTMLSelectElement).value,
+          bodyFont: (document.getElementById('style-font-body') as HTMLSelectElement).value
+        };
+        localStorage.setItem('wp_global_styles', JSON.stringify(s));
+        applyStylesToUI();
+      }
 
-  function loadCustomizer() {
-    const raw = localStorage.getItem('iadverts_custom_site_content');
-    const c: SiteContentConfig = raw ? JSON.parse(raw) : DEFAULT_SITE_CONTENT;
+      document.getElementById('btn-reset-styles')?.addEventListener('click', () => {
+        if (confirm('Reset styles to original defaults?')) {
+          localStorage.setItem('wp_global_styles', JSON.stringify(DEFAULT_STYLES));
+          applyStylesToUI();
+          toast('Styles reset to defaults.');
+        }
+      });
 
-    (document.getElementById('cust-hero-tag') as HTMLInputElement).value = c.heroTag;
-    (document.getElementById('cust-hero-headline-1') as HTMLInputElement).value = c.heroHeadline1;
-    (document.getElementById('cust-hero-headline-2') as HTMLInputElement).value = c.heroHeadline2;
-    (document.getElementById('cust-hero-subtitle') as HTMLTextAreaElement).value = c.heroSubtitle;
-    (document.getElementById('cust-hero-cta') as HTMLInputElement).value = c.heroCta;
-    (document.getElementById('cust-metric-1') as HTMLInputElement).value = c.metric1;
-    (document.getElementById('cust-metric-2') as HTMLInputElement).value = c.metric2;
-    (document.getElementById('cust-metric-3') as HTMLInputElement).value = c.metric3;
-    (document.getElementById('cust-founder-name') as HTMLInputElement).value = c.founderName;
-    (document.getElementById('cust-founder-tagline') as HTMLInputElement).value = c.founderTagline;
-    (document.getElementById('cust-founder-quote') as HTMLTextAreaElement).value = c.founderQuote;
-    (document.getElementById('cust-cta-headline') as HTMLInputElement).value = c.ctaHeadline;
-    (document.getElementById('cust-cta-btn') as HTMLInputElement).value = c.ctaBtn;
-    (document.getElementById('cust-cta-features') as HTMLInputElement).value = c.ctaFeatures;
-  }
+      // 5. APPEARANCE SUB-TABS
+      document.querySelectorAll('.subtab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.subtab-btn').forEach(b => {
+            b.classList.remove('active', 'bg-[#2271b1]', 'text-white');
+            b.classList.add('text-white/70');
+          });
+          btn.classList.add('active', 'bg-[#2271b1]', 'text-white');
+          btn.classList.remove('text-white/70');
 
-  document.getElementById('btn-save-customizer')?.addEventListener('click', () => {
-    const c: SiteContentConfig = {
-      heroTag: (document.getElementById('cust-hero-tag') as HTMLInputElement).value.trim(),
-      heroHeadline1: (document.getElementById('cust-hero-headline-1') as HTMLInputElement).value.trim(),
-      heroHeadline2: (document.getElementById('cust-hero-headline-2') as HTMLInputElement).value.trim(),
-      heroSubtitle: (document.getElementById('cust-hero-subtitle') as HTMLTextAreaElement).value.trim(),
-      heroCta: (document.getElementById('cust-hero-cta') as HTMLInputElement).value.trim(),
-      metric1: (document.getElementById('cust-metric-1') as HTMLInputElement).value.trim(),
-      metric2: (document.getElementById('cust-metric-2') as HTMLInputElement).value.trim(),
-      metric3: (document.getElementById('cust-metric-3') as HTMLInputElement).value.trim(),
-      founderName: (document.getElementById('cust-founder-name') as HTMLInputElement).value.trim(),
-      founderTagline: (document.getElementById('cust-founder-tagline') as HTMLInputElement).value.trim(),
-      founderQuote: (document.getElementById('cust-founder-quote') as HTMLTextAreaElement).value.trim(),
-      ctaHeadline: (document.getElementById('cust-cta-headline') as HTMLInputElement).value.trim(),
-      ctaBtn: (document.getElementById('cust-cta-btn') as HTMLInputElement).value.trim(),
-      ctaFeatures: (document.getElementById('cust-cta-features') as HTMLInputElement).value.trim(),
-    };
-    localStorage.setItem('iadverts_custom_site_content', JSON.stringify(c));
-    showToast('Website content updated! Live on homepage.');
-  });
+          const sub = btn.getAttribute('data-sub');
+          document.querySelectorAll('.subtab-panel').forEach(p => {
+            if (p.id === sub) p.classList.remove('hidden');
+            else p.classList.add('hidden');
+          });
+        });
+      });
 
-  document.getElementById('btn-restore-customizer')?.addEventListener('click', () => {
-    if (confirm('Reset homepage content to defaults?')) {
-      localStorage.setItem('iadverts_custom_site_content', JSON.stringify(DEFAULT_SITE_CONTENT));
-      loadCustomizer();
-      showToast('Website content reset to factory defaults.');
-    }
-  });
+      // 6. PATTERNS & SECTION REORDERING (Drag & Drop + Up/Down)
+      const DEFAULT_SECTIONS = [
+        { id: 'hero', name: 'Hero Banner Section' },
+        { id: 'marquee', name: 'Marquee Client Proof Ticker' },
+        { id: 'services', name: 'The 4-Pillar Meta System (Bento Grid)' },
+        { id: 'calculator', name: 'ROAS Simulator & Scaler' },
+        { id: 'results', name: 'Documented Case Studies' },
+        { id: 'founder', name: 'Founder Profile & Bio' },
+        { id: 'cta', name: 'Final Revenue Engine CTA' }
+      ];
 
-  // ================================================================
-  // SECURITY & MASTER PASSWORD
-  // ================================================================
-  document.getElementById('btn-update-password')?.addEventListener('click', () => {
-    const newPwd = (document.getElementById('new-admin-password') as HTMLInputElement).value.trim();
-    if (!newPwd || newPwd.length < 6) {
-      alert('Password must be at least 6 characters.');
-      return;
-    }
-    localStorage.setItem('iadverts_admin_password', newPwd);
-    (document.getElementById('new-admin-password') as HTMLInputElement).value = '';
-    showToast('Master Password updated successfully!');
-  });
+      function getSectionOrder(): string[] {
+        const raw = localStorage.getItem('wp_section_order');
+        if (!raw) return DEFAULT_SECTIONS.map(s => s.id);
+        try { return JSON.parse(raw); } catch { return DEFAULT_SECTIONS.map(s => s.id); }
+      }
 
-  document.getElementById('btn-reset-default-pwd')?.addEventListener('click', () => {
-    if (confirm(`Reset master password to "${DEFAULT_ADMIN_KEY}"?`)) {
-      localStorage.setItem('iadverts_admin_password', DEFAULT_ADMIN_KEY);
-      showToast('Password reset to admin@iadvert2027.');
-    }
-  });
+      function renderSectionsList() {
+        const container = document.getElementById('wp-sections-order-list');
+        if (!container) return;
+        const order = getSectionOrder();
 
-  // Secret shortcut: Ctrl + Shift + A to open admin
-  window.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
-      window.location.href = '/dashboard';
-    }
-  });
+        container.innerHTML = order.map((id, idx) => {
+          const match = DEFAULT_SECTIONS.find(s => s.id === id) || { id, name: id };
+          return `
+            <div class="flex items-center justify-between p-3 rounded-xl bg-[#101517] border border-white/10 hover:border-wpblue/50 transition-colors">
+              <div class="flex items-center gap-3">
+                <span class="text-white/40 font-mono text-[11px] w-5">${idx + 1}.</span>
+                <span class="font-semibold text-white font-sans text-xs">${match.name}</span>
+                <span class="text-[10px] text-peach font-mono bg-peach/10 px-2 py-0.5 rounded">#sec-${id}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <button type="button" data-move-up="${id}" class="p-1 rounded bg-white/5 hover:bg-white/10 text-white/80 hover:text-white" title="Move Up">↑</button>
+                <button type="button" data-move-down="${id}" class="p-1 rounded bg-white/5 hover:bg-white/10 text-white/80 hover:text-white" title="Move Down">↓</button>
+              </div>
+            </div>
+          `;
+        }).join('');
 
-  // Initial Boot
-  checkAuth();
-  renderPosts();
-  loadCustomizer();
-</script>
+        container.querySelectorAll('[data-move-up]').forEach(b => {
+          b.addEventListener('click', () => {
+            const id = b.getAttribute('data-move-up');
+            const current = getSectionOrder();
+            const idx = current.indexOf(id!);
+            if (idx > 0) {
+              const temp = current[idx - 1];
+              current[idx - 1] = current[idx];
+              current[idx] = temp;
+              localStorage.setItem('wp_section_order', JSON.stringify(current));
+              renderSectionsList();
+              toast('Section moved up!');
+            }
+          });
+        });
+
+        container.querySelectorAll('[data-move-down]').forEach(b => {
+          b.addEventListener('click', () => {
+            const id = b.getAttribute('data-move-down');
+            const current = getSectionOrder();
+            const idx = current.indexOf(id!);
+            if (idx < current.length - 1 && idx >= 0) {
+              const temp = current[idx + 1];
+              current[idx + 1] = current[idx];
+              current[idx] = temp;
+              localStorage.setItem('wp_section_order', JSON.stringify(current));
+              renderSectionsList();
+              toast('Section moved down!');
+            }
+          });
+        });
+      }
+
+      // 7. SITE IMAGES REPLACER
+      function getSiteImages(): Record<string, string> {
+        const raw = localStorage.getItem('wp_site_images');
+        if (!raw) return { logo: '/assets/logo.png', founder: '/assets/founder.jpg' };
+        try { return JSON.parse(raw); } catch { return { logo: '/assets/logo.png', founder: '/assets/founder.jpg' }; }
+      }
+
+      function loadImagesUI() {
+        const imgs = getSiteImages();
+        (document.getElementById('input-img-logo') as HTMLInputElement).value = imgs.logo || '/assets/logo.png';
+        (document.getElementById('img-preview-logo') as HTMLImageElement).src = imgs.logo || '/assets/logo.png';
+        (document.getElementById('input-img-founder') as HTMLInputElement).value = imgs.founder || '/assets/founder.jpg';
+        (document.getElementById('img-preview-founder') as HTMLImageElement).src = imgs.founder || '/assets/founder.jpg';
+      }
+
+      document.querySelectorAll('.file-img-replacer').forEach(inp => {
+        inp.addEventListener('change', (e) => {
+          const target = inp.getAttribute('data-target');
+          const file = (e.target as HTMLInputElement).files?.[0];
+          if (file && target) {
+            const r = new FileReader();
+            r.onload = (ev) => {
+              const b64 = ev.target?.result as string;
+              const imgs = getSiteImages();
+              imgs[target] = b64;
+              localStorage.setItem('wp_site_images', JSON.stringify(imgs));
+              loadImagesUI();
+              toast(`${target} image updated across site!`);
+            };
+            r.readAsDataURL(file);
+          }
+        });
+      });
+
+      document.getElementById('input-img-logo')?.addEventListener('change', () => {
+        const imgs = getSiteImages();
+        imgs.logo = (document.getElementById('input-img-logo') as HTMLInputElement).value.trim();
+        localStorage.setItem('wp_site_images', JSON.stringify(imgs));
+        loadImagesUI();
+      });
+
+      document.getElementById('input-img-founder')?.addEventListener('change', () => {
+        const imgs = getSiteImages();
+        imgs.founder = (document.getElementById('input-img-founder') as HTMLInputElement).value.trim();
+        localStorage.setItem('wp_site_images', JSON.stringify(imgs));
+        loadImagesUI();
+      });
+
+      // 8. SECTION CONTENT COPY
+      function loadSectionContent() {
+        const raw = localStorage.getItem('iadverts_custom_site_content');
+        if (raw) {
+          try {
+            const c = JSON.parse(raw);
+            if (c.heroTag) (document.getElementById('wp-text-heroTag') as HTMLInputElement).value = c.heroTag;
+            if (c.heroSubtitle) (document.getElementById('wp-text-heroSubtitle') as HTMLTextAreaElement).value = c.heroSubtitle;
+            if (c.heroCta) (document.getElementById('wp-text-heroCta') as HTMLInputElement).value = c.heroCta;
+            if (c.founderQuote) (document.getElementById('wp-text-founderQuote') as HTMLTextAreaElement).value = c.founderQuote;
+            if (c.ctaHeadline) (document.getElementById('wp-text-ctaHeadline') as HTMLInputElement).value = c.ctaHeadline;
+          } catch (e) {}
+        }
+      }
+
+      function saveSectionContent() {
+        const c: any = {};
+        c.heroTag = (document.getElementById('wp-text-heroTag') as HTMLInputElement)?.value.trim();
+        c.heroSubtitle = (document.getElementById('wp-text-heroSubtitle') as HTMLTextAreaElement)?.value.trim();
+        c.heroCta = (document.getElementById('wp-text-heroCta') as HTMLInputElement)?.value.trim();
+        c.founderQuote = (document.getElementById('wp-text-founderQuote') as HTMLTextAreaElement)?.value.trim();
+        c.ctaHeadline = (document.getElementById('wp-text-ctaHeadline') as HTMLInputElement)?.value.trim();
+        localStorage.setItem('iadverts_custom_site_content', JSON.stringify(c));
+      }
+
+      document.getElementById('btn-save-all-appearance')?.addEventListener('click', () => {
+        saveAndApplyCurrentStyles();
+        saveSectionContent();
+        toast('Site Editor changes saved and published!');
+      });
+
+      // 9. MEDIA LIBRARY
+      const DEFAULT_MEDIA = [
+        { id: '1', name: 'logo.png', url: '/assets/logo.png', dim: '1200x442', size: '98 KB' },
+        { id: '2', name: 'founder.jpg', url: '/assets/founder.jpg', dim: '800x800', size: '128 KB' },
+        { id: '3', name: 'hero-3d-concept.jpg', url: '/assets/hero-3d-concept.jpg', dim: '1920x1080', size: '89 KB' }
+      ];
+
+      function getMedia() {
+        const raw = localStorage.getItem('iadverts_cms_media');
+        if (!raw) {
+          localStorage.setItem('iadverts_cms_media', JSON.stringify(DEFAULT_MEDIA));
+          return DEFAULT_MEDIA;
+        }
+        try { return JSON.parse(raw); } catch { return DEFAULT_MEDIA; }
+      }
+
+      function renderMediaGrid() {
+        const grid = document.getElementById('wp-media-grid');
+        const badge = document.getElementById('media-library-count');
+        const dashBadge = document.getElementById('dash-stat-media');
+        if (!grid) return;
+        const list = getMedia();
+        if (badge) badge.textContent = `${list.length} items`;
+        if (dashBadge) dashBadge.textContent = list.length.toString();
+
+        grid.innerHTML = list.map((item: any) => `
+          <div class="bg-[#1d2327] border border-white/10 rounded-xl overflow-hidden group">
+            <div class="h-24 bg-[#101517] p-2 flex items-center justify-center overflow-hidden">
+              <img src="${item.url}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform" />
+            </div>
+            <div class="p-2 text-[10px] font-mono border-t border-white/[0.06]">
+              <div class="text-white truncate font-sans">${item.name}</div>
+              <button type="button" data-copy-url="${item.url}" class="w-full mt-1.5 bg-[#2271b1]/20 hover:bg-[#2271b1] text-[#72aee6] hover:text-white py-1 rounded transition-colors text-[10px]">Copy URL</button>
+            </div>
+          </div>
+        `).join('');
+
+        grid.querySelectorAll('[data-copy-url]').forEach(b => {
+          b.addEventListener('click', () => {
+            const u = b.getAttribute('data-copy-url');
+            if (u) {
+              navigator.clipboard.writeText(u);
+              toast('Image URL copied to clipboard!');
+            }
+          });
+        });
+      }
+
+      document.getElementById('wp-media-upload-input')?.addEventListener('change', (e) => {
+        const files = (e.target as HTMLInputElement).files;
+        if (files && files.length > 0) {
+          Array.from(files).forEach(file => {
+            const r = new FileReader();
+            r.onload = (ev) => {
+              const b64 = ev.target?.result as string;
+              const media = getMedia();
+              media.unshift({ id: 'm' + Date.now(), name: file.name, url: b64, dim: 'Custom', size: `${(file.size / 1024).toFixed(1)} KB` });
+              localStorage.setItem('iadverts_cms_media', JSON.stringify(media));
+              renderMediaGrid();
+              toast(`Uploaded ${file.name}`);
+            };
+            r.readAsDataURL(file);
+          });
+        }
+      });
+
+      // 10. GENERAL SETTINGS
+      document.getElementById('btn-save-wp-settings')?.addEventListener('click', () => {
+        const s = {
+          title: (document.getElementById('wp-set-title') as HTMLInputElement).value.trim(),
+          tagline: (document.getElementById('wp-set-tagline') as HTMLInputElement).value.trim(),
+          phone: (document.getElementById('wp-set-phone') as HTMLInputElement).value.trim(),
+          whatsapp: (document.getElementById('wp-set-whatsapp') as HTMLInputElement).value.trim(),
+          address: (document.getElementById('wp-set-address') as HTMLInputElement).value.trim()
+        };
+        localStorage.setItem('iadverts_site_settings', JSON.stringify(s));
+        toast('General settings saved!');
+      });
+
+      // 11. PROFILE UPDATE
+      document.getElementById('btn-wp-update-profile')?.addEventListener('click', () => {
+        const newPwd = (document.getElementById('wp-user-new-pwd') as HTMLInputElement).value.trim();
+        if (newPwd) {
+          localStorage.setItem('iadverts_admin_password', newPwd);
+          toast('Master Password updated!');
+        } else {
+          toast('Profile saved.');
+        }
+      });
+
+      // 12. EXPORT BACKUP
+      document.getElementById('btn-wp-export-all')?.addEventListener('click', () => {
+        const backup = {
+          styles: getStyles(),
+          posts: getPosts(),
+          sectionsOrder: getSectionOrder(),
+          siteImages: getSiteImages(),
+          content: localStorage.getItem('iadverts_custom_site_content'),
+          settings: localStorage.getItem('iadverts_site_settings')
+        };
+        const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `iadvert-wordpress-backup-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        toast('Complete site backup downloaded!');
+      });
+
+      // Init on load
+      refreshAuth();
+      renderPostsTable();
+      renderMediaGrid();
+      applyStylesToUI();
+      renderSectionsList();
+      loadImagesUI();
+      loadSectionContent();
+
+      // ================================================================
+      // PUBLISH SITE CONFIG — generates site-config.json from all edits
+      // ================================================================
+      const BASE_CONFIG_JSON = document.getElementById('wp-default-config')?.textContent;
+      const BASE_CONFIG = BASE_CONFIG_JSON ? JSON.parse(BASE_CONFIG_JSON) : {};
+
+      function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+      function generateSiteConfig() {
+        const base = deepClone(BASE_CONFIG);
+
+        // --- Global Styles -> theme.colors & typography ---
+        try {
+          const s = JSON.parse(localStorage.getItem('wp_global_styles') || '{}');
+          base.theme.colors.terra = s.terraColor ?? base.theme.colors.terra;
+          base.theme.colors.terraBright = s.terraColor ?? base.theme.colors.terraBright;
+          base.theme.colors.peach = s.peachColor ?? base.theme.colors.peach;
+          base.theme.colors.mint = s.mintColor ?? base.theme.colors.mint;
+          base.theme.colors.primary = s.bgColor ?? base.theme.colors.primary;
+          base.theme.colors.surface = s.bgColor ?? base.theme.colors.surface;
+          base.typography.headingFont = s.headingFont ?? base.typography.headingFont;
+          base.typography.bodyFont = s.bodyFont ?? base.typography.bodyFont;
+        } catch (e) {}
+
+        // --- Section Content -> hero / founder / cta ---
+        try {
+          const c = JSON.parse(localStorage.getItem('iadverts_custom_site_content') || '{}');
+          if (c.heroTag) base.sections.hero.tag = c.heroTag;
+          if (c.heroSubtitle) base.sections.hero.subtitle = c.heroSubtitle;
+          if (c.heroCta) base.sections.hero.ctaText = c.heroCta;
+          if (c.founderQuote) base.sections.founder.quote = c.founderQuote;
+          if (c.ctaHeadline) base.sections.cta.headline = c.ctaHeadline;
+        } catch (e) {}
+
+        // --- Site Images -> logo, founder ---
+        try {
+          const img = JSON.parse(localStorage.getItem('wp_site_images') || '{}');
+          if (img.logo) base.brand.logo = img.logo;
+          if (img.founder) base.sections.founder.image = img.founder;
+        } catch (e) {}
+
+        // --- General Settings -> brand & founder ---
+        try {
+          const st = JSON.parse(localStorage.getItem('iadverts_site_settings') || '{}');
+          if (st.title) base.brand.name = st.title;
+          if (st.tagline) base.brand.tagline = st.tagline;
+          if (st.phone) base.brand.phone = st.phone;
+          if (st.whatsapp) base.brand.whatsapp = st.whatsapp;
+          if (st.address) base.brand.address = st.address;
+          if (st.title) base.sections.founder.name = st.title;
+        } catch (e) {}
+
+        base.lastUpdated = new Date().toISOString();
+        return base;
+      }
+
+      const publishBtn = document.getElementById('btn-wp-publish-config');
+      const publishModal = document.getElementById('wp-modal-publish');
+      const closePublishBtn = document.getElementById('btn-close-publish-modal');
+      const previewEl = document.getElementById('wp-publish-preview');
+      const metaEl = document.getElementById('wp-publish-meta');
+      const copyBtn = document.getElementById('btn-wp-copy-config');
+      const downloadBtn = document.getElementById('btn-wp-download-config');
+
+      let generatedConfig = null;
+
+      publishBtn?.addEventListener('click', () => {
+        generatedConfig = generateSiteConfig();
+        previewEl.textContent = JSON.stringify(generatedConfig, null, 2);
+        metaEl.textContent = `Generated ${new Date().toLocaleString()} • ${Object.keys(generatedConfig.sections).length} sections`;
+        publishModal.classList.remove('hidden');
+        publishModal.classList.add('flex');
+        toast('Config compiled — download site-config.json');
+      });
+
+      closePublishBtn?.addEventListener('click', () => {
+        publishModal.classList.add('hidden');
+        publishModal.classList.remove('flex');
+      });
+
+      copyBtn?.addEventListener('click', () => {
+        if (generatedConfig) {
+          navigator.clipboard.writeText(JSON.stringify(generatedConfig, null, 2));
+          toast('Config JSON copied to clipboard!');
+        }
+      });
+
+      downloadBtn?.addEventListener('click', () => {
+        if (!generatedConfig) return;
+        const blob = new Blob([JSON.stringify(generatedConfig, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'site-config.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        toast('site-config.json downloaded — replace public/site-config.json and deploy!');
+      });
+    </script>
+  </body>
+</html>

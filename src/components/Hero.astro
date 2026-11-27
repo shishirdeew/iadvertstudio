@@ -1,4 +1,6 @@
 ---
+import { DEFAULT_CONFIG } from '../lib/siteConfig';
+const cfg = DEFAULT_CONFIG.sections.hero;
 ---
 <section class="relative pt-36 pb-20 max-w-7xl mx-auto px-6 min-h-[92vh] flex flex-col justify-center z-10">
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -8,57 +10,51 @@
       <!-- Tag -->
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-terra/10 border border-terra/30 font-mono text-xs text-peach mb-6 reveal reveal-left">
         <span class="w-2 h-2 rounded-full bg-accent-mint animate-ping"></span>
-        <span id="live-hero-tag">100% SPECIALIZED IN META & FACEBOOK ADS</span>
+        <span id="live-hero-tag" data-cfg="sections.hero.tag">{cfg.tag}</span>
       </div>
 
       <!-- Main Headline -->
       <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.18] mb-6 text-white reveal reveal-left">
-        We Scale Brands with <br class="hidden sm:inline" />
-        <span class="text-peach tracking-wide font-bold italic">HIGH-PERFORMANCE</span> <br class="hidden sm:inline" />
-        <span class="text-terra-bright tracking-wide font-bold drop-shadow-[0_0_25px_rgba(224,72,50,0.5)]">META ADS.</span>
+        {cfg.headline1} <br class="hidden sm:inline" />
+        <span class="text-peach tracking-wide font-bold italic">{cfg.headline2}</span> <br class="hidden sm:inline" />
+        <span class="text-terra-bright tracking-wide font-bold drop-shadow-[0_0_25px_rgba(224,72,50,0.5)]">{cfg.headline3}</span>
       </h1>
 
       <!-- English Subtitle -->
-      <p id="live-hero-subtitle" class="text-base sm:text-lg text-white/70 max-w-xl leading-relaxed mb-8 reveal reveal-left reveal-up reveal-delay-200">
-        Stop guessing your Facebook ad spend. Build a profitable sales machine with psychological creative hooks, data-driven CBO architecture, and bulletproof server-side CAPI tracking.
+      <p id="live-hero-subtitle" data-cfg="sections.hero.subtitle" class="text-base sm:text-lg text-white/70 max-w-xl leading-relaxed mb-8 reveal reveal-left reveal-up reveal-delay-200">
+        {cfg.subtitle}
       </p>
 
       <!-- CTA Buttons -->
       <div class="flex flex-wrap items-center gap-4 mb-12 reveal reveal-left reveal-delay-400">
         <a
-          href="https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20would%20like%20to%20audit%20my%20Facebook%20Ads%20account."
+          href={cfg.ctaHref}
           target="_blank"
           rel="noopener"
           class="inline-flex items-center gap-3 bg-gradient-to-r from-terra-bright to-terra hover:from-[#eb4f39] hover:to-[#b53421] text-white font-semibold text-sm sm:text-base px-7 py-3.5 rounded-full border border-peach/25 shadow-xl shadow-terra/40 transition-all hover:scale-105 hover:shadow-terra/60"
         >
-          <span id="live-hero-cta">Get Free 20-Min Audit</span>
+          <span id="live-hero-cta" data-cfg="sections.hero.ctaText">{cfg.ctaText}</span>
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
 
         <a
-          href="#calculator"
+          href={cfg.secondaryCtaHref}
           class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white font-medium text-sm sm:text-base px-6 py-3.5 rounded-full border border-white/10 backdrop-blur-md transition-all hover:scale-105"
         >
-          <span>Calculate ROAS</span>
+          <span>{cfg.secondaryCtaText}</span>
         </a>
       </div>
 
       <!-- Trust Metrics -->
       <div class="w-full pt-6 border-t border-white/10 grid grid-cols-3 gap-2 sm:gap-6 reveal reveal-left reveal-delay-500">
-        <div>
-          <div id="live-hero-metric-1" class="font-display font-bold text-lg sm:text-3xl text-peach whitespace-nowrap">$100k+</div>
-          <div class="text-[10px] sm:text-xs uppercase tracking-wider text-white/50 font-mono mt-1">Spend Managed</div>
-        </div>
-        <div>
-          <div id="live-hero-metric-2" class="font-display font-bold text-lg sm:text-3xl text-peach whitespace-nowrap">3.8x – 6.2x</div>
-          <div class="text-[10px] sm:text-xs uppercase tracking-wider text-white/50 font-mono mt-1">Avg Client ROAS</div>
-        </div>
-        <div>
-          <div id="live-hero-metric-3" class="font-display font-bold text-lg sm:text-3xl text-accent-mint whitespace-nowrap">99.8%</div>
-          <div class="text-[10px] sm:text-xs uppercase tracking-wider text-white/50 font-mono mt-1">CAPI Accuracy</div>
-        </div>
+        {cfg.metrics.map((m) => (
+          <div>
+            <div id={`live-hero-${m.id}`} data-cfg={`sections.hero.metrics.${m.id.split('metric')[1]-1}.value`} class="font-display font-bold text-lg sm:text-3xl text-peach whitespace-nowrap">{m.value}</div>
+            <div class="text-[10px] sm:text-xs uppercase tracking-wider text-white/50 font-mono mt-1">{m.label}</div>
+          </div>
+        ))}
       </div>
 
       <!-- Scroll cue -->

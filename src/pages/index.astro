@@ -13,14 +13,14 @@ import Marquee from '../components/Marquee.astro';
 
 <Layout title="iAdvert Studio | Premier Meta & Facebook Ads Agency">
   <Navbar />
-  <main>
-    <Hero />
-    <Marquee />
-    <BentoGrid />
-    <RoasCalculator />
-    <CaseStudies />
-    <Founder />
-    <CtaSection />
+  <main id="main-content-canvas">
+    <div id="sec-hero" data-section="hero"><Hero /></div>
+    <div id="sec-marquee" data-section="marquee"><Marquee /></div>
+    <div id="sec-services" data-section="services"><BentoGrid /></div>
+    <div id="sec-calculator" data-section="calculator"><RoasCalculator /></div>
+    <div id="sec-results" data-section="results"><CaseStudies /></div>
+    <div id="sec-founder" data-section="founder"><Founder /></div>
+    <div id="sec-cta" data-section="cta"><CtaSection /></div>
   </main>
   <Footer />
 </Layout>
@@ -75,4 +75,19 @@ import Marquee from '../components/Marquee.astro';
   } catch (e) {
     // Graceful fallback
   }
+
+  // Section Reordering from WordPress Site Editor (Appearance -> Patterns)
+  try {
+    const rawOrder = localStorage.getItem('wp_section_order');
+    if (rawOrder) {
+      const order: string[] = JSON.parse(rawOrder);
+      const canvas = document.getElementById('main-content-canvas');
+      if (canvas && Array.isArray(order) && order.length > 0) {
+        order.forEach(id => {
+          const el = document.getElementById(`sec-${id}`);
+          if (el) canvas.appendChild(el);
+        });
+      }
+    }
+  } catch (e) {}
 </script>

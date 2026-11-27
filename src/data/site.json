@@ -1,0 +1,251 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-01-15T00:00:00.000Z",
+  "brand": {
+    "name": "iAdvert Studio",
+    "tagline": "Premier Meta & Facebook Ads Agency",
+    "logo": "/assets/logo.png",
+    "favicon": "/favicon.svg",
+    "founder": "Ratul Ahmed Shishir",
+    "founderTagline": "THE STRATEGIST BEHIND THE SYSTEM",
+    "description": "We scale brands with high-performance Meta and Facebook ads. Psychological creative, scientific CBO architecture, and bulletproof CAPI tracking.",
+    "email": "inquiryiadverts@gmail.com",
+    "phone": "+880 1301-843562",
+    "whatsapp": "+880 1301-843562",
+    "address": "Rajshahi, Bangladesh",
+    "social": {
+      "facebook": "https://www.facebook.com/iAdvertStudio",
+      "instagram": "https://www.instagram.com/iadvertstudio",
+      "linkedin": "https://www.linkedin.com/company/iadvertsm/",
+      "linkedinProfile": "https://www.linkedin.com/in/ratulashishir/",
+      "youtube": "https://youtube.com/@iadvertstudio"
+    }
+  },
+  "theme": {
+    "colors": {
+      "primary": "#0c0a10",
+      "surface": "#141218",
+      "terra": "#e04832",
+      "terraBright": "#e04832",
+      "peach": "#ffdad2",
+      "mint": "#00e599",
+      "accentMint": "#00e599",
+      "textPrimary": "#f8f7fa",
+      "textSecondary": "#c4c3ca",
+      "textMuted": "#9a999f",
+      "border": "#ffffff1a"
+    },
+    "typography": {
+      "headingFont": "Lora",
+      "headingFontUrl": "https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap",
+      "bodyFont": "Plus Jakarta Sans",
+      "bodyFontUrl": "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
+      "monoFont": "JetBrains Mono",
+      "monoFontUrl": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap",
+      "baseSize": "16px",
+      "scaleRatio": 1.25
+    },
+    "spacing": {
+      "sectionX": "6rem",
+      "sectionY": "4rem",
+      "containerMax": "80rem",
+      "gutter": "1.5rem"
+    },
+    "radius": {
+      "sm": "0.5rem",
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "full": "9999px"
+    },
+    "shadows": {
+      "card": "0 4px 20px rgba(0,0,0,0.3)",
+      "elevated": "0 10px 40px rgba(0,0,0,0.45)",
+      "glow": "0 0 25px rgba(224,72,50,0.5)"
+    }
+  },
+  "navigation": {
+    "items": [
+      { "id": "services", "label": "Meta Engine", "href": "/#services", "enabled": true },
+      { "id": "calculator", "label": "ROAS Simulator", "href": "/#calculator", "enabled": true },
+      { "id": "results", "label": "Case Studies", "href": "/#results", "enabled": true },
+      { "id": "blog", "label": "Blog", "href": "/blog", "enabled": true },
+      { "id": "founder", "label": "About", "href": "/#founder", "enabled": true }
+    ],
+    "cta": {
+      "label": "Claim Free Audit",
+      "href": "https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20want%20a%20Free%20Meta%20Ads%20Audit%20for%20my%20business.",
+      "enabled": true
+    }
+  },
+  "sections": {
+    "hero": {
+      "enabled": true,
+      "tag": "100% SPECIALIZED IN META & FACEBOOK ADS",
+      "headline1": "We Scale Brands with",
+      "headline2": "HIGH-PERFORMANCE",
+      "headline3": "META ADS.",
+      "subtitle": "Stop guessing your Facebook ad spend. Build a profitable sales machine with psychological creative hooks, data-driven CBO architecture, and bulletproof server-side CAPI tracking.",
+      "ctaText": "Get Free 20-Min Audit",
+      "ctaHref": "https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20would%20like%20to%20audit%20my%20Facebook%20Ads%20account.",
+      "secondaryCtaText": "Calculate ROAS",
+      "secondaryCtaHref": "#calculator",
+      "metrics": [
+        { "label": "Spend Managed", "value": "$100k+", "id": "metric1" },
+        { "label": "Avg Client ROAS", "value": "3.8x – 6.2x", "id": "metric2" },
+        { "label": "CAPI Accuracy", "value": "99.8%", "id": "metric3" }
+      ],
+      "floatingCards": [
+        { "id": "card1", "label": "BLENDED ROAS", "value": "+380%", "trend": "up", "position": "top-left" },
+        { "id": "card2", "label": "SCALING ENGINE", "value": "+124%", "subLabel": "MoM Growth", "position": "bottom-right" },
+        { "id": "card3", "label": "CAPI VERIFIED", "value": "100% Server-Side Data", "subLabel": "● Zero iOS 14.5 Loss", "position": "center-left" }
+      ]
+    },
+    "marquee": {
+      "enabled": true,
+      "items": [
+        "Meta Ads Specialist",
+        "CAPI Implementation Expert",
+        "Creative Strategy & UGC",
+        "CBO Architecture",
+        "Server-Side Tracking",
+        "ROAS Optimization",
+        "E-commerce Scaling",
+        "Lead Gen Mastery"
+      ]
+    },
+    "services": {
+      "enabled": true,
+      "title": "The Meta Engine",
+      "subtitle": "End-to-end ad systems — not just campaigns.",
+      "items": [
+        {
+          "id": "svc1",
+          "icon": "target",
+          "title": "Meta Ads Strategy",
+          "description": "Full-funnel architecture from cold traffic to LTV maximization. Audience layering, bid strategy selection, and budget pacing."
+        },
+        {
+          "id": "svc2",
+          "icon": "chart",
+          "title": "Creative That Converts",
+          "description": "Psychological hook engineering, UGC production systems, iterative testing frameworks, and creative fatigue detection."
+        },
+        {
+          "id": "svc3",
+          "icon": "shield",
+          "title": "Server-Side CAPI",
+          "description": "Stape.io, GTM server-side, and Events API implementation. Recover 15-35% lost signal from iOS/privacy changes."
+        },
+        {
+          "id": "svc4",
+          "icon": "scale",
+          "title": "Scaling Playbooks",
+          "description": "Vertical & horizontal scaling without ROAS decay. Automated rules, budget allocation models, and audience expansion."
+        },
+        {
+          "id": "svc5",
+          "icon": "audit",
+          "title": "Account Audits",
+          "description": "Deep-dive analysis of structure, creative, tracking, and attribution. Actionable roadmap with priority scoring."
+        },
+        {
+          "id": "svc6",
+          "icon": "brain",
+          "title": "Retention & LTV",
+          "description": "Post-purchase funnels, WhatsApp automation, email sequences, and predictive LTV modeling for sustainable growth."
+        }
+      ]
+    },
+    "calculator": {
+      "enabled": true,
+      "title": "ROAS Simulator",
+      "subtitle": "Project your returns before you spend."
+    },
+    "caseStudies": {
+      "enabled": true,
+      "title": "Client Results",
+      "subtitle": "Real outcomes from real ad accounts.",
+      "items": [
+        {
+          "id": "cs1",
+          "client": "D2C Beauty Brand",
+          "industry": "Beauty & Cosmetics",
+          "challenge": "Declining ROAS at $8K/mo spend",
+          "result": "3.2x ROAS → 5.8x in 45 days",
+          "metrics": ["$8K → $22K/mo", "CPA -44%", "28% signal recovered"],
+          "image": "/assets/hero-3d-concept.jpg"
+        },
+        {
+          "id": "cs2",
+          "client": "Fitness Apparel",
+          "industry": "E-commerce",
+          "challenge": "Stuck at $50K/mo, creative fatigue",
+          "result": "Scaled to $180K/mo at 4.1x ROAS",
+          "metrics": ["Creative refresh 2x/mo", "CAPI +30% attribution", "LTV +67%"],
+          "image": "/assets/hero-3d-concept.jpg"
+        },
+        {
+          "id": "cs3",
+          "client": "SaaS Lead Gen",
+          "industry": "B2B Software",
+          "challenge": "High CPL, poor lead quality",
+          "result": "CPL -52%, SQL rate +89%",
+          "metrics": ["Server-side tracking", "WhatsApp nurture", "Lookalike expansion"],
+          "image": "/assets/hero-3d-concept.jpg"
+        }
+      ]
+    },
+    "founder": {
+      "enabled": true,
+      "name": "Ratul Ahmed Shishir",
+      "tagline": "THE STRATEGIST BEHIND THE SYSTEM",
+      "quote": "\"Agencies that claim to handle graphics, logos, websites, and SEO all at once cannot truly specialize in any. I have spent the last several years focusing exclusively on the internal algorithms, high-conversion copywriting, and server-side tracking mechanisms of Meta and Facebook ads. My single goal: to deliver the maximum cash return for every 1 taka of ad spend.\"",
+      "image": "/assets/founder.jpg"
+    },
+    "cta": {
+      "enabled": true,
+      "headline": "Ready to Build a Predictable REVENUE ENGINE WITH META ADS?",
+      "buttonText": "Book 20-Min Strategy Audit on WhatsApp",
+      "buttonHref": "https://wa.me/8801301843562?text=Hello%20Ratul,%20I%20want%20a%20Free%20Meta%20Ads%20Audit%20for%20my%20business.",
+      "features": "✓ Free 1-on-1 Consultation • ✓ Actionable Scaling Roadmap • ✓ Zero Obligation"
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "iAdvert Studio | Premier Meta & Facebook Ads Agency",
+      "description": "We scale brands with high-performance Meta and Facebook ads. Psychological creative, scientific CBO architecture, and bulletproof CAPI tracking.",
+      "keywords": "Meta Ads Agency, Facebook Ads Bangladesh, CAPI Setup, Scale ROAS",
+      "ogImage": "/assets/hero-3d-concept.jpg"
+    },
+    "blog": {
+      "title": "iAdvert Studio | Meta Ads Blog & Insights",
+      "description": "Expert insights on Meta Ads, CAPI tracking, creative strategy, and scaling playbooks from Ratul Ahmed Shishir.",
+      "keywords": "Meta Ads Blog, Facebook Ads Tips, CAPI Tutorial, Ad Scaling",
+      "ogImage": "/assets/hero-3d-concept.jpg"
+    },
+    "privacy": {
+      "title": "Privacy Policy | iAdvert Studio",
+      "description": "Our commitment to protecting your data and privacy. Learn how we collect, use, and safeguard your information.",
+      "keywords": "Privacy Policy, Data Protection, GDPR",
+      "ogImage": "/assets/hero-3d-concept.jpg"
+    }
+  },
+  "blog": {
+    "postsPerPage": 10,
+    "categories": ["Meta Ads", "CAPI & Tracking", "Creative Psychology", "Strategy & Scale", "Education & Tips"],
+    "defaultCover": "/assets/hero-3d-concept.jpg"
+  },
+  "media": {
+    "assets": [
+      { "id": "logo", "name": "logo.png", "url": "/assets/logo.png", "type": "image", "alt": "iAdvert Studio Logo" },
+      { "id": "hero", "name": "hero-3d-concept.jpg", "url": "/assets/hero-3d-concept.jpg", "type": "image", "alt": "Hero 3D Concept" },
+      { "id": "founder", "name": "founder.jpg", "url": "/assets/founder.jpg", "type": "image", "alt": "Founder Ratul Ahmed Shishir" }
+    ]
+  },
+  "footer": {
+    "copyright": "iAdvert Studio. All rights reserved.",
+    "disclaimer": "Meta™ and Facebook™ are trademarks of Meta Platforms, Inc.",
+    "madeIn": "Made with focus in Rajshahi, Bangladesh"
+  }
+}
