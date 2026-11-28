@@ -276,22 +276,3 @@ const homeUrl = base || '/';
   }
 </style>
 
-<script>
-  // Sync article image if updated in Admin CMS Dashboard
-  try {
-    const imgEl = document.getElementById('article-featured-img');
-    const slug = imgEl?.getAttribute('data-slug');
-    if (slug) {
-      const raw = localStorage.getItem('iadverts_cms_posts');
-      if (raw) {
-        const posts: Array<{ slug: string; image: string }> = JSON.parse(raw);
-        const match = posts.find(p => p.slug === slug);
-        if (match && match.image && imgEl && imgEl.getAttribute('src') !== match.image) {
-          imgEl.setAttribute('src', match.image);
-        }
-      }
-    }
-  } catch (e) {
-    // Graceful fallback
-  }
-</script>

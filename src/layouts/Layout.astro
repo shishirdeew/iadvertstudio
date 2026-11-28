@@ -90,73 +90,6 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-    <!-- WordPress Dynamic Styles Overrides (Loaded from localStorage) -->
-    <style id="wp-custom-styles"></style>
-    <script is:inline>
-      // Apply WordPress Global Styles & Typography immediately
-      try {
-        const rawStyles = localStorage.getItem('wp_global_styles');
-        if (rawStyles) {
-          const s = JSON.parse(rawStyles);
-          const styleEl = document.getElementById('wp-custom-styles');
-          let css = '';
-          if (s.headingFont) {
-            const fontName = s.headingFont.replace(/['"]/g, '').trim();
-            if (fontName !== 'Lora' && fontName !== 'Plus Jakarta Sans') {
-              const fontUrl = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;600;700;800&display=swap`;
-              const link = document.createElement('link');
-              link.rel = 'stylesheet';
-              link.href = fontUrl;
-              document.head.appendChild(link);
-            }
-            css += `h1, h2, h3, h4, .font-display { font-family: '${fontName}', serif !important; }\n`;
-          }
-          if (s.bodyFont) {
-            const bodyFontName = s.bodyFont.replace(/['"]/g, '').trim();
-            if (bodyFontName !== 'Plus Jakarta Sans' && bodyFontName !== 'Lora') {
-              const link = document.createElement('link');
-              link.rel = 'stylesheet';
-              link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(bodyFontName)}:wght@400;500;600;700&display=swap`;
-              document.head.appendChild(link);
-            }
-            css += `body, p, span, div, a, li, input, button { font-family: '${bodyFontName}', sans-serif; }\n`;
-          }
-          if (s.bgColor) {
-            css += `html, body { background-color: ${s.bgColor} !important; }\n`;
-          }
-          if (s.terraColor) {
-            css += `.text-terra-bright, .text-terra { color: ${s.terraColor} !important; }\n`;
-            css += `.bg-terra-bright, .bg-terra { background-color: ${s.terraColor} !important; }\n`;
-            css += `.border-terra, .border-terra-bright { border-color: ${s.terraColor} !important; }\n`;
-          }
-          if (s.peachColor) {
-            css += `.text-peach { color: ${s.peachColor} !important; }\n`;
-          }
-          if (s.mintColor) {
-            css += `.text-accent-mint { color: ${s.mintColor} !important; }\n`;
-            css += `.bg-accent-mint { background-color: ${s.mintColor} !important; }\n`;
-          }
-          if (styleEl) styleEl.textContent = css;
-        }
-      } catch (e) {}
-
-      // Apply WordPress Image Overrides
-      try {
-        const rawImages = localStorage.getItem('wp_site_images');
-        if (rawImages) {
-          const imgs = JSON.parse(rawImages);
-          window.addEventListener('DOMContentLoaded', () => {
-            Object.keys(imgs).forEach(key => {
-              document.querySelectorAll(`[data-wp-img="${key}"]`).forEach(el => {
-                if (imgs[key] && el instanceof HTMLImageElement) {
-                  el.src = imgs[key];
-                }
-              });
-            });
-          });
-        }
-      } catch (e) {}
-    </script>
   </head>
   <body
     class="bg-obsidian-900 text-[#F8F7FA] font-sans relative selection:bg-terra-bright selection:text-white"
@@ -207,44 +140,5 @@ const jsonLd = {
       }
     </script>
 
-    <!-- WordPress Runtime Config Overrides -->
-    <script>
-      (function applySiteConfigOverrides() {
-        try {
-          const raw = localStorage.getItem('iadverts_site_config');
-          const cfg = raw ? JSON.parse(raw) : null;
-          if (cfg) applyOverrides(cfg);
-        } catch (e) {}
-
-        fetch('/site-config.json', { cache: 'force-cache' }).then(async (resp) => {
-          if (resp.ok) {
-            const baked = await resp.json();
-            if (!localStorage.getItem('iadverts_site_config')) {
-              applyOverrides(baked);
-            }
-          }
-        }).catch(() => {});
-      })();
-
-      function applyOverrides(cfg) {
-        document.querySelectorAll('[data-cfg]').forEach((el) => {
-          const key = el.getAttribute('data-cfg');
-          if (!key) return;
-          const parts = key.split('.');
-          let val = cfg;
-          for (const p of parts) {
-            if (!val || typeof val !== 'object') { val = undefined; break; }
-            val = val[p];
-          }
-          if (val !== undefined && val !== null && val !== '') {
-            if (el.tagName === 'IMG' && el.getAttribute('data-wp-img')) {
-              el.src = String(val);
-            } else {
-              el.textContent = String(val);
-            }
-          }
-        });
-      }
-    </script>
   </body>
 </html>

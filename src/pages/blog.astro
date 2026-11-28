@@ -147,23 +147,3 @@ function formatDate(date: Date) {
   <Footer />
 </Layout>
 
-<script>
-  // Live sync with Admin Dashboard CMS changes stored in localStorage
-  try {
-    const raw = localStorage.getItem('iadverts_cms_posts');
-    if (raw) {
-      const posts: Array<{ slug: string; title: string; image: string; description: string }> = JSON.parse(raw);
-      posts.forEach(post => {
-        const card = document.querySelector(`[data-slug="${post.slug}"]`);
-        if (card) {
-          const img = card.querySelector('img');
-          if (img && post.image && img.getAttribute('src') !== post.image) {
-            img.setAttribute('src', post.image);
-          }
-        }
-      });
-    }
-  } catch (e) {
-    // Graceful fallback
-  }
-</script>
