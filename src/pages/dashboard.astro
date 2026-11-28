@@ -56,7 +56,7 @@ const homeUrl = base || '/';
     <!-- ================================================================ -->
     <!-- MASTER SECURITY LOCK GATE -->
     <!-- ================================================================ -->
-    <div id="wp-auth-gate" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0c0a10] p-4">
+    <div id="wp-auth-gate" style="display:flex" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0c0a10] p-4">
       <div class="bg-[#1d2327] border border-white/10 rounded-2xl p-8 max-w-sm w-full shadow-2xl text-center">
         <!-- WordPress Iconic Logo -->
         <div class="w-16 h-16 rounded-full bg-[#2271b1]/20 border border-[#2271b1]/50 mx-auto flex items-center justify-center text-white mb-5 shadow-lg">
@@ -77,7 +77,7 @@ const homeUrl = base || '/';
             <label for="wp-login-pwd" class="block text-xs font-mono text-white/70 mb-1.5">Master Security Password</label>
             <input type="password" id="wp-login-pwd" placeholder="Enter password..." class="w-full bg-[#101517] border border-white/20 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-wpblue" required />
           </div>
-          <div id="wp-login-error" class="hidden text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-800/50 p-2 rounded">
+          <div id="wp-login-error" style="display:none" class="text-[11px] font-mono text-red-400 bg-red-950/40 border border-red-800/50 p-2 rounded">
             Incorrect master password.
           </div>
           <button type="submit" class="w-full bg-[#2271b1] hover:bg-[#135e96] text-white font-medium text-xs py-2.5 rounded-lg transition-colors">
@@ -964,13 +964,11 @@ const homeUrl = base || '/';
 
       function refreshAuth() {
         if (isAuthed()) {
-          authGate?.classList.add('hidden');
-          appContainer?.classList.remove('hidden');
-          appContainer?.classList.add('flex');
+          if (authGate) authGate.style.display = 'none';
+          if (appContainer) appContainer.style.display = 'flex';
         } else {
-          authGate?.classList.remove('hidden');
-          appContainer?.classList.add('hidden');
-          appContainer?.classList.remove('flex');
+          if (authGate) authGate.style.display = 'flex';
+          if (appContainer) appContainer.style.display = 'none';
         }
       }
 
@@ -978,12 +976,12 @@ const homeUrl = base || '/';
         e.preventDefault();
         if (loginPwd.value.trim() === getMasterKey()) {
           localStorage.setItem('iadverts_admin_authenticated', 'true');
-          loginErr?.classList.add('hidden');
+          if (loginErr) loginErr.style.display = 'none';
           refreshAuth();
           toast('Welcome to WordPress 6.6 Admin!');
         } else {
-          loginErr?.classList.remove('hidden');
-          loginPwd.focus();
+          if (loginErr) loginErr.style.display = 'flex';
+          if (loginPwd) loginPwd.focus();
         }
       });
 
@@ -1733,12 +1731,12 @@ const homeUrl = base || '/';
             if (pwd === defaultKey) {
               try { localStorage.setItem('iadverts_admin_authenticated', 'true'); } catch {}
               if (loginErr) {
-                loginErr.classList.add('hidden');
+                loginErr.style.display = 'none';
               }
               refreshAuth();
             } else {
               if (loginErr) {
-                loginErr.classList.remove('hidden');
+                loginErr.style.display = 'flex';
               }
               if (loginPwd) {
                 loginPwd.focus();
