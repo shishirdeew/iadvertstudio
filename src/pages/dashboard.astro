@@ -94,7 +94,7 @@ const homeUrl = base || '/';
     <!-- ================================================================ -->
     <!-- AUTHENTICATED WP ADMIN SUITE -->
     <!-- ================================================================ -->
-    <div id="wp-app-container" class="hidden flex-col flex-1 min-h-screen">
+    <div id="wp-app-container" class="hidden flex-col flex-1 min-h-screen" style="display:none">
 
       <!-- ================================================================ -->
       <!-- TOP WORDPRESS ADMIN BAR -->
@@ -1684,5 +1684,78 @@ const homeUrl = base || '/';
         toast('site-config.json downloaded — replace public/site-config.json and deploy!');
       });
     </script>
+
+    <!-- ================================================================ -->
+    <!-- INDEPENDENT AUTH GATE (IIFE-scoped, Tailwind-independent storage) -->
+    <!-- ================================================================ -->
+    <script>
+      (() => {
+        let defaultKey = 'admin@iadvert2027';
+        try { defaultKey = localStorage.getItem('iadverts_admin_password') || defaultKey; } catch {}
+
+        const authGate = document.getElementById('wp-auth-gate');
+        const appContainer = document.getElementById('wp-app-container');
+        const loginForm = document.getElementById('wp-login-form');
+        const loginPwd = document.getElementById('wp-login-pwd');
+        const loginErr = document.getElementById('wp-login-error');
+        const logoutBtn = document.getElementById('btn-wp-logout');
+
+        function isAuthed() {
+          try { return localStorage.getItem('iadverts_admin_authenticated') === 'true'; } catch { return false; }
+        }
+
+        function refreshAuth() {
+          if (isAuthed()) {
+            if (authGate) {
+              authGate.style.display = 'none';
+            }
+            if (appContainer) {
+              appContainer.style.display = 'flex';
+            }
+          } else {
+            if (authGate) {
+              authGate.style.display = 'flex';
+            }
+            if (appContainer) {
+              appContainer.style.display = 'none';
+            }
+          }
+        }
+
+        // Check auth on page load
+        refreshAuth();
+
+        // Login form submit handler
+        if (loginForm) {
+          loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pwd = loginPwd ? loginPwd.value.trim() : '';
+            if (pwd === defaultKey) {
+              try { localStorage.setItem('iadverts_admin_authenticated', 'true'); } catch {}
+              if (loginErr) {
+                loginErr.classList.add('hidden');
+              }
+              refreshAuth();
+            } else {
+              if (loginErr) {
+                loginErr.classList.remove('hidden');
+              }
+              if (loginPwd) {
+                loginPwd.focus();
+              }
+            }
+          });
+        }
+
+        // Logout handler
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', () => {
+            try { localStorage.removeItem('iadverts_admin_authenticated'); } catch {}
+            refreshAuth();
+          });
+        }
+      })();
+    </script>
+
   </body>
 </html>
